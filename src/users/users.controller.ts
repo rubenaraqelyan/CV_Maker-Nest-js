@@ -12,58 +12,61 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import {ApiBody, ApiOperation, ApiProperty, ApiResponse, ApiTags} from '@nestjs/swagger';
-import { UsersService } from './users.service';
-import { Type } from 'class-transformer';
-import {UserDto, UserLoginDto, UsersCreateResDto} from '../dto/user.dto';
-import {response} from "../utils/helpers";
+import {ApiBody, ApiHeader, ApiOperation, ApiProperty, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {UsersService} from './users.service';
+import {Type} from 'class-transformer';
+import {UserDto, UserLoginDto} from '../dto/user.dto';
+import {getMeResponse, signInBody, signInResponse, signUpBody, signUpResponse} from "../swagger/users";
+import {RequestType} from "../dto/main.dto";
+import {xAuthorization} from "../swagger/main";
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
-
+  constructor(private readonly usersService: UsersService) {
+  }
   @Post('/sign-up')
-  @ApiBody({
-    type: UserDto,
-    description: 'User registration',
-  })
-  @ApiResponse({
-    status: 200,
-    type: UsersCreateResDto,
-    description: 'Users successfully registered',
-  })
+  @ApiBody(signUpBody)
+  @ApiResponse(signUpResponse)
   async signUp(@Body() body: UserDto) {
     const data = await this.usersService.signUp(body);
-    return response({
+    return {
       status: 'success',
-      message: 'Users successfully registered',
+      message: 'User success registered',
       data
-    });
+    }
   }
 
   @Post('/sign-in')
-  @ApiBody({
-    type: UserLoginDto,
-    description: 'User login',
-  })
-  @ApiResponse({
-    status: 200,
-    type: UsersCreateResDto,
-    description: 'Users successfully login',
-  })
+  @ApiBody(signInBody)
+  @ApiResponse(signInResponse)
   async signIn(@Body() body: UserLoginDto) {
     const data = await this.usersService.signIn(body);
-    return response({
+    const token = this.usersService.getToken(data.id);
+    return {
       status: 'success',
       message: 'User successfully login',
-      data
-    });
+      data,
+      token,
+    };
   }
 
-  @Get('/:id')
-  findAll(@Param('id') id: string, @Next() next): string {
-    console.log(id);
-    return 'This action returns all cats';
+  @Get('/me')
+  @ApiHeader(xAuthorization)
+  @ApiResponse(getMeResponse)
+  async getMe(@Req() req: RequestType) {
+    const {id} = req.user;
+    const data = await this.usersService.getUserById(id);
+    return {
+      status: 'success',
+      message: 'User successfully login',
+      data,
+    };
   }
+
+  // @Get('/:id')
+  // findAll(@Param('id') id: string, @Next() next): string {
+  //   console.log(id);
+  //   return 'This action returns all cats';
+  // }
 }

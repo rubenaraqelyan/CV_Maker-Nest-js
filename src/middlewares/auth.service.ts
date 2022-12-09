@@ -1,6 +1,6 @@
 import {forwardRef, HttpException, HttpStatus, Inject, Injectable, NestMiddleware} from '@nestjs/common';
 import {RequestType, response, next, } from '../dto/main.dto';
-import JWT from 'jsonwebtoken';
+import * as JWT from 'jsonwebtoken';
 import {UsersService} from "../users/users.service";
 const {JWT_SECRET} = process.env;
 
@@ -11,7 +11,8 @@ export class AuthService implements NestMiddleware {
     try {
       const token = req.headers['x-authorization'];
       if (token) {
-        const decoded = JWT.verify(token, JWT_SECRET);
+        const decoded = await JWT.verify(token, JWT_SECRET);
+        console.log(8888, decoded)
         if (!decoded) next(new HttpException('Forbidden', HttpStatus.FORBIDDEN));
         const user = await this.usersService.findById(decoded.id);
         if (!user) next(new HttpException('Forbidden', HttpStatus.FORBIDDEN));
@@ -20,6 +21,7 @@ export class AuthService implements NestMiddleware {
       }
       next(new HttpException('Forbidden', HttpStatus.FORBIDDEN));
     } catch (e) {
+      console.log(e)
       return next(new HttpException(e.name, HttpStatus.FORBIDDEN));
     }
   }

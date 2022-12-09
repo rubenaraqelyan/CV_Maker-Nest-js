@@ -1,6 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import { users } from './users.model';
 import { InjectSqlModel } from '../database/inject-model-sql';
+import * as JWT from 'jsonwebtoken';
 import {checkPassword, hashPassword} from "../utils/helpers";
 
 @Injectable()
@@ -21,6 +22,13 @@ export class UsersService {
     return user;
   }
 
+  getToken(id) {
+    return JWT.sign({id}, process.env.JWT_SECRET);
+  }
+
+  getUserById(id) {
+    return this.Users.findByPk(id);
+  }
   async findById(id) {
     const user = await this.Users.findByPk(id);
     if (!user) throw new HttpException('Invalid username or password', HttpStatus.UNPROCESSABLE_ENTITY);

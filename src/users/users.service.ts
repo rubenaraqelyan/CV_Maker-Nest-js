@@ -1,31 +1,30 @@
-import { Injectable } from '@nestjs/common';
-import { SocketConnection } from '../middlewares/socket.connection';
-import { UsersDto } from '../dto/users.dto';
-import { Users } from './users.model';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import { users } from './users.model';
 import { InjectSqlModel } from '../database/inject-model-sql';
-import db from '../database/initialize-sql';
+import {checkPassword, hashPassword} from "../utils/helpers";
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectSqlModel(Users) private usersSql: typeof Users, // private test:Anunuy // @Inject('USERS_REPOSITORY') private users: typeof Users
+    @InjectSqlModel(users) private Users: typeof users,
   ) {}
-  async create(data) {
-    // throw new HttpException('UNAUTHORIZED', HttpStatus.UNAUTHORIZED);
-    // return SocketConnection.emit('1','test', {
-    //     message: 'hello'
-    // })
-    // const test = await db.manual().query('SELECT * FROM `users` WHERE name OR age LIKE \'%18%\' LIMIT 2', {nest: true})
-    const test = await db
-      .manual()
-      .query(
-        'SELECT tr.*, tr.nick_name AS nick, INTO tts, tob.title FROM trainers AS tr INNER JOIN toolkits AS tob ON tr.id = tob.trainer_id',
-        { nest: true },
-      );
-    // const test = await this.usersSql.findAll()
-    console.log(test);
-    return test;
-    // await this.usersMongo.create(data);
-    // return await this.usersSql.create(data);
+  async signUp(data) {
+    data.password = await hashPassword(data.password);
+    return this.Users.create(data);
   }
+
+  async signIn(data) {
+    const user = await this.Users.findOne(data);
+    if (!user) throw new HttpException('Invalid username or password', HttpStatus.UNPROCESSABLE_ENTITY);
+    const checkUser = await checkPassword(data.password, user.getDataValue('password'));
+    if (!checkUser) throw new HttpException('Invalid username or password', HttpStatus.UNPROCESSABLE_ENTITY);
+    return user;
+  }
+
+  async findById(id) {
+    const user = await this.Users.findByPk(id);
+    if (!user) throw new HttpException('Invalid username or password', HttpStatus.UNPROCESSABLE_ENTITY);
+    return user;
+  }
+
 }

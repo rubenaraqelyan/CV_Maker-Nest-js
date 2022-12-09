@@ -1,7 +1,7 @@
 {
-  "name": "nest",
+  "name": "make_cv",
   "version": "0.0.1",
-  "description": "",
+  "description": "Make cv",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
@@ -31,6 +31,7 @@
     "@nestjs/swagger": "^5.2.1",
     "@nestjs/websockets": "^8.4.5",
     "@types/sequelize": "^4.28.13",
+    "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "dotenv": "^16.0.3",

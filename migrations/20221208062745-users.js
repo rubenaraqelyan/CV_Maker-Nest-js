@@ -5,47 +5,63 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable('products', {
+      await queryInterface.createTable('users', {
         id: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true,
-        },
-        userId: {
           type: Sequelize.UUID,
+          defaultValue: Sequelize.UUIDV4,
           allowNull: false,
-          references: {
-            model: 'users',
-            key: 'id',
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
+          primaryKey: true
         },
         name: {
           type: Sequelize.STRING(255),
           allowNull: false,
         },
-        description: {
+        username: {
           type: Sequelize.STRING(255),
           allowNull: false,
         },
-        price: {
+        email: {
           type: Sequelize.STRING(255),
           allowNull: false,
         },
-        createdAt: {
+        password: {
+          type: Sequelize.STRING(255),
+          allowNull: false,
+          get: () => null,
+        },
+        image: {
+          type: Sequelize.STRING(255),
+          allowNull: false,
+          defaultValue: "",
+        },
+        socials: {
+          type: Sequelize.JSON,
+          allowNull: false,
+          defaultValue: {},
+          get: () => JSON.parse(this.getDataValue("socials")),
+          set: (value) => this.setDataValue("socials", JSON.stringify(value)),
+        },
+        verified_at: {
+          type: "TIMESTAMP",
+          defaultValue: null,
+          allowNull: true,
+        },
+        created_at: {
           type: "TIMESTAMP",
           defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
           allowNull: false,
         },
-        updatedAt: {
+        updated_at: {
           type: "TIMESTAMP",
           defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
           allowNull: false,
+        },
+        deleted_at: {
+          type: "TIMESTAMP",
+          defaultValue: null,
+          allowNull: true,
         },
       },{transaction});
-
       await transaction.commit();
     } catch(e) {
       await transaction.rollback();
@@ -56,7 +72,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.dropTable('products', { transaction });
+      await queryInterface.dropTable('users', { transaction });
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();

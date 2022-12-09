@@ -7,9 +7,11 @@ import {
 import { SocketConnection } from './middlewares/socket.connection';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { AuthMiddleware } from './middlewares/auth.middleware';
+import { AuthService } from './middlewares/auth.service';
 import { UsersModule } from './users/users.module';
 import db from './database/initialize-sql';
+import {UsersService} from "./users/users.service";
+
 
 @Module({
   imports: [
@@ -26,10 +28,10 @@ import db from './database/initialize-sql';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(AuthMiddleware)
+      .apply(AuthService)
       .exclude(
-        { path: 'login', method: RequestMethod.POST },
-        { path: 'sign-up', method: RequestMethod.POST },
+        { path: '/api/users/sign-in', method: RequestMethod.POST },
+        { path: '/api/users/sign-up', method: RequestMethod.POST },
       )
       .forRoutes('*');
   }

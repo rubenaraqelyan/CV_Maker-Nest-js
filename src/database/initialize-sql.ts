@@ -1,5 +1,5 @@
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Users } from '../users/users.model';
+import { users } from '../users/users.model';
 import * as process from 'process';
 import { Sequelize } from 'sequelize-typescript';
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
@@ -16,10 +16,10 @@ export default class db {
       define: {
         charset: 'utf8',
         collate: 'utf8_general_ci',
-        timestamps: true,
+        timestamps: false
       },
       // operatorsAliases,
-      models: [Users],
+      models: [users],
     });
   }
   static manual() {
@@ -33,9 +33,9 @@ export default class db {
       define: {
         charset: 'utf8',
         collate: 'utf8_general_ci',
-        timestamps: true,
+        timestamps: false
       },
-      models: [Users],
+      models: [users],
     });
   }
 }

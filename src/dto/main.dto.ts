@@ -12,8 +12,8 @@ class requestUser {
     email: string;
     password: string;
     image: string;
-    verified_at: string;
-    // socials: { name: string, url: string }[]
+    verified_at: string | null;
+    socials: string;
 }
 
 export interface RequestType extends Request {

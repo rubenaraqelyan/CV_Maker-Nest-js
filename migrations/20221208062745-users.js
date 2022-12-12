@@ -19,10 +19,12 @@ module.exports = {
         username: {
           type: Sequelize.STRING(255),
           allowNull: false,
+          unique: true
         },
         email: {
           type: Sequelize.STRING(255),
           allowNull: false,
+          unique: true
         },
         password: {
           type: Sequelize.STRING(255),
@@ -37,9 +39,14 @@ module.exports = {
         socials: {
           type: Sequelize.JSON,
           allowNull: false,
-          defaultValue: {},
+          defaultValue: '[]',
           get: () => JSON.parse(this.getDataValue("socials")),
           set: (value) => this.setDataValue("socials", JSON.stringify(value)),
+        },
+        forgot_password_code: {
+          type: Sequelize.STRING(255),
+          allowNull: false,
+          defaultValue: null,
         },
         verified_at: {
           type: "TIMESTAMP",

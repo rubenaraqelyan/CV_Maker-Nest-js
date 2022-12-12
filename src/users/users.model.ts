@@ -44,7 +44,7 @@ export class users extends Model {
   @Column({
     type: DataType.JSON,
     allowNull: false,
-    defaultValue: {},
+    defaultValue: '[]',
   })
 
   get socials(): string {
@@ -53,6 +53,13 @@ export class users extends Model {
   set socials(value: string) {
     this.setDataValue("socials", JSON.stringify(value));
   }
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+    defaultValue: null,
+  })
+  forgot_password_code: string
 
   @Column({
     type: "TIMESTAMP",

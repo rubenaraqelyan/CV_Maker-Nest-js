@@ -2,10 +2,16 @@ import {ApiProperty} from "@nestjs/swagger";
 import {
   IsString,
   IsNotEmpty,
-  IsObject, IsInt, Min, Max, IsEmail, IsArray
+  IsObject, IsInt, Min, Max, IsEmail, IsArray, IsOptional, isEmail, ValidateNested
 } from 'class-validator';
+import {Type} from "class-transformer";
 
-
+class socialsDto {
+  @IsString()
+  readonly name: string;
+  @IsString()
+  readonly url: string;
+}
 export class UserDto {
   @IsNotEmpty()
   @IsString()
@@ -25,16 +31,55 @@ export class UserDto {
   readonly password: string;
 
   @IsArray()
-  readonly socials: object[];
+  @ValidateNested({ each: true })
+  @Type(() => socialsDto)
+  readonly socials: socialsDto[];
 }
 
 export class UserLoginDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  readonly username: string;
+  @IsEmail()
+  readonly email: string;
 
   @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  readonly password: string;
+}
+
+export class UpdateDto {
+  @IsOptional()
+  @IsString()
+  readonly name: string;
+
+  @IsOptional()
+  @IsString()
+  readonly username: string;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => socialsDto)
+  readonly socials: socialsDto[];
+}
+export class updatePassword {
+  @IsNotEmpty()
+  @IsString()
+  readonly password: string;
+}
+
+export class forgotPassword {
+  @IsNotEmpty()
+  @IsString()
+  @IsEmail()
+  readonly email: string;
+}
+export class acceptCodeForgotPassword {
+  @IsNotEmpty()
+  @IsString()
+  readonly code: string;
   @IsNotEmpty()
   @IsString()
   readonly password: string;

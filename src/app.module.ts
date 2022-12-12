@@ -10,8 +10,6 @@ import { join } from 'path';
 import { AuthService } from './middlewares/auth.service';
 import { UsersModule } from './users/users.module';
 import db from './database/initialize-sql';
-import {UsersService} from "./users/users.service";
-
 
 @Module({
   imports: [
@@ -30,8 +28,11 @@ export class AppModule implements NestModule {
     consumer
       .apply(AuthService)
       .exclude(
-        { path: '/api/users/sign-in', method: RequestMethod.POST },
-        { path: '/api/users/sign-up', method: RequestMethod.POST },
+        { path: '/api/user/sign-in', method: RequestMethod.POST },
+        { path: '/api/user/sign-up', method: RequestMethod.POST },
+        { path: '/api/user/forgot-password', method: RequestMethod.POST },
+        { path: '/api/user/accept-forgot-password', method: RequestMethod.PUT },
+        { path: '/api/user/email-verify/:token', method: RequestMethod.PUT },
       )
       .forRoutes('*');
   }

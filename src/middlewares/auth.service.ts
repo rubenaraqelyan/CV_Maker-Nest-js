@@ -11,18 +11,16 @@ export class AuthService implements NestMiddleware {
     try {
       const token = req.headers['x-authorization'];
       if (token) {
-        const decoded = await JWT.verify(token, JWT_SECRET);
-        console.log(8888, decoded)
-        if (!decoded) next(new HttpException('Forbidden', HttpStatus.FORBIDDEN));
-        const user = await this.usersService.findById(decoded.id);
+        const id = await this.usersService.verifyToken(token);
+        if (!id) next(new HttpException('Forbidden', HttpStatus.FORBIDDEN));
+        const user = await this.usersService.findById(id);
         if (!user) next(new HttpException('Forbidden', HttpStatus.FORBIDDEN));
-        req.user = user;
+        req.user = user['dataValues'];
         return next();
       }
       next(new HttpException('Forbidden', HttpStatus.FORBIDDEN));
     } catch (e) {
-      console.log(e)
-      return next(new HttpException(e.name, HttpStatus.FORBIDDEN));
+      return next(new HttpException(`${e.name} ${e.message}`, HttpStatus.FORBIDDEN));
     }
   }
 }

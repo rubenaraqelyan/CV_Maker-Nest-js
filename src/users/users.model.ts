@@ -1,4 +1,6 @@
-import {Table, Column, Model, DataType} from 'sequelize-typescript';
+import {Table, Column, Model, DataType, HasMany, BelongsTo} from 'sequelize-typescript';
+import {addresses} from "../addresses/addresses.model";
+
 @Table
 export class users extends Model {
   @Column({
@@ -67,5 +69,8 @@ export class users extends Model {
     defaultValue: null,
   })
   verified_at: string;
+
+  @HasMany(() => addresses)
+  addresses: addresses[];
 
 }

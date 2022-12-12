@@ -1,5 +1,6 @@
 import { SequelizeModule } from '@nestjs/sequelize';
 import { users } from '../users/users.model';
+import { addresses } from '../addresses/addresses.model';
 import * as process from 'process';
 import { Sequelize } from 'sequelize-typescript';
 import {operatorsAliases} from "../utils/constanst";
@@ -20,7 +21,7 @@ export default class db {
         timestamps: false
       },
       operatorsAliases,
-      models: [users],
+      models: [users, addresses],
     });
   }
 }

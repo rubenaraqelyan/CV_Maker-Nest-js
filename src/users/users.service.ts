@@ -86,10 +86,10 @@ export class UsersService {
     if (!user) throw new HttpException('Email not found', HttpStatus.NOT_FOUND);
     await this.Users.update({ forgot_password_code }, { where: { id: user.id } })
     await this.Users.sequelize.query(`
-    create event ${user.id}
+    create event ${forgot_password_code}
      on schedule at current_timestamp + interval 5 minute
      do update users set forgot_password_code = null`);
-    const html = `<h1>CV Maker</h1><div><p>Your verification code: ${forgot_password_code}, expair 5 minute</p></div>`;
+    const html = `<h1>CV Maker</h1><div><h6>Your verification code: ${forgot_password_code}, expair 5 minute</h6></div>`;
     return Email.send(email, 'Forgot password code', html);
   }
   async acceptCodeForgotPassword(data) {

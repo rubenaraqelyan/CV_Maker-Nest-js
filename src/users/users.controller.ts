@@ -53,7 +53,6 @@ export class UsersController {
   async signIn(@Body() body: UserLoginDto) {
     const data = await this.usersService.signIn(body);
     const token = this.usersService.getToken(data.id);
-    await this.usersService.sendForgotCodeToEmail('karen.evistep@gmail.com')
     return {
       status: 'success',
       message: 'User successfully login',

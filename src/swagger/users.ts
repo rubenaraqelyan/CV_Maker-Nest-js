@@ -38,37 +38,37 @@ const signUpResponse = {
   schema: {
     properties: {
       ...response,
-      data: {
-        type: "object",
-        properties: {
-          name: {
-            type: "string"
-          },
-          username: {
-            type: "string"
-          },
-          email: {
-            type: "string"
-          },
-          password: {
-            type: "string"
-          },
-          socials: {
-            type: "array",
-            items: {
-              type: "object",
-              properties: {
-                name: {
-                  type: "string"
-                },
-                url: {
-                  type: "string"
-                }
-              }
-            }
-          }
-        },
-      }
+      // data: {
+      //   type: "object",
+      //   properties: {
+      //     name: {
+      //       type: "string"
+      //     },
+      //     username: {
+      //       type: "string"
+      //     },
+      //     email: {
+      //       type: "string"
+      //     },
+      //     password: {
+      //       type: "string"
+      //     },
+      //     socials: {
+      //       type: "array",
+      //       items: {
+      //         type: "object",
+      //         properties: {
+      //           name: {
+      //             type: "string"
+      //           },
+      //           url: {
+      //             type: "string"
+      //           }
+      //         }
+      //       }
+      //     }
+      //   },
+      // }
     }
   }
 };

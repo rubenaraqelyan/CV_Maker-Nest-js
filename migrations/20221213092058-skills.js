@@ -5,53 +5,26 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable('users', {
+      await queryInterface.createTable('skills', {
         id: {
           type: Sequelize.UUID,
           defaultValue: Sequelize.UUIDV4,
           allowNull: false,
           primaryKey: true
         },
-        name: {
+        user_id: {
+          type: Sequelize.UUID,
+          allowNull: false,
+          references: {
+            model: 'users',
+            key: 'id',
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+        },
+        skill: {
           type: Sequelize.STRING(255),
           allowNull: false,
-        },
-        username: {
-          type: Sequelize.STRING(255),
-          allowNull: false,
-          unique: true
-        },
-        email: {
-          type: Sequelize.STRING(255),
-          allowNull: false,
-          unique: true
-        },
-        password: {
-          type: Sequelize.STRING(255),
-          allowNull: false,
-          get: () => null,
-        },
-        image: {
-          type: Sequelize.STRING(255),
-          allowNull: false,
-          defaultValue: "",
-        },
-        socials: {
-          type: Sequelize.JSON,
-          allowNull: false,
-          defaultValue: '[]',
-          get: () => JSON.parse(this.getDataValue("socials")),
-          set: (value) => this.setDataValue("socials", JSON.stringify(value)),
-        },
-        forgot_password_code: {
-          type: Sequelize.STRING(255),
-          allowNull: true,
-          defaultValue: null,
-        },
-        verified_at: {
-          type: "TIMESTAMP",
-          defaultValue: null,
-          allowNull: true,
         },
         created_at: {
           type: "TIMESTAMP",
@@ -79,7 +52,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.dropTable('users', { transaction });
+      await queryInterface.dropTable('skills', { transaction });
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();

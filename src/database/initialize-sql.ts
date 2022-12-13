@@ -2,8 +2,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { users } from '../users/users.model';
 import { addresses } from '../addresses/addresses.model';
 import * as process from 'process';
-import { Sequelize } from 'sequelize-typescript';
 import {operatorsAliases} from "../utils/constanst";
+import {skills} from "../skills/skills.model";
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
 export default class db {
@@ -21,7 +21,7 @@ export default class db {
         timestamps: false
       },
       operatorsAliases,
-      models: [users, addresses],
+      models: [users, addresses, skills],
     });
   }
 }

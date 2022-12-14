@@ -5,6 +5,8 @@ import {languages} from "../languages/languages.model";
 import {bios} from "../bios/bios.model";
 import {certificates} from "../certificates/certificates.model";
 import {educations} from "../educations/educations.model";
+import { phone_number } from 'src/dto/phone_number.dto';
+import { phone_numbers } from 'src/phone_numbers/phone_numbers.model';
 
 @Table
 export class users extends Model {
@@ -92,5 +94,9 @@ export class users extends Model {
 
   @HasMany(() => educations)
   educations: educations[];
+
+  @HasMany(() => phone_numbers)
+  phone_numbers: phone_numbers[];
+
 
 }

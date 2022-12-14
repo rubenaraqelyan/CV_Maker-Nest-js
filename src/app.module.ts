@@ -10,7 +10,8 @@ import { join } from 'path';
 import { AuthService } from './middlewares/auth.service';
 import { UsersModule } from './users/users.module';
 import { AddressesModule } from './addresses/addresses.module';
-import { SkillsModule } from './skills/skills.module';
+import { SkillsModule } from './skills/skills.module';import { LanguagesModule } from './languages/languages.module';
+import { BiosModule } from './bios/bios.module';
 import db from './database/initialize-sql';
 
 @Module({
@@ -24,6 +25,8 @@ import db from './database/initialize-sql';
     UsersModule,
     AddressesModule,
     SkillsModule,
+    LanguagesModule,
+    BiosModule,
   ],
   providers: [],
 })

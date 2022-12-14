@@ -1,17 +1,17 @@
 import {response} from "./main";
 
-const createSkillBody = {
+const createBioBody = {
   schema: {
     properties: {
-      skill: {
+      bio: {
         type: "string"
       }
     }
   }
 };
 
-const createSkillResponse = {
-  description: "Create address",
+const createBioResponse = {
+  description: "Create bio",
   schema: {
     properties: {
       ...response,
@@ -24,7 +24,7 @@ const createSkillResponse = {
           user_id: {
             type: "string"
           },
-          skill: {
+          bio: {
             type: "string"
           }
         },
@@ -33,8 +33,8 @@ const createSkillResponse = {
   }
 };
 
-const getSkillResponse = {
-  description: "Get address",
+const getBioResponse = {
+  description: "Get bios",
   schema: {
     properties: {
       ...response,
@@ -49,7 +49,7 @@ const getSkillResponse = {
             user_id: {
               type: "string"
             },
-            skill: {
+            bio: {
               type: "string"
             }
           },
@@ -60,7 +60,7 @@ const getSkillResponse = {
 };
 
 export {
-  createSkillBody,
-  createSkillResponse,
-  getSkillResponse,
+  createBioBody,
+  createBioResponse,
+  getBioResponse
 }

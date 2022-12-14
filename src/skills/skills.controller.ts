@@ -3,7 +3,7 @@ import {ApiBody, ApiHeader, ApiParam, ApiResponse, ApiTags} from "@nestjs/swagge
 import {SkillsService} from "./skills.service";
 import {RequestType, uuId} from "../dto/main.dto";
 import {xAuthorization} from "../swagger/main";
-import {createSkillBody, createSkillResponse} from "../swagger/skills";
+import {createSkillBody, createSkillResponse, getSkillResponse} from "../swagger/skills";
 import {skill} from "../dto/skills.dto";
 import {createAddressResponse} from "../swagger/addresses";
 
@@ -16,12 +16,25 @@ export class SkillsController {
   @ApiHeader(xAuthorization)
   @ApiResponse(createSkillResponse)
   @ApiBody(createSkillBody)
-  async getList(@Req() req: RequestType, @Body() body: skill){
+  async create(@Req() req: RequestType, @Body() body: skill){
     const {id} = req.user;
     const data = await this.skillsService.create(id, body);
     return {
       status: 'success',
       message: 'Skill success created',
+      data
+    }
+  }
+
+  @Get('/')
+  @ApiHeader(xAuthorization)
+  @ApiResponse(getSkillResponse)
+  async getList(@Req() req: RequestType){
+    const {id} = req.user;
+    const data = await this.skillsService.getList(id);
+    return {
+      status: 'success',
+      message: 'Skills list',
       data
     }
   }

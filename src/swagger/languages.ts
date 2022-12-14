@@ -1,17 +1,20 @@
 import {response} from "./main";
 
-const createSkillBody = {
+const createLanguageBody = {
   schema: {
     properties: {
-      skill: {
+      language: {
+        type: "string"
+      } ,
+      level: {
         type: "string"
       }
     }
   }
 };
 
-const createSkillResponse = {
-  description: "Create address",
+const createLanguageResponse = {
+  description: "Create language",
   schema: {
     properties: {
       ...response,
@@ -24,7 +27,10 @@ const createSkillResponse = {
           user_id: {
             type: "string"
           },
-          skill: {
+          language: {
+            type: "string"
+          },
+          level: {
             type: "string"
           }
         },
@@ -33,8 +39,8 @@ const createSkillResponse = {
   }
 };
 
-const getSkillResponse = {
-  description: "Get address",
+const getLanguageResponse = {
+  description: "Get languages",
   schema: {
     properties: {
       ...response,
@@ -49,7 +55,10 @@ const getSkillResponse = {
             user_id: {
               type: "string"
             },
-            skill: {
+            language: {
+              type: "string"
+            },
+            level: {
               type: "string"
             }
           },
@@ -60,7 +69,7 @@ const getSkillResponse = {
 };
 
 export {
-  createSkillBody,
-  createSkillResponse,
-  getSkillResponse,
+  createLanguageBody,
+  createLanguageResponse,
+  getLanguageResponse
 }

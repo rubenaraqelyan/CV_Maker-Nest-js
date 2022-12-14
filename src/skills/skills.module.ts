@@ -8,6 +8,5 @@ import {SkillsController} from "./skills.controller";
   imports: [SequelizeModule.forFeature([skills])],
   providers: [SkillsService],
   controllers: [SkillsController],
-  exports: [SkillsService],
 })
 export class SkillsModule {}

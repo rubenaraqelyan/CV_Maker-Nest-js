@@ -13,7 +13,7 @@ export class SkillsService {
   }
   async getById(user_id, id) {
     const data = await this.Skills.findOne({where: {user_id, id}});
-    if (!data) throw new HttpException('Address not found', HttpStatus.NOT_FOUND)
+    if (!data) throw new HttpException('Skill not found', HttpStatus.NOT_FOUND)
     return data;
   }
   async getList(user_id) {

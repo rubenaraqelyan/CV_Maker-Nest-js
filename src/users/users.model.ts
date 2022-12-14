@@ -1,6 +1,8 @@
 import {Table, Column, Model, DataType, HasMany, BelongsTo} from 'sequelize-typescript';
 import {addresses} from "../addresses/addresses.model";
 import {skills} from "../skills/skills.model";
+import {languages} from "../languages/languages.model";
+import {bios} from "../bios/bios.model";
 
 @Table
 export class users extends Model {
@@ -76,5 +78,11 @@ export class users extends Model {
 
   @HasMany(() => skills)
   skills: skills[];
+
+  @HasMany(() => languages)
+  languages: languages[];
+
+  @HasMany(() => bios)
+  bios: bios[];
 
 }

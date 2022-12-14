@@ -40,4 +40,37 @@ declare const createPhoneNumberResponse: {
         };
     };
 };
-export { createPhoneNumberBody, createPhoneNumberResponse };
+declare const getPhoneNumbersResponse: {
+    description: string;
+    schema: {
+        properties: {
+            data: {
+                type: string;
+                items: {
+                    type: string;
+                    properties: {
+                        id: {
+                            type: string;
+                        };
+                        code: {
+                            type: string;
+                        };
+                        phone_number: {
+                            type: string;
+                        };
+                        user_id: {
+                            type: string;
+                        };
+                    };
+                };
+            };
+            status: {
+                type: string;
+            };
+            message: {
+                type: string;
+            };
+        };
+    };
+};
+export { createPhoneNumberBody, createPhoneNumberResponse, getPhoneNumbersResponse };

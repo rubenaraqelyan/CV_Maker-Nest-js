@@ -24,6 +24,9 @@ let PhoneNumbersService = class PhoneNumbersService {
         data.user_id = id;
         return this.PhoneNumbers.create(data);
     }
+    async getList(user_id) {
+        return this.PhoneNumbers.findAll({ where: { user_id } });
+    }
 };
 PhoneNumbersService = __decorate([
     (0, common_1.Injectable)(),

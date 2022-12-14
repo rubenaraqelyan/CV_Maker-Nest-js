@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { ApiBody, ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RequestType } from 'src/dto/main.dto';
 import { phone_number } from 'src/dto/phone_number.dto';
@@ -7,6 +7,7 @@ import { xAuthorization } from '../swagger/main';
 import {
   createPhoneNumberBody,
   createPhoneNumberResponse,
+  getPhoneNumbersResponse,
 } from 'src/swagger/phone_numbers';
 
 @ApiTags('phone number')
@@ -24,6 +25,19 @@ export class PhoneNumbersController {
     return {
       status: 'success',
       message: 'Phone number has been created successfully',
+      data,
+    };
+  }
+
+  @Get('/')
+  @ApiHeader(xAuthorization)
+  @ApiResponse(getPhoneNumbersResponse)
+  async getList(@Req() req: RequestType) {
+    const { id } = req.user;
+    const data = await this.phoneNumbersService.getList(id);
+    return {
+      status: 'success',
+      message: 'Phone number list',
       data,
     };
   }

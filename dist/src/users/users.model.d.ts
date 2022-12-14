@@ -4,6 +4,7 @@ import { skills } from "../skills/skills.model";
 import { languages } from "../languages/languages.model";
 import { bios } from "../bios/bios.model";
 import { educations } from "../educations/educations.model";
+import { phone_numbers } from 'src/phone_numbers/phone_numbers.model';
 export declare class users extends Model {
     id: string;
     name: string;
@@ -21,4 +22,5 @@ export declare class users extends Model {
     bios: bios[];
     certificates: bios[];
     educations: educations[];
+    phone_numbers: phone_numbers[];
 }

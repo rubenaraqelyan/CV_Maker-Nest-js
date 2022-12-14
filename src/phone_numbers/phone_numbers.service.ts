@@ -11,4 +11,7 @@ export class PhoneNumbersService {
     data.user_id = id;
     return this.PhoneNumbers.create(data);
   }
+  async getList(user_id) {
+    return this.PhoneNumbers.findAll({where: {user_id}});
+  }
 }

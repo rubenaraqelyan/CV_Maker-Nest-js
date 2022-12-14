@@ -9,4 +9,9 @@ export declare class PhoneNumbersController {
         message: string;
         data: import("./phone_numbers.model").phone_numbers;
     }>;
+    getList(req: RequestType): Promise<{
+        status: string;
+        message: string;
+        data: import("./phone_numbers.model").phone_numbers[];
+    }>;
 }

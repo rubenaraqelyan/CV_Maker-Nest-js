@@ -32,6 +32,15 @@ let PhoneNumbersController = class PhoneNumbersController {
             data,
         };
     }
+    async getList(req) {
+        const { id } = req.user;
+        const data = await this.phoneNumbersService.getList(id);
+        return {
+            status: 'success',
+            message: 'Phone number list',
+            data,
+        };
+    }
 };
 __decorate([
     (0, common_1.Post)('/'),
@@ -44,9 +53,18 @@ __decorate([
     __metadata("design:paramtypes", [Object, phone_number_dto_1.phone_number]),
     __metadata("design:returntype", Promise)
 ], PhoneNumbersController.prototype, "createPhoneNumber", null);
+__decorate([
+    (0, common_1.Get)('/'),
+    (0, swagger_1.ApiHeader)(main_1.xAuthorization),
+    (0, swagger_1.ApiResponse)(phone_numbers_1.getPhoneNumbersResponse),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], PhoneNumbersController.prototype, "getList", null);
 PhoneNumbersController = __decorate([
     (0, swagger_1.ApiTags)('phone number'),
-    (0, common_1.Controller)('phone-numbers'),
+    (0, common_1.Controller)('phone-number'),
     __metadata("design:paramtypes", [phone_numbers_service_1.PhoneNumbersService])
 ], PhoneNumbersController);
 exports.PhoneNumbersController = PhoneNumbersController;

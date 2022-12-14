@@ -17,6 +17,7 @@ const languages_model_1 = require("../languages/languages.model");
 const bios_model_1 = require("../bios/bios.model");
 const certificates_model_1 = require("../certificates/certificates.model");
 const educations_model_1 = require("../educations/educations.model");
+const phone_numbers_model_1 = require("../phone_numbers/phone_numbers.model");
 let users = class users extends sequelize_typescript_1.Model {
     get socials() {
         return JSON.parse(this.getDataValue("socials"));
@@ -120,6 +121,10 @@ __decorate([
     (0, sequelize_typescript_1.HasMany)(() => educations_model_1.educations),
     __metadata("design:type", Array)
 ], users.prototype, "educations", void 0);
+__decorate([
+    (0, sequelize_typescript_1.HasMany)(() => phone_numbers_model_1.phone_numbers),
+    __metadata("design:type", Array)
+], users.prototype, "phone_numbers", void 0);
 users = __decorate([
     sequelize_typescript_1.Table
 ], users);

@@ -1,15 +1,17 @@
 import {
   Body,
   Controller,
-  Get, Header,
+  Get,
   Param,
   Post,
   Put,
   Req,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
-import {ApiBody, ApiHeader, ApiOperation, ApiParam, ApiProperty, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBody, ApiConsumes, ApiHeader, ApiParam, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {UsersService} from './users.service';
-import {Type} from 'class-transformer';
+
 import {
   acceptCodeForgotPassword,
   forgotPassword,
@@ -27,15 +29,18 @@ import {
   signUpBody,
   signUpResponse,
   updateBody, updatePasswordBody,
-  updateResponse, verifyUserResponse
+  updateResponse, uploadAvatarBody, verifyUserResponse
 } from "../swagger/users";
 import {RequestType} from "../dto/main.dto";
 import {emptyResponse, xAuthorization} from "../swagger/main";
+import {AnyFilesInterceptor, FileFieldsInterceptor, FileInterceptor, FilesInterceptor} from "@nestjs/platform-express";
+
 @ApiTags('user')
 @Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {
   }
+
   @Post('/sign-up')
   @ApiBody(signUpBody)
   @ApiResponse(signUpResponse)
@@ -47,6 +52,7 @@ export class UsersController {
       data
     }
   }
+
   @Post('/sign-in')
   @ApiBody(signInBody)
   @ApiResponse(signInResponse)
@@ -60,6 +66,7 @@ export class UsersController {
       token,
     };
   }
+
   @Get('/me')
   @ApiHeader(xAuthorization)
   @ApiResponse(getMeResponse)
@@ -72,6 +79,7 @@ export class UsersController {
       data,
     };
   }
+
   @Put('/')
   @ApiBody(updateBody)
   @ApiResponse(updateResponse)
@@ -85,6 +93,7 @@ export class UsersController {
       data,
     };
   }
+
   @Put('/password')
   @ApiBody(updatePasswordBody)
   @ApiResponse(emptyResponse('User response'))
@@ -97,6 +106,7 @@ export class UsersController {
       message: 'Password successfully updated',
     };
   }
+
   @Put('/email-verify/:token')
   @ApiParam({
     name: 'token',
@@ -112,6 +122,7 @@ export class UsersController {
       data
     };
   }
+
   @Post('/forgot-password')
   @ApiBody(forgotPasswordBody)
   @ApiResponse(emptyResponse('User response'))
@@ -122,6 +133,7 @@ export class UsersController {
       message: 'Verification code sent to your email',
     };
   }
+
   @Put('/accept-forgot-password')
   @ApiBody(acceptCodeForgotPasswordBody)
   @ApiResponse(emptyResponse('User response'))
@@ -132,4 +144,23 @@ export class UsersController {
       message: 'Password changed',
     };
   }
+
+  @ApiHeader(xAuthorization)
+  @ApiConsumes("multipart/form-data")
+  @ApiBody(uploadAvatarBody)
+  @Post('/avatar')
+  // @UseInterceptors(AnyFilesInterceptor())
+  // uploadFile(@UploadedFiles() files: Array<Express.Multer.File>) {
+  //   console.log(files);
+  // }
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadAvatar(@Req() req: RequestType, @UploadedFile() file: Express.Multer.File) {
+    const {id} = req.user;
+    await this.usersService.uploadAvatar(id, file);
+    return {
+      status: 'success',
+      message: 'Avatar success uploaded',
+    };
+  }
+
 }

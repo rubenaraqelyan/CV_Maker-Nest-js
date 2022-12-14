@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+
 const Op = Sequelize.Op;
 const operatorsAliases = {
   $eq: Op.eq,
@@ -37,4 +38,14 @@ const operatorsAliases = {
   $col: Op.col,
 };
 
-export { operatorsAliases };
+const imageMimeTypes = {
+  'image/jpeg': '.jpg',
+  'image/gif': '.gif',
+  'image/png': '.png',
+  'image/webp': '.webp',
+  'image/avif': '.avif',
+  'image/tiff': '.tiff',
+  "image/heif": ".heif",
+}
+
+export {operatorsAliases, imageMimeTypes};

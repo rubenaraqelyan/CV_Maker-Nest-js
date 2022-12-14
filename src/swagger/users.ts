@@ -282,6 +282,18 @@ const acceptCodeForgotPasswordBody = {
   }
 };
 
+const uploadAvatarBody = {
+  schema: {
+    type: 'object',
+      properties: {
+      file: {
+        type: 'string',
+          format: 'binary',
+      },
+    },
+  },
+};
+
 export {
   signUpBody,
   signUpResponse,
@@ -293,5 +305,6 @@ export {
   verifyUserResponse,
   updatePasswordBody,
   forgotPasswordBody,
-  acceptCodeForgotPasswordBody
+  acceptCodeForgotPasswordBody,
+  uploadAvatarBody
 }

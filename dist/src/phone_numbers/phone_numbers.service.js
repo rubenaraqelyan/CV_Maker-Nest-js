@@ -27,6 +27,16 @@ let PhoneNumbersService = class PhoneNumbersService {
     async getList(user_id) {
         return this.PhoneNumbers.findAll({ where: { user_id } });
     }
+    async getById(user_id, id) {
+        const data = await this.PhoneNumbers.findOne({ where: { user_id, id } });
+        if (!data)
+            throw new common_1.HttpException('Skill not found', common_1.HttpStatus.NOT_FOUND);
+        return data;
+    }
+    async update(user_id, id, dataUpdate) {
+        await this.PhoneNumbers.update(dataUpdate, { where: { user_id, id } });
+        return this.getById(user_id, id);
+    }
 };
 PhoneNumbersService = __decorate([
     (0, common_1.Injectable)(),

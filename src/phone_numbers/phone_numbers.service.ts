@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectSqlModel } from 'src/database/inject-model-sql';
 import { phone_numbers } from './phone_numbers.model';
 
@@ -14,4 +14,14 @@ export class PhoneNumbersService {
   async getList(user_id) {
     return this.PhoneNumbers.findAll({where: {user_id}});
   }
+  async getById(user_id, id) {
+    const data = await this.PhoneNumbers.findOne({where: {user_id, id}});
+    if (!data) throw new HttpException('Skill not found', HttpStatus.NOT_FOUND)
+    return data;
+  }
+  async update(user_id, id, dataUpdate) {
+    await this.PhoneNumbers.update(dataUpdate,{where: {user_id, id}});
+    return this.getById(user_id, id);
+  }
+
 }

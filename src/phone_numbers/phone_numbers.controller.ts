@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
-import { ApiBody, ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { RequestType } from 'src/dto/main.dto';
+import { Body, Controller, Get, Param, Post, Put, Req } from '@nestjs/common';
+import { ApiBody, ApiHeader, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { RequestType, uuId } from 'src/dto/main.dto';
 import { phone_number } from 'src/dto/phone_number.dto';
 import { PhoneNumbersService } from './phone_numbers.service';
 import { xAuthorization } from '../swagger/main';
@@ -40,5 +40,24 @@ export class PhoneNumbersController {
       message: 'Phone number list',
       data,
     };
+  }
+
+  @Put('/:id')
+  @ApiHeader(xAuthorization)
+  @ApiResponse(createPhoneNumberResponse)
+  @ApiBody(createPhoneNumberBody)
+  @ApiParam({
+    name: 'id',
+    type: 'string'
+  })
+  async update(@Req() req: RequestType, @Param() param: uuId, @Body() body: phone_number){
+    const {id: user_id} = req.user;
+    const {id} = param;
+    const data = await this.phoneNumbersService.update(user_id, id, body);
+    return {
+      status: 'success',
+      message: 'Phone number has been updated successfully',
+      data
+    }
   }
 }

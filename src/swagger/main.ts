@@ -13,7 +13,17 @@ const xAuthorization = {
   required: true
 }
 
+const emptyResponse = (description: string) => ({
+  description: description,
+  schema: {
+    properties: {
+      ...response,
+    }
+  }
+});
+
 export {
   response,
-  xAuthorization
+  emptyResponse,
+  xAuthorization,
 }

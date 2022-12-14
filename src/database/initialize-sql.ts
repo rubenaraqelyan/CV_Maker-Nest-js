@@ -3,9 +3,10 @@ import { users } from '../users/users.model';
 import { addresses } from '../addresses/addresses.model';
 import {skills} from "../skills/skills.model";
 import {languages} from "../languages/languages.model";
-import * as process from 'process';
-import {operatorsAliases} from "../utils/constanst";
 import {bios} from "../bios/bios.model";
+import {certificates} from "../certificates/certificates.model";
+import {educations} from "../educations/educations.model";
+import {operatorsAliases} from "../utils/constanst";
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
 export default class db {
@@ -23,7 +24,15 @@ export default class db {
         timestamps: false
       },
       operatorsAliases,
-      models: [users, addresses, skills, languages, bios],
+      models: [
+        users,
+        addresses,
+        skills,
+        languages,
+        bios,
+        certificates,
+        educations
+      ],
     });
   }
 }

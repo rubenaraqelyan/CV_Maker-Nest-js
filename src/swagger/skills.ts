@@ -11,7 +11,7 @@ const createSkillBody = {
 };
 
 const createSkillResponse = {
-  description: "Create address",
+  description: "Skill response",
   schema: {
     properties: {
       ...response,
@@ -34,7 +34,7 @@ const createSkillResponse = {
 };
 
 const getSkillResponse = {
-  description: "Get address",
+  description: "Skill response",
   schema: {
     properties: {
       ...response,

@@ -2,7 +2,7 @@ import {Body, Controller, Delete, Get, Param, Post, Put, Req} from '@nestjs/comm
 import {ApiBody, ApiHeader, ApiParam, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {AddressesService} from "./addresses.service";
 import {RequestType, uuId} from "../dto/main.dto";
-import {createAddressBody, createAddressResponse} from "../swagger/addresses";
+import {createAddressBody, createAddressResponse, getAddressesResponse} from "../swagger/addresses";
 import {address} from "../dto/address.dto";
 import {xAuthorization} from "../swagger/main";
 
@@ -13,7 +13,7 @@ export class AddressesController {
 
   @Get('/')
   @ApiHeader(xAuthorization)
-  @ApiResponse(createAddressResponse)
+  @ApiResponse(getAddressesResponse)
   async getList(@Req() req: RequestType){
     const {id} = req.user;
     const data = await this.addressesService.getList(id);
@@ -25,8 +25,8 @@ export class AddressesController {
   }
 
   @Post('/')
-  @ApiBody(createAddressBody)
   @ApiHeader(xAuthorization)
+  @ApiBody(createAddressBody)
   @ApiResponse(createAddressResponse)
   async create(@Req() req: RequestType, @Body() body: address){
     const {id} = req.user;
@@ -34,6 +34,24 @@ export class AddressesController {
     return {
       status: 'success',
       message: 'Address success created',
+      data
+    }
+  }
+
+  @Get('/:id')
+  @ApiHeader(xAuthorization)
+  @ApiResponse(createAddressResponse)
+  @ApiParam({
+    name: 'id',
+    type: 'string'
+  })
+  async getById(@Req() req: RequestType, @Param() param: uuId){
+    const {id: user_id} = req.user;
+    const {id} = param;
+    const data = await this.addressesService.getById(user_id, id);
+    return {
+      status: 'success',
+      message: 'Get address',
       data
     }
   }
@@ -53,23 +71,6 @@ export class AddressesController {
     return {
       status: 'success',
       message: 'Address success updated',
-      data
-    }
-  }
-  @Get('/:id')
-  @ApiHeader(xAuthorization)
-  @ApiResponse(createAddressResponse)
-  @ApiParam({
-    name: 'id',
-    type: 'string'
-  })
-  async getById(@Req() req: RequestType, @Param() param: uuId){
-    const {id: user_id} = req.user;
-    const {id} = param;
-    const data = await this.addressesService.getById(user_id, id);
-    return {
-      status: 'success',
-      message: 'Get address',
       data
     }
   }

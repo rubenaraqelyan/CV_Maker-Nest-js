@@ -20,9 +20,14 @@ export class LanguagesService {
   async getList(user_id) {
     return this.Languages.findAll({where: {user_id}});
   }
+
+  async update(user_id, id, dataUpdate) {
+    await this.Languages.update(dataUpdate,{where: {user_id, id}});
+    return this.getById(user_id, id);
+  }
+
   async destroy(user_id, id) {
     const data = await this.getById(user_id, id);
-    if (!data) throw new HttpException('Language not found', HttpStatus.NOT_FOUND)
     await this.Languages.destroy({where: {user_id, id}});
     return data;
   }

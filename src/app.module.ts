@@ -12,6 +12,8 @@ import { UsersModule } from './users/users.module';
 import { AddressesModule } from './addresses/addresses.module';
 import { SkillsModule } from './skills/skills.module';import { LanguagesModule } from './languages/languages.module';
 import { BiosModule } from './bios/bios.module';
+import { CertificatesModule } from './certificates/certificates.module';
+import { EducationsModule } from './educations/educations.module';
 import db from './database/initialize-sql';
 
 @Module({
@@ -27,8 +29,9 @@ import db from './database/initialize-sql';
     SkillsModule,
     LanguagesModule,
     BiosModule,
+    CertificatesModule,
+    EducationsModule,
   ],
-  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -40,7 +43,6 @@ export class AppModule implements NestModule {
         { path: '/api/user/forgot-password', method: RequestMethod.POST },
         { path: '/api/user/accept-forgot-password', method: RequestMethod.PUT },
         { path: '/api/user/email-verify/:token', method: RequestMethod.PUT },
-      )
-      .forRoutes('*');
+      ).forRoutes('*');
   }
 }

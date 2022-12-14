@@ -19,18 +19,18 @@ import {
   UserLoginDto
 } from '../dto/user.dto';
 import {
-  acceptCodeForgotPasswordBody, acceptCodeForgotPasswordResponse,
-  forgotPasswordBody, forgotPasswordResponse,
+  acceptCodeForgotPasswordBody,
+  forgotPasswordBody,
   getMeResponse,
   signInBody,
   signInResponse,
   signUpBody,
   signUpResponse,
-  updateBody, updatePasswordBody, updatePasswordResponse,
+  updateBody, updatePasswordBody,
   updateResponse, verifyUserResponse
 } from "../swagger/users";
 import {RequestType} from "../dto/main.dto";
-import {xAuthorization} from "../swagger/main";
+import {emptyResponse, xAuthorization} from "../swagger/main";
 @ApiTags('user')
 @Controller('user')
 export class UsersController {
@@ -87,7 +87,7 @@ export class UsersController {
   }
   @Put('/password')
   @ApiBody(updatePasswordBody)
-  @ApiResponse(updatePasswordResponse)
+  @ApiResponse(emptyResponse('User response'))
   @ApiHeader(xAuthorization)
   async updatePassword(@Req() req: RequestType, @Body() body: updatePassword) {
     const {id} = req.user;
@@ -114,7 +114,7 @@ export class UsersController {
   }
   @Post('/forgot-password')
   @ApiBody(forgotPasswordBody)
-  @ApiResponse(forgotPasswordResponse)
+  @ApiResponse(emptyResponse('User response'))
   async forgotPassword(@Req() req: RequestType, @Body() body: forgotPassword) {
     await this.usersService.sendForgotCodeToEmail(body.email);
     return {
@@ -124,7 +124,7 @@ export class UsersController {
   }
   @Put('/accept-forgot-password')
   @ApiBody(acceptCodeForgotPasswordBody)
-  @ApiResponse(acceptCodeForgotPasswordResponse)
+  @ApiResponse(emptyResponse('User response'))
   async acceptCodeForgotPassword(@Req() req: RequestType, @Body() body: acceptCodeForgotPassword) {
     await this.usersService.acceptCodeForgotPassword(body);
     return {

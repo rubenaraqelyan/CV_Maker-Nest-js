@@ -1,17 +1,24 @@
 import {response} from "./main";
 
-const createBioBody = {
+const createCertificateBody = {
+  description: "Certificate body",
   schema: {
     properties: {
-      bio: {
+      name: {
+        type: "string"
+      } ,
+      url: {
+        type: "string"
+      },
+      expaire_date: {
         type: "string"
       }
     }
   }
 };
 
-const createBioResponse = {
-  description: "Bios response",
+const createCertificateResponse = {
+  description: "Certificate response",
   schema: {
     properties: {
       ...response,
@@ -24,17 +31,23 @@ const createBioResponse = {
           user_id: {
             type: "string"
           },
-          bio: {
+          name: {
+            type: "string"
+          } ,
+          url: {
+            type: "string"
+          },
+          expaire_date: {
             type: "string"
           }
-        },
+        }
       }
     }
   }
 };
 
-const getBioResponse = {
-  description: "Bios response",
+const getCertificateResponse = {
+  description: "Certificates response",
   schema: {
     properties: {
       ...response,
@@ -49,7 +62,13 @@ const getBioResponse = {
             user_id: {
               type: "string"
             },
-            bio: {
+            name: {
+              type: "string"
+            } ,
+            url: {
+              type: "string"
+            },
+            expaire_date: {
               type: "string"
             }
           },
@@ -60,7 +79,7 @@ const getBioResponse = {
 };
 
 export {
-  createBioBody,
-  createBioResponse,
-  getBioResponse
+  createCertificateBody,
+  createCertificateResponse,
+  getCertificateResponse
 }

@@ -14,7 +14,7 @@ const createLanguageBody = {
 };
 
 const createLanguageResponse = {
-  description: "Create language",
+  description: "Language response",
   schema: {
     properties: {
       ...response,
@@ -40,7 +40,7 @@ const createLanguageResponse = {
 };
 
 const getLanguageResponse = {
-  description: "Get languages",
+  description: "Languages response",
   schema: {
     properties: {
       ...response,

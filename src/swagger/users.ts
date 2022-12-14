@@ -1,6 +1,7 @@
 import {response} from "./main";
 
 const signUpBody = {
+  description: "User body",
   schema: {
     properties: {
       name: {
@@ -34,46 +35,16 @@ const signUpBody = {
 };
 
 const signUpResponse = {
-  description: "Sign up user",
+  description: "User response",
   schema: {
     properties: {
       ...response,
-      // data: {
-      //   type: "object",
-      //   properties: {
-      //     name: {
-      //       type: "string"
-      //     },
-      //     username: {
-      //       type: "string"
-      //     },
-      //     email: {
-      //       type: "string"
-      //     },
-      //     password: {
-      //       type: "string"
-      //     },
-      //     socials: {
-      //       type: "array",
-      //       items: {
-      //         type: "object",
-      //         properties: {
-      //           name: {
-      //             type: "string"
-      //           },
-      //           url: {
-      //             type: "string"
-      //           }
-      //         }
-      //       }
-      //     }
-      //   },
-      // }
     }
   }
 };
 
 const signInBody = {
+  description: "User body",
   schema: {
     properties: {
       email: {
@@ -87,7 +58,7 @@ const signInBody = {
 };
 
 const signInResponse = {
-  description: "Sign in user",
+  description: "User response",
   schema: {
     properties: {
       ...response,
@@ -139,7 +110,7 @@ const signInResponse = {
 };
 
 const getMeResponse = {
-  description: "Get current user",
+  description: "User response",
   schema: {
     properties: {
       ...response,
@@ -188,6 +159,7 @@ const getMeResponse = {
 };
 
 const updateBody = {
+  description: "User body",
   schema: {
     properties: {
       name: {
@@ -215,7 +187,7 @@ const updateBody = {
 };
 
 const updateResponse = {
-  description: "User successfully updated",
+  description: "User response",
   schema: {
     properties: {
       ...response,
@@ -258,6 +230,7 @@ const updateResponse = {
 };
 
 const updatePasswordBody = {
+  description: "User body",
   schema: {
     properties: {
       password: {
@@ -267,16 +240,8 @@ const updatePasswordBody = {
   }
 };
 
-const updatePasswordResponse = {
-  description: "Password successfully updated",
-  schema: {
-    properties: {
-      ...response,
-    }
-  }
-};
-
 const forgotPasswordBody = {
+  description: "User body",
   schema: {
     properties: {
       email: {
@@ -287,7 +252,7 @@ const forgotPasswordBody = {
 };
 
 const verifyUserResponse = {
-  description: "User successfully verified",
+  description: "User response",
   schema: {
     properties: {
       ...response,
@@ -303,16 +268,8 @@ const verifyUserResponse = {
   }
 };
 
-const forgotPasswordResponse = {
-  description: "Verification code sent to your email",
-  schema: {
-    properties: {
-      ...response,
-    }
-  }
-};
-
 const acceptCodeForgotPasswordBody = {
+  description: "User body",
   schema: {
     properties: {
       code: {
@@ -321,15 +278,6 @@ const acceptCodeForgotPasswordBody = {
       password: {
         type: "string"
       }
-    }
-  }
-};
-
-const acceptCodeForgotPasswordResponse = {
-  description: "Password changed",
-  schema: {
-    properties: {
-      ...response,
     }
   }
 };
@@ -344,9 +292,6 @@ export {
   updateResponse,
   verifyUserResponse,
   updatePasswordBody,
-  updatePasswordResponse,
   forgotPasswordBody,
-  forgotPasswordResponse,
-  acceptCodeForgotPasswordBody,
-  acceptCodeForgotPasswordResponse
+  acceptCodeForgotPasswordBody
 }

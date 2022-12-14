@@ -20,7 +20,7 @@ const createAddressBody = {
 };
 
 const createAddressResponse = {
-  description: "Create address",
+  description: "Address response",
   schema: {
     properties: {
       ...response,
@@ -51,7 +51,45 @@ const createAddressResponse = {
   }
 };
 
+
+
+const getAddressesResponse = {
+  description: "Get addresses",
+  schema: {
+    properties: {
+      ...response,
+      data: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string"
+            },
+            user_id: {
+              type: "string"
+            },
+            address: {
+              type: "string"
+            },
+            city: {
+              type: "string"
+            },
+            country: {
+              type: "string"
+            },
+            zip: {
+              type: "string"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export {
   createAddressBody,
   createAddressResponse,
+  getAddressesResponse,
 }

@@ -1,17 +1,23 @@
 import {response} from "./main";
-
-const createBioBody = {
+const createEducationBody = {
+  description: "Education body",
   schema: {
     properties: {
-      bio: {
+      title: {
+        type: "string"
+      } ,
+      start_date: {
+        type: "string"
+      },
+      end_date: {
         type: "string"
       }
     }
   }
 };
 
-const createBioResponse = {
-  description: "Bios response",
+const createEducationResponse = {
+  description: "Education response",
   schema: {
     properties: {
       ...response,
@@ -24,17 +30,23 @@ const createBioResponse = {
           user_id: {
             type: "string"
           },
-          bio: {
+          title: {
+            type: "string"
+          } ,
+          start_date: {
+            type: "string"
+          },
+          end_date: {
             type: "string"
           }
-        },
+        }
       }
     }
   }
 };
 
-const getBioResponse = {
-  description: "Bios response",
+const getEducationResponse = {
+  description: "Education response",
   schema: {
     properties: {
       ...response,
@@ -49,7 +61,13 @@ const getBioResponse = {
             user_id: {
               type: "string"
             },
-            bio: {
+            title: {
+              type: "string"
+            } ,
+            start_date: {
+              type: "string"
+            },
+            end_date: {
               type: "string"
             }
           },
@@ -60,7 +78,7 @@ const getBioResponse = {
 };
 
 export {
-  createBioBody,
-  createBioResponse,
-  getBioResponse
+  createEducationBody,
+  createEducationResponse,
+  getEducationResponse
 }

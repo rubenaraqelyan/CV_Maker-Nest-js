@@ -1,47 +1,47 @@
 import {Body, Controller, Delete, Get, Param, Post, Put, Req} from '@nestjs/common';
 import {ApiBody, ApiHeader, ApiParam, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {CertificatesService} from "./certificates.service";
 import {xAuthorization} from "../swagger/main";
 import {RequestType, uuId} from "../dto/main.dto";
-import {BiosService} from "./bios.service";
-import {bio} from "../dto/bios.dto";
-import {createBioBody, createBioResponse, getBioResponse} from "../swagger/bios";
+import {createCertificateResponse, createCertificateBody, getCertificateResponse} from "../swagger/certificates";
+import {certificates} from "../dto/certificates.dto";
 import {skill} from "../dto/skills.dto";
 
-@ApiTags('bios')
-@Controller('bios')
-export class BiosController {
-  constructor(private readonly biosService: BiosService) {}
+@ApiTags('certificate')
+@Controller('certificate')
+export class CertificatesController {
+  constructor(private readonly certificatesService: CertificatesService) {}
 
   @Post('/')
   @ApiHeader(xAuthorization)
-  @ApiResponse(createBioResponse)
-  @ApiBody(createBioBody)
-  async create(@Req() req: RequestType, @Body() body: bio){
+  @ApiResponse(createCertificateResponse)
+  @ApiBody(createCertificateBody)
+  async create(@Req() req: RequestType, @Body() body: certificates){
     const {id} = req.user;
-    const data = await this.biosService.create(id, body);
+    const data = await this.certificatesService.create(id, body);
     return {
       status: 'success',
-      message: 'Bio success created',
+      message: 'Certificate success created',
       data
     }
   }
 
   @Get('/')
   @ApiHeader(xAuthorization)
-  @ApiResponse(getBioResponse)
+  @ApiResponse(getCertificateResponse)
   async getList(@Req() req: RequestType){
     const {id} = req.user;
-    const data = await this.biosService.getList(id);
+    const data = await this.certificatesService.getList(id);
     return {
       status: 'success',
-      message: 'Bios list',
+      message: 'Certificates list',
       data
     }
   }
 
   @Get('/:id')
   @ApiHeader(xAuthorization)
-  @ApiResponse(createBioResponse)
+  @ApiResponse(createCertificateResponse)
   @ApiParam({
     name: 'id',
     type: 'string'
@@ -49,36 +49,35 @@ export class BiosController {
   async getById(@Req() req: RequestType, @Param() param: uuId){
     const {id: user_id} = req.user;
     const {id} = param;
-    const data = await this.biosService.getById(user_id, id);
+    const data = await this.certificatesService.getById(user_id, id);
     return {
       status: 'success',
-      message: 'Get bio',
+      message: 'Get certificate',
       data
     }
   }
-
   @Put('/:id')
   @ApiHeader(xAuthorization)
-  @ApiResponse(createBioResponse)
-  @ApiBody(createBioBody)
+  @ApiResponse(createCertificateResponse)
+  @ApiBody(createCertificateBody)
   @ApiParam({
     name: 'id',
     type: 'string'
   })
-  async update(@Req() req: RequestType, @Param() param: uuId, @Body() body: bio){
+  async update(@Req() req: RequestType, @Param() param: uuId, @Body() body: certificates){
     const {id: user_id} = req.user;
     const {id} = param;
-    const data = await this.biosService.update(user_id, id, body);
+    const data = await this.certificatesService.update(user_id, id, body);
     return {
       status: 'success',
-      message: 'Bio success updated',
+      message: 'Certificate success updated',
       data
     }
   }
 
   @Delete('/:id')
   @ApiHeader(xAuthorization)
-  @ApiResponse(createBioResponse)
+  @ApiResponse(createCertificateResponse)
   @ApiParam({
     name: 'id',
     type: 'string'
@@ -86,10 +85,10 @@ export class BiosController {
   async destroy(@Req() req: RequestType, @Param() param: uuId){
     const {id: user_id} = req.user;
     const {id} = param;
-    const data = await this.biosService.destroy(user_id, id);
+    const data = await this.certificatesService.destroy(user_id, id);
     return {
       status: 'success',
-      message: 'Bio success deleted',
+      message: 'Certificate success deleted',
       data
     }
   }

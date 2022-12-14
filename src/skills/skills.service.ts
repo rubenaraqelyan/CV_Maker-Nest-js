@@ -19,10 +19,17 @@ export class SkillsService {
   async getList(user_id) {
     return this.Skills.findAll({where: {user_id}});
   }
+
+  async update(user_id, id, dataUpdate) {
+    await this.Skills.update(dataUpdate,{where: {user_id, id}});
+    return this.getById(user_id, id);
+  }
+
   async destroy(user_id, id) {
     const data = await this.getById(user_id, id);
-    if (!data) throw new HttpException('Skill not found', HttpStatus.NOT_FOUND)
     await this.Skills.destroy({where: {user_id, id}});
     return data;
   }
+
+
 }

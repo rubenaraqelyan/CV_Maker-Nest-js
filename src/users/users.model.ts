@@ -3,6 +3,8 @@ import {addresses} from "../addresses/addresses.model";
 import {skills} from "../skills/skills.model";
 import {languages} from "../languages/languages.model";
 import {bios} from "../bios/bios.model";
+import {certificates} from "../certificates/certificates.model";
+import {educations} from "../educations/educations.model";
 
 @Table
 export class users extends Model {
@@ -84,5 +86,11 @@ export class users extends Model {
 
   @HasMany(() => bios)
   bios: bios[];
+
+  @HasMany(() => certificates)
+  certificates: bios[];
+
+  @HasMany(() => educations)
+  educations: educations[];
 
 }

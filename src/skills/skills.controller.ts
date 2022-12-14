@@ -6,6 +6,7 @@ import {xAuthorization} from "../swagger/main";
 import {createSkillBody, createSkillResponse, getSkillResponse} from "../swagger/skills";
 import {skill} from "../dto/skills.dto";
 import {createAddressResponse} from "../swagger/addresses";
+import {createLanguageResponse} from "../swagger/languages";
 
 @ApiTags('skill')
 @Controller('skill')
@@ -35,6 +36,43 @@ export class SkillsController {
     return {
       status: 'success',
       message: 'Skills list',
+      data
+    }
+  }
+
+  @Get('/:id')
+  @ApiHeader(xAuthorization)
+  @ApiResponse(createSkillResponse)
+  @ApiParam({
+    name: 'id',
+    type: 'string'
+  })
+  async getById(@Req() req: RequestType, @Param() param: uuId){
+    const {id: user_id} = req.user;
+    const {id} = param;
+    const data = await this.skillsService.getById(user_id, id);
+    return {
+      status: 'success',
+      message: 'Get skill',
+      data
+    }
+  }
+
+  @Put('/:id')
+  @ApiHeader(xAuthorization)
+  @ApiResponse(createSkillResponse)
+  @ApiBody(createSkillBody)
+  @ApiParam({
+    name: 'id',
+    type: 'string'
+  })
+  async update(@Req() req: RequestType, @Param() param: uuId, @Body() body: skill){
+    const {id: user_id} = req.user;
+    const {id} = param;
+    const data = await this.skillsService.update(user_id, id, body);
+    return {
+      status: 'success',
+      message: 'Skill success updated',
       data
     }
   }

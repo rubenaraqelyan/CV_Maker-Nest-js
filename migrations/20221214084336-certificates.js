@@ -1,11 +1,12 @@
 'use strict';
 
+const sequelize = require("sequelize");
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.createTable('bios', {
+      await queryInterface.createTable('certificates', {
         id: {
           type: Sequelize.UUID,
           defaultValue: Sequelize.UUIDV4,
@@ -22,9 +23,18 @@ module.exports = {
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         },
-        bio: {
+        name: {
           type: Sequelize.STRING(255),
           allowNull: false,
+        },
+        url: {
+          type: Sequelize.STRING(255),
+          allowNull: false,
+        },
+        expaire_date: {
+          type: "TIMESTAMP",
+          defaultValue: null,
+          allowNull: true,
         },
         created_at: {
           type: "TIMESTAMP",
@@ -52,7 +62,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.dropTable('bios', { transaction });
+      await queryInterface.dropTable('certificates', { transaction });
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
@@ -60,3 +70,4 @@ module.exports = {
     }
   }
 };
+

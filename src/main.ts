@@ -6,6 +6,8 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import * as session from 'express-session';
+import * as passport from 'passport';
 import * as packageJson from '../package.json';
 import { join } from 'path';
 const SWAGGER_URL = 'api/docs';
@@ -16,7 +18,6 @@ async function bootstrap() {
   });
   app.setGlobalPrefix('api');
   app.useStaticAssets(join(__dirname, '..', '..', 'public'));
-  app.useStaticAssets(join(__dirname, '..', '..', './dist', 'public'));
   app.useStaticAssets(join(__dirname, '..', '..', 'web'));
   const config = new DocumentBuilder()
     .setTitle('Generate CV')
@@ -25,6 +26,20 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(SWAGGER_URL, app, document);
+
+  app.use(
+    session({
+      secret: 'asiodasjoddjdoasddasoidjasiodasdjaiodd',
+      saveUninitialized: false,
+      resave: false,
+      cookie: {
+        maxAge: 60000,
+      },
+    }),
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,

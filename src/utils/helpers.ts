@@ -21,7 +21,7 @@ const validateImage = (file) => {
 const writeImage = (fileName: string, file: File) => {
   const extension = validateImage(file);
   const folderName = 'avatars';
-  const direction = path.join(__dirname, '..', '..', 'public', folderName);
+  const direction = path.resolve('public', folderName);
   if (!fs.existsSync(direction)) {
     fs.mkdirSync(direction, {recursive: true});
   }

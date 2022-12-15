@@ -283,6 +283,7 @@ const acceptCodeForgotPasswordBody = {
 };
 
 const uploadAvatarBody = {
+  description: "User response",
   schema: {
     type: 'object',
       properties: {
@@ -292,6 +293,23 @@ const uploadAvatarBody = {
       },
     },
   },
+};
+
+const uploadAvatarResponse = {
+  description: "User response",
+  schema: {
+    properties: {
+      ...response,
+      data: {
+        type: "object",
+        properties: {
+          image: {
+            type: "string"
+          }
+        }
+      }
+    }
+  }
 };
 
 export {
@@ -306,5 +324,6 @@ export {
   updatePasswordBody,
   forgotPasswordBody,
   acceptCodeForgotPasswordBody,
-  uploadAvatarBody
+  uploadAvatarBody,
+  uploadAvatarResponse
 }

@@ -29,17 +29,16 @@ import {
   signUpBody,
   signUpResponse,
   updateBody, updatePasswordBody,
-  updateResponse, uploadAvatarBody, verifyUserResponse
+  updateResponse, uploadAvatarBody, uploadAvatarResponse, verifyUserResponse
 } from "../swagger/users";
 import {RequestType} from "../dto/main.dto";
 import {emptyResponse, xAuthorization} from "../swagger/main";
-import {AnyFilesInterceptor, FileFieldsInterceptor, FileInterceptor, FilesInterceptor} from "@nestjs/platform-express";
+import {FileInterceptor} from "@nestjs/platform-express";
 
 @ApiTags('Users')
 @Controller('user')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {
-  }
+  constructor(private readonly usersService: UsersService) {}
 
   @Post('/sign-up')
   @ApiBody(signUpBody)
@@ -148,6 +147,7 @@ export class UsersController {
   @ApiHeader(xAuthorization)
   @ApiConsumes("multipart/form-data")
   @ApiBody(uploadAvatarBody)
+  @ApiResponse(uploadAvatarResponse)
   @Post('/avatar')
   // @UseInterceptors(AnyFilesInterceptor())
   // uploadFile(@UploadedFiles() files: Array<Express.Multer.File>) {
@@ -156,10 +156,11 @@ export class UsersController {
   @UseInterceptors(FileInterceptor('file'))
   async uploadAvatar(@Req() req: RequestType, @UploadedFile() file: Express.Multer.File) {
     const {id} = req.user;
-    await this.usersService.uploadAvatar(id, file);
+    const data = await this.usersService.uploadAvatar(id, file);
     return {
       status: 'success',
       message: 'Avatar success uploaded',
+      data
     };
   }
 

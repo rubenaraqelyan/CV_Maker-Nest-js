@@ -42,6 +42,16 @@ let PhoneNumbersController = class PhoneNumbersController {
             data,
         };
     }
+    async getById(req, param) {
+        const { id: user_id } = req.user;
+        const { id } = param;
+        const data = await this.phoneNumbersService.getById(user_id, id);
+        return {
+            status: 'success',
+            message: 'Get phone number',
+            data,
+        };
+    }
     async update(req, param, body) {
         const { id: user_id } = req.user;
         const { id } = param;
@@ -49,6 +59,16 @@ let PhoneNumbersController = class PhoneNumbersController {
         return {
             status: 'success',
             message: 'Phone number has been updated successfully',
+            data,
+        };
+    }
+    async destroy(req, param) {
+        const { id: user_id } = req.user;
+        const { id } = param;
+        const data = await this.phoneNumbersService.destroy(user_id, id);
+        return {
+            status: 'success',
+            message: 'Phone number has been removed successfully',
             data
         };
     }
@@ -74,21 +94,50 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], PhoneNumbersController.prototype, "getList", null);
 __decorate([
+    (0, common_1.Get)('/:id'),
+    (0, swagger_1.ApiHeader)(main_1.xAuthorization),
+    (0, swagger_1.ApiResponse)(phone_numbers_1.createPhoneNumberResponse),
+    (0, swagger_1.ApiParam)({
+        name: 'id',
+        type: 'string',
+    }),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, main_dto_1.uuId]),
+    __metadata("design:returntype", Promise)
+], PhoneNumbersController.prototype, "getById", null);
+__decorate([
     (0, common_1.Put)('/:id'),
     (0, swagger_1.ApiHeader)(main_1.xAuthorization),
     (0, swagger_1.ApiResponse)(phone_numbers_1.createPhoneNumberResponse),
     (0, swagger_1.ApiBody)(phone_numbers_1.createPhoneNumberBody),
     (0, swagger_1.ApiParam)({
         name: 'id',
-        type: 'string'
+        type: 'string',
     }),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)()),
     __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, main_dto_1.uuId, phone_number_dto_1.phone_number]),
+    __metadata("design:paramtypes", [Object, main_dto_1.uuId,
+        phone_number_dto_1.phone_number]),
     __metadata("design:returntype", Promise)
 ], PhoneNumbersController.prototype, "update", null);
+__decorate([
+    (0, common_1.Delete)('/:id'),
+    (0, swagger_1.ApiHeader)(main_1.xAuthorization),
+    (0, swagger_1.ApiResponse)(phone_numbers_1.createPhoneNumberResponse),
+    (0, swagger_1.ApiParam)({
+        name: 'id',
+        type: 'string'
+    }),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, main_dto_1.uuId]),
+    __metadata("design:returntype", Promise)
+], PhoneNumbersController.prototype, "destroy", null);
 PhoneNumbersController = __decorate([
     (0, swagger_1.ApiTags)('phone number'),
     (0, common_1.Controller)('phone-number'),

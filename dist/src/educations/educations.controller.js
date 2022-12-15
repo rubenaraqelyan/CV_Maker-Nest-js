@@ -29,7 +29,7 @@ let EducationsController = class EducationsController {
         const data = await this.educationsService.create(id, body);
         return {
             status: 'success',
-            message: 'Education success created',
+            message: 'Education has been created successfully',
             data
         };
     }
@@ -58,7 +58,7 @@ let EducationsController = class EducationsController {
         const data = await this.educationsService.update(user_id, id, body);
         return {
             status: 'success',
-            message: 'Education success updated',
+            message: 'Education has been updated successfully',
             data
         };
     }
@@ -68,7 +68,7 @@ let EducationsController = class EducationsController {
         const data = await this.educationsService.destroy(user_id, id);
         return {
             status: 'success',
-            message: 'Education success deleted',
+            message: 'Education has been removed successfully',
             data
         };
     }

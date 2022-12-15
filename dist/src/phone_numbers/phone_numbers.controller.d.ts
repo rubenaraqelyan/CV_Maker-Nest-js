@@ -14,7 +14,17 @@ export declare class PhoneNumbersController {
         message: string;
         data: import("./phone_numbers.model").phone_numbers[];
     }>;
+    getById(req: RequestType, param: uuId): Promise<{
+        status: string;
+        message: string;
+        data: import("./phone_numbers.model").phone_numbers;
+    }>;
     update(req: RequestType, param: uuId, body: phone_number): Promise<{
+        status: string;
+        message: string;
+        data: import("./phone_numbers.model").phone_numbers;
+    }>;
+    destroy(req: RequestType, param: uuId): Promise<{
         status: string;
         message: string;
         data: import("./phone_numbers.model").phone_numbers;

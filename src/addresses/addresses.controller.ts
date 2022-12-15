@@ -33,7 +33,7 @@ export class AddressesController {
     const data = await this.addressesService.create(id, body);
     return {
       status: 'success',
-      message: 'Address success created',
+      message: 'Address has been created successfully',
       data
     }
   }
@@ -70,7 +70,7 @@ export class AddressesController {
     const data = await this.addressesService.update(user_id, id, body);
     return {
       status: 'success',
-      message: 'Address success updated',
+      message: 'Address has been updated successfully',
       data
     }
   }
@@ -88,7 +88,7 @@ export class AddressesController {
     const data = await this.addressesService.destroy(user_id, id);
     return {
       status: 'success',
-      message: 'Address success deleted',
+      message: 'Address has been removed successfully',
       data
     }
   }

@@ -22,7 +22,7 @@ export class SkillsController {
     const data = await this.skillsService.create(id, body);
     return {
       status: 'success',
-      message: 'Skill success created',
+      message: 'Skill has been created successfully',
       data
     }
   }
@@ -72,7 +72,7 @@ export class SkillsController {
     const data = await this.skillsService.update(user_id, id, body);
     return {
       status: 'success',
-      message: 'Skill success updated',
+      message: 'Skill has been updated successfully',
       data
     }
   }
@@ -90,7 +90,7 @@ export class SkillsController {
     const data = await this.skillsService.destroy(user_id, id);
     return {
       status: 'success',
-      message: 'Skill success deleted',
+      message: 'Skill has been removed successfully',
       data
     }
   }

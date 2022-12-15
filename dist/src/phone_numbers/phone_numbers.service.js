@@ -30,12 +30,17 @@ let PhoneNumbersService = class PhoneNumbersService {
     async getById(user_id, id) {
         const data = await this.PhoneNumbers.findOne({ where: { user_id, id } });
         if (!data)
-            throw new common_1.HttpException('Skill not found', common_1.HttpStatus.NOT_FOUND);
+            throw new common_1.HttpException('Phone number not found', common_1.HttpStatus.NOT_FOUND);
         return data;
     }
     async update(user_id, id, dataUpdate) {
         await this.PhoneNumbers.update(dataUpdate, { where: { user_id, id } });
         return this.getById(user_id, id);
+    }
+    async destroy(user_id, id) {
+        const data = await this.getById(user_id, id);
+        await this.PhoneNumbers.destroy({ where: { user_id, id } });
+        return data;
     }
 };
 PhoneNumbersService = __decorate([

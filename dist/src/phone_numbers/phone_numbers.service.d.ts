@@ -6,4 +6,5 @@ export declare class PhoneNumbersService {
     getList(user_id: any): Promise<phone_numbers[]>;
     getById(user_id: any, id: any): Promise<phone_numbers>;
     update(user_id: any, id: any, dataUpdate: any): Promise<phone_numbers>;
+    destroy(user_id: any, id: any): Promise<phone_numbers>;
 }

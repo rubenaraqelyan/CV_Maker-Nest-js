@@ -24,12 +24,10 @@ export class SkillsService {
     await this.Skills.update(dataUpdate,{where: {user_id, id}});
     return this.getById(user_id, id);
   }
-
+  
   async destroy(user_id, id) {
     const data = await this.getById(user_id, id);
     await this.Skills.destroy({where: {user_id, id}});
     return data;
   }
-
-
 }

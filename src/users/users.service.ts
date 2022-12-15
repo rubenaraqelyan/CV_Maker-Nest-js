@@ -6,6 +6,7 @@ import { InjectSqlModel } from '../database/inject-model-sql';
 const {JWT_SECRET, BASE_API_URL} = process.env
 import {checkPassword, hashPassword, writeImage} from "../utils/helpers";
 import Email from "../services/Email";
+import {Op} from "sequelize";
 
 @Injectable()
 export class UsersService {
@@ -54,7 +55,7 @@ export class UsersService {
     return this.Users.update(data,{ where: { id } })
   }
   async checkUsername(id, username) {
-    const check = await this.Users.findOne({where: {username, id: {$ne: id}}});
+    const check = await this.Users.findOne({where: {username, id: {[Op.ne]: id}}});
     if (check) throw new HttpException('Username already use', HttpStatus.BAD_REQUEST);
     return true;
   }

@@ -5,8 +5,6 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { SocketConnection } from './middlewares/socket.connection';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import { AuthService } from './middlewares/auth.service';
 import { UsersModule } from './users/users.module';
 import { AddressesModule } from './addresses/addresses.module';
@@ -20,10 +18,6 @@ import db from './database/initialize-sql';
   imports: [
     SocketConnection,
     db.initialize(),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../../', 'web'),
-      exclude: ['/api*'],
-    }),
     UsersModule,
     AddressesModule,
     SkillsModule,

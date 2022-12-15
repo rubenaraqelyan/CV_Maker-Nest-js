@@ -21,7 +21,7 @@ export class BiosController {
     const data = await this.biosService.create(id, body);
     return {
       status: 'success',
-      message: 'Bio success created',
+      message: 'Bio has been created successfully',
       data
     }
   }
@@ -71,7 +71,7 @@ export class BiosController {
     const data = await this.biosService.update(user_id, id, body);
     return {
       status: 'success',
-      message: 'Bio success updated',
+      message: 'Bio has been updated successfully',
       data
     }
   }
@@ -89,7 +89,7 @@ export class BiosController {
     const data = await this.biosService.destroy(user_id, id);
     return {
       status: 'success',
-      message: 'Bio success deleted',
+      message: 'Bio has been removed successfully',
       data
     }
   }

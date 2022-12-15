@@ -48,7 +48,7 @@ export class UsersController {
     const data = await this.usersService.signUp(body);
     return {
       status: 'success',
-      message: 'Verification email sent',
+      message: 'Verification has been sent to email',
       data
     }
   }
@@ -61,7 +61,7 @@ export class UsersController {
     const token = this.usersService.getToken(data.id);
     return {
       status: 'success',
-      message: 'User successfully login',
+      message: 'User has successfully loged in',
       data,
       token,
     };
@@ -89,7 +89,7 @@ export class UsersController {
     const data = await this.usersService.update(id, body);
     return {
       status: 'success',
-      message: 'User successfully updated',
+      message: 'User info has been updated successfully ',
       data,
     };
   }
@@ -103,7 +103,7 @@ export class UsersController {
     await this.usersService.updatePassword(id, body);
     return {
       status: 'success',
-      message: 'Password successfully updated',
+      message: 'Password has been updated successfully',
     };
   }
 
@@ -118,7 +118,7 @@ export class UsersController {
     const data = await this.usersService.verifyEmail(id);
     return {
       status: 'success',
-      message: 'User successfully verified',
+      message: 'User has been verified successfully',
       data
     };
   }
@@ -130,7 +130,7 @@ export class UsersController {
     await this.usersService.sendForgotCodeToEmail(body.email);
     return {
       status: 'success',
-      message: 'Verification code sent to your email',
+      message: 'Verification code has sent to your email',
     };
   }
 
@@ -141,7 +141,7 @@ export class UsersController {
     await this.usersService.acceptCodeForgotPassword(body);
     return {
       status: 'success',
-      message: 'Password changed',
+      message: 'Password was changed',
     };
   }
 

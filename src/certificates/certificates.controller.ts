@@ -21,7 +21,7 @@ export class CertificatesController {
     const data = await this.certificatesService.create(id, body);
     return {
       status: 'success',
-      message: 'Certificate success created',
+      message: 'Certificate has been created successfully',
       data
     }
   }
@@ -70,7 +70,7 @@ export class CertificatesController {
     const data = await this.certificatesService.update(user_id, id, body);
     return {
       status: 'success',
-      message: 'Certificate success updated',
+      message: 'Certificate has been updated successfully',
       data
     }
   }
@@ -88,7 +88,7 @@ export class CertificatesController {
     const data = await this.certificatesService.destroy(user_id, id);
     return {
       status: 'success',
-      message: 'Certificate success deleted',
+      message: 'Certificate has been removed successfully',
       data
     }
   }

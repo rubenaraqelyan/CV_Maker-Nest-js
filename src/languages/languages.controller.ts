@@ -20,7 +20,7 @@ export class LanguagesController {
     const data = await this.languageService.create(id, body);
     return {
       status: 'success',
-      message: 'Language success created',
+      message: 'Language has been created successfully',
       data
     }
   }
@@ -70,7 +70,7 @@ export class LanguagesController {
     const data = await this.languageService.update(user_id, id, body);
     return {
       status: 'success',
-      message: 'Language success updated',
+      message: 'Language has been updated successfully',
       data
     }
   }
@@ -88,7 +88,7 @@ export class LanguagesController {
     const data = await this.languageService.destroy(user_id, id);
     return {
       status: 'success',
-      message: 'Language success deleted',
+      message: 'Language has been removed successfully',
       data
     }
   }

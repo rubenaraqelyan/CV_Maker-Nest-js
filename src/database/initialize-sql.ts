@@ -7,6 +7,7 @@ import {bios} from "../bios/bios.model";
 import {certificates} from "../certificates/certificates.model";
 import {educations} from "../educations/educations.model";
 import {operatorsAliases} from "../utils/constanst";
+import { phone_numbers } from 'src/phone_numbers/phone_numbers.model';
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
 export default class db {
@@ -31,7 +32,8 @@ export default class db {
         languages,
         bios,
         certificates,
-        educations
+        educations,
+        phone_numbers
       ],
     });
   }

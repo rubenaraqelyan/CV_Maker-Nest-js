@@ -12,6 +12,7 @@ import { SkillsModule } from './skills/skills.module';import { LanguagesModule }
 import { BiosModule } from './bios/bios.module';
 import { CertificatesModule } from './certificates/certificates.module';
 import { EducationsModule } from './educations/educations.module';
+import { PhoneNumbersModule } from './phone_numbers/phone_numbers.module';
 import db from './database/initialize-sql';
 
 @Module({
@@ -25,6 +26,7 @@ import db from './database/initialize-sql';
     BiosModule,
     CertificatesModule,
     EducationsModule,
+    PhoneNumbersModule
   ],
 })
 export class AppModule implements NestModule {

@@ -294,4 +294,15 @@ declare const acceptCodeForgotPasswordBody: {
         };
     };
 };
-export { signUpBody, signUpResponse, signInBody, signInResponse, getMeResponse, updateBody, updateResponse, verifyUserResponse, updatePasswordBody, forgotPasswordBody, acceptCodeForgotPasswordBody };
+declare const uploadAvatarBody: {
+    schema: {
+        type: string;
+        properties: {
+            file: {
+                type: string;
+                format: string;
+            };
+        };
+    };
+};
+export { signUpBody, signUpResponse, signInBody, signInResponse, getMeResponse, updateBody, updateResponse, verifyUserResponse, updatePasswordBody, forgotPasswordBody, acceptCodeForgotPasswordBody, uploadAvatarBody };

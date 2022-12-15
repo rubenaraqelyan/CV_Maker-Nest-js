@@ -34,4 +34,13 @@ declare const operatorsAliases: {
     $values: symbol;
     $col: symbol;
 };
-export { operatorsAliases };
+declare const imageMimeTypes: {
+    'image/jpeg': string;
+    'image/gif': string;
+    'image/png': string;
+    'image/webp': string;
+    'image/avif': string;
+    'image/tiff': string;
+    "image/heif": string;
+};
+export { operatorsAliases, imageMimeTypes };

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.acceptCodeForgotPasswordBody = exports.forgotPasswordBody = exports.updatePasswordBody = exports.verifyUserResponse = exports.updateResponse = exports.updateBody = exports.getMeResponse = exports.signInResponse = exports.signInBody = exports.signUpResponse = exports.signUpBody = void 0;
+exports.uploadAvatarBody = exports.acceptCodeForgotPasswordBody = exports.forgotPasswordBody = exports.updatePasswordBody = exports.verifyUserResponse = exports.updateResponse = exports.updateBody = exports.getMeResponse = exports.signInResponse = exports.signInBody = exports.signUpResponse = exports.signUpBody = void 0;
 const main_1 = require("./main");
 const signUpBody = {
     description: "User body",
@@ -270,4 +270,16 @@ const acceptCodeForgotPasswordBody = {
     }
 };
 exports.acceptCodeForgotPasswordBody = acceptCodeForgotPasswordBody;
+const uploadAvatarBody = {
+    schema: {
+        type: 'object',
+        properties: {
+            file: {
+                type: 'string',
+                format: 'binary',
+            },
+        },
+    },
+};
+exports.uploadAvatarBody = uploadAvatarBody;
 //# sourceMappingURL=users.js.map

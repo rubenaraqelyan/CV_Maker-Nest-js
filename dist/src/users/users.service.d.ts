@@ -18,4 +18,7 @@ export declare class UsersService {
     }>;
     sendForgotCodeToEmail(email: any): Promise<any>;
     acceptCodeForgotPassword(data: any): Promise<[affectedCount: number]>;
+    uploadAvatar(id: any, file: any): Promise<{
+        image: string;
+    }>;
 }

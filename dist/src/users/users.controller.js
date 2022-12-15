@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
@@ -19,6 +20,7 @@ const users_service_1 = require("./users.service");
 const user_dto_1 = require("../dto/user.dto");
 const users_1 = require("../swagger/users");
 const main_1 = require("../swagger/main");
+const platform_express_1 = require("@nestjs/platform-express");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -88,6 +90,14 @@ let UsersController = class UsersController {
         return {
             status: 'success',
             message: 'Password was changed',
+        };
+    }
+    async uploadAvatar(req, file) {
+        const { id } = req.user;
+        await this.usersService.uploadAvatar(id, file);
+        return {
+            status: 'success',
+            message: 'Avatar success uploaded',
         };
     }
 };
@@ -173,6 +183,18 @@ __decorate([
     __metadata("design:paramtypes", [Object, user_dto_1.acceptCodeForgotPassword]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "acceptCodeForgotPassword", null);
+__decorate([
+    (0, swagger_1.ApiHeader)(main_1.xAuthorization),
+    (0, swagger_1.ApiConsumes)("multipart/form-data"),
+    (0, swagger_1.ApiBody)(users_1.uploadAvatarBody),
+    (0, common_1.Post)('/avatar'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.UploadedFile)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, typeof (_b = typeof Express !== "undefined" && (_a = Express.Multer) !== void 0 && _a.File) === "function" ? _b : Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "uploadAvatar", null);
 UsersController = __decorate([
     (0, swagger_1.ApiTags)('user'),
     (0, common_1.Controller)('user'),

@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { NextFunction, Request, Response } from 'express';
 export type response = Response;
 export type next = NextFunction;
@@ -16,5 +17,13 @@ export interface RequestType extends Request {
 }
 export declare class uuId {
     readonly id: string;
+}
+export interface File {
+    readonly fieldname: string;
+    readonly originalname: string;
+    readonly encoding: string;
+    readonly mimetype: string;
+    readonly buffer: Buffer;
+    size: number;
 }
 export {};

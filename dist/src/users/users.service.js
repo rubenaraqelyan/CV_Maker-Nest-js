@@ -119,6 +119,11 @@ let UsersService = class UsersService {
             throw new common_1.HttpException('The entered code is not correct', common_1.HttpStatus.BAD_REQUEST);
         return this.updatePassword(user.id, { password: data.password });
     }
+    async uploadAvatar(id, file) {
+        const data = (0, helpers_1.writeImage)(id, file);
+        await this.Users.update(data, { where: { id } });
+        return data;
+    }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),

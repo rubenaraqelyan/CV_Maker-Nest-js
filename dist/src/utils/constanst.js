@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.operatorsAliases = void 0;
+exports.imageMimeTypes = exports.operatorsAliases = void 0;
 const sequelize_1 = require("sequelize");
 const Op = sequelize_1.default.Op;
 const operatorsAliases = {
@@ -40,4 +40,14 @@ const operatorsAliases = {
     $col: Op.col,
 };
 exports.operatorsAliases = operatorsAliases;
+const imageMimeTypes = {
+    'image/jpeg': '.jpg',
+    'image/gif': '.gif',
+    'image/png': '.png',
+    'image/webp': '.webp',
+    'image/avif': '.avif',
+    'image/tiff': '.tiff',
+    "image/heif": ".heif",
+};
+exports.imageMimeTypes = imageMimeTypes;
 //# sourceMappingURL=constanst.js.map

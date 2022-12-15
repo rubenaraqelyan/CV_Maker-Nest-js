@@ -44,4 +44,8 @@ export declare class UsersController {
         status: string;
         message: string;
     }>;
+    uploadAvatar(req: RequestType, file: Express.Multer.File): Promise<{
+        status: string;
+        message: string;
+    }>;
 }

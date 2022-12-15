@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
-const { NODE_ENV, PORT, BASE_URL, BASE_API_URL } = process.env;
+const { NODE_ENV, PORT, BASE_URL, BASE_API_URL, SESSION_SECRET } = process.env;
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -24,12 +24,12 @@ async function bootstrap() {
     .setDescription('Generate CV apis')
     .setVersion(packageJson.version)
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config, {include: []});
   SwaggerModule.setup(SWAGGER_URL, app, document);
 
   app.use(
     session({
-      secret: 'asiodasjoddjdoasddasoidjasiodasdjaiodd',
+      secret: SESSION_SECRET,
       saveUninitialized: false,
       resave: false,
       cookie: {

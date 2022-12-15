@@ -7,6 +7,7 @@ const {JWT_SECRET, BASE_API_URL} = process.env
 import {checkPassword, hashPassword, writeImage} from "../utils/helpers";
 import Email from "../services/Email";
 import {Op} from "sequelize";
+import {authData} from "../dto/auth.dto";
 
 @Injectable()
 export class UsersService {
@@ -103,6 +104,14 @@ export class UsersService {
     const data = writeImage(id, file);
     await this.Users.update(data,{where: {id}});
     return data;
+  }
+
+  async validateGoogleUser(params: authData) {
+    const {name, email, social_id, image} = params;
+    const where = { email };
+    const defaults = {name, username: `user_${social_id}`, email, social_id, image, verified_at: new Date()};
+    const [user] = await this.Users.findOrCreate({ where, defaults });
+    return user['dataValues'];
   }
 
 }

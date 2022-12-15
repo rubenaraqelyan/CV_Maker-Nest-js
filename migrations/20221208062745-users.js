@@ -26,10 +26,21 @@ module.exports = {
           allowNull: false,
           unique: true
         },
+        social_id: {
+          type: Sequelize.STRING(255),
+          allowNull: true,
+          defaultValue: null,
+          unique: true,
+        },
         password: {
           type: Sequelize.STRING(255),
-          allowNull: false,
+          allowNull: true,
           get: () => null,
+          set: (password) => {
+            const social_id = this.getDataValue('social_id');
+            if (!social_id && !password) throw new Error('Password is mandatory!');
+            return this.setDataValue("password", password);
+          },
         },
         image: {
           type: Sequelize.STRING(255),

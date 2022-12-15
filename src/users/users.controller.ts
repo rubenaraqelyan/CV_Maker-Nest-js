@@ -6,7 +6,7 @@ import {
   Post,
   Put,
   Req,
-  UploadedFile,
+  UploadedFile, UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import {ApiBody, ApiConsumes, ApiHeader, ApiParam, ApiResponse, ApiTags} from '@nestjs/swagger';
@@ -27,13 +27,13 @@ import {
   signInBody,
   signInResponse,
   signUpBody,
-  signUpResponse,
   updateBody, updatePasswordBody,
   updateResponse, uploadAvatarBody, uploadAvatarResponse, verifyUserResponse
 } from "../swagger/users";
 import {RequestType} from "../dto/main.dto";
 import {emptyResponse, xAuthorization} from "../swagger/main";
 import {FileInterceptor} from "@nestjs/platform-express";
+import {GoogleAuthGuard} from "../services/GoogleGuard";
 
 @ApiTags('Users')
 @Controller('user')
@@ -42,7 +42,7 @@ export class UsersController {
 
   @Post('/sign-up')
   @ApiBody(signUpBody)
-  @ApiResponse(signUpResponse)
+  @ApiResponse(emptyResponse('User response'))
   async signUp(@Body() body: UserDto) {
     const data = await this.usersService.signUp(body);
     return {
@@ -60,7 +60,7 @@ export class UsersController {
     const token = this.usersService.getToken(data.id);
     return {
       status: 'success',
-      message: 'User has successfully loged in',
+      message: 'User has successfully login',
       data,
       token,
     };
@@ -125,7 +125,7 @@ export class UsersController {
   @Post('/forgot-password')
   @ApiBody(forgotPasswordBody)
   @ApiResponse(emptyResponse('User response'))
-  async forgotPassword(@Req() req: RequestType, @Body() body: forgotPassword) {
+  async forgotPassword(@Body() body: forgotPassword) {
     await this.usersService.sendForgotCodeToEmail(body.email);
     return {
       status: 'success',

@@ -38,10 +38,25 @@ export class users extends Model {
 
   @Column({
     type: DataType.STRING(255),
-    allowNull: false,
-    get: () => null,
+    allowNull: true,
+    defaultValue: null,
+    unique: true,
   })
-  password: string;
+  social_id: string;
+
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: true
+  })
+
+  get password(): null {
+    return null;
+  }
+  set password (password: string) {
+    const social_id = this.getDataValue('social_id');
+    if (!social_id && !password) throw new Error('Password is mandatory!');
+    this.setDataValue("password", password);
+  }
 
   @Column({
     type: DataType.STRING(255),

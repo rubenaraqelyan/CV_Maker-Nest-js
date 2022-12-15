@@ -1,11 +1,9 @@
-import {forwardRef, HttpException, HttpStatus, Inject, Injectable, NestMiddleware} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable, NestMiddleware} from '@nestjs/common';
 import {RequestType, response, next, } from '../dto/main.dto';
-import * as JWT from 'jsonwebtoken';
 import {UsersService} from "../users/users.service";
-const {JWT_SECRET} = process.env;
 
 @Injectable()
-export class AuthService implements NestMiddleware {
+export class AuthMiddleware implements NestMiddleware {
   constructor(private usersService: UsersService) {}
   async use(req: RequestType, res: response, next: next) {
     try {

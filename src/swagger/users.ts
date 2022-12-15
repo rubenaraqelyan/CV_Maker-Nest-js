@@ -34,15 +34,6 @@ const signUpBody = {
   }
 };
 
-const signUpResponse = {
-  description: "User response",
-  schema: {
-    properties: {
-      ...response,
-    }
-  }
-};
-
 const signInBody = {
   description: "User body",
   schema: {
@@ -312,9 +303,29 @@ const uploadAvatarResponse = {
   }
 };
 
+const OAuthLoginResponse = {
+  description: "Google OAuth redirect to /google/redirect",
+};
+
+const OAuthRedirectResponse = {
+  description: "Google OAuth middleware",
+  schema: {
+    properties: {
+      ...response,
+      data: {
+        type: "object",
+        properties: {
+          token: {
+            type: "string"
+          }
+        }
+      }
+    }
+  }
+};
+
 export {
   signUpBody,
-  signUpResponse,
   signInBody,
   signInResponse,
   getMeResponse,
@@ -325,5 +336,7 @@ export {
   forgotPasswordBody,
   acceptCodeForgotPasswordBody,
   uploadAvatarBody,
-  uploadAvatarResponse
+  uploadAvatarResponse,
+  OAuthLoginResponse,
+  OAuthRedirectResponse
 }

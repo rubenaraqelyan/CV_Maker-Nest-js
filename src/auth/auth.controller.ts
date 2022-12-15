@@ -1,34 +1,33 @@
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
-import { GoogleAuthGuard } from './utils/Guards';
-import {ApiTags} from '@nestjs/swagger';
+import { GoogleAuthGuard } from '../services/GoogleGuard';
+import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {UsersService} from "../users/users.service";
 import {RequestType} from "../dto/main.dto";
+import {OAuthLoginResponse, OAuthRedirectResponse, verifyUserResponse} from "../swagger/users";
 
-@ApiTags('Auths')
+@ApiTags('Google OAuth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('google/login')
+  @ApiResponse(OAuthLoginResponse)
   @UseGuards(GoogleAuthGuard)
-  handleLogin() {
-    return { msg: 'Google Authentication' };
+  handleLogin(@Req() req: RequestType) {
+    console.log(req)
   }
 
-  // api/auth/google/redirect
   @Get('google/redirect')
+  @ApiResponse(OAuthRedirectResponse)
   @UseGuards(GoogleAuthGuard)
-  handleRedirect() {
-    return { msg: 'OK' };
+  handleRedirect(@Req() req: RequestType) {
+    const {id} = req.user;
+    const token = this.usersService.getToken(id);
+    return {
+      status: 'success',
+      message: 'Google social login',
+      data: {token}
+    };
   }
 
-  @Get('status')
-  user(@Req() req: RequestType) {
-    console.log(req.user);
-    if (req.user) {
-      return { msg: 'Authenticated' };
-    } else {
-      return { msg: 'Not Authenticated' };
-    }
-  }
 }

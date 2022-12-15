@@ -8,7 +8,7 @@ import {skill} from "../dto/skills.dto";
 import {createAddressResponse} from "../swagger/addresses";
 import {createLanguageResponse} from "../swagger/languages";
 
-@ApiTags('skill')
+@ApiTags('Skills')
 @Controller('skill')
 export class SkillsController {
   constructor(private readonly skillsService: SkillsService) {}

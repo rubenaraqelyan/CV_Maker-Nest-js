@@ -6,7 +6,7 @@ import {RequestType, uuId} from "../dto/main.dto";
 import {createEducationBody, createEducationResponse, getEducationResponse} from "../swagger/educations";
 import {educations} from "../dto/educations.dto";
 
-@ApiTags('education')
+@ApiTags('Educations')
 @Controller('education')
 export class EducationsController {
   constructor(private readonly educationsService: EducationsService) {}

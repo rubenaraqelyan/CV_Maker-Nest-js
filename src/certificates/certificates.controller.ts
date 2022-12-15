@@ -7,7 +7,7 @@ import {createCertificateResponse, createCertificateBody, getCertificateResponse
 import {certificates} from "../dto/certificates.dto";
 import {skill} from "../dto/skills.dto";
 
-@ApiTags('certificate')
+@ApiTags('Certificates')
 @Controller('certificate')
 export class CertificatesController {
   constructor(private readonly certificatesService: CertificatesService) {}

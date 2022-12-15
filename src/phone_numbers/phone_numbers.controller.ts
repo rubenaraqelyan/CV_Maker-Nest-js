@@ -16,7 +16,7 @@ import {
   getPhoneNumbersResponse,
 } from 'src/swagger/phone_numbers';
 
-@ApiTags('phone number')
+@ApiTags('Phone numbers')
 @Controller('phone-number')
 export class PhoneNumbersController {
   constructor(private readonly phoneNumbersService: PhoneNumbersService) {}

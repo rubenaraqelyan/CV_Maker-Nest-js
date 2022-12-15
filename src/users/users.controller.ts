@@ -35,7 +35,7 @@ import {RequestType} from "../dto/main.dto";
 import {emptyResponse, xAuthorization} from "../swagger/main";
 import {AnyFilesInterceptor, FileFieldsInterceptor, FileInterceptor, FilesInterceptor} from "@nestjs/platform-express";
 
-@ApiTags('user')
+@ApiTags('Users')
 @Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {

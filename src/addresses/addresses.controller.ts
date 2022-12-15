@@ -6,7 +6,7 @@ import {createAddressBody, createAddressResponse, getAddressesResponse} from "..
 import {address} from "../dto/address.dto";
 import {xAuthorization} from "../swagger/main";
 
-@ApiTags('address')
+@ApiTags('Addresses')
 @Controller('address')
 export class AddressesController {
   constructor(private readonly addressesService: AddressesService) {}

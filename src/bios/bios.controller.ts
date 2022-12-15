@@ -7,7 +7,7 @@ import {bio} from "../dto/bios.dto";
 import {createBioBody, createBioResponse, getBioResponse} from "../swagger/bios";
 import {skill} from "../dto/skills.dto";
 
-@ApiTags('bios')
+@ApiTags('Bios')
 @Controller('bios')
 export class BiosController {
   constructor(private readonly biosService: BiosService) {}

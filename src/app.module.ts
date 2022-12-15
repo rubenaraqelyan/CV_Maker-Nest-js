@@ -13,12 +13,12 @@ import { BiosModule } from './bios/bios.module';
 import { CertificatesModule } from './certificates/certificates.module';
 import { EducationsModule } from './educations/educations.module';
 import { PhoneNumbersModule } from './phone_numbers/phone_numbers.module';
-import db from './database/initialize-sql';
+import Sequelize from "./database/initialize-sql";
 
 @Module({
   imports: [
     SocketConnection,
-    db.initialize(),
+    Sequelize.initialize(),
     UsersModule,
     AddressesModule,
     SkillsModule,

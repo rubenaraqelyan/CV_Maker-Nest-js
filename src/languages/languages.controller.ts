@@ -6,7 +6,7 @@ import {RequestType, uuId} from "../dto/main.dto";
 import {createLanguageBody, createLanguageResponse, getLanguageResponse} from "../swagger/languages";
 import {language} from "../dto/languages.dto";
 
-@ApiTags('language')
+@ApiTags('Languages')
 @Controller('language')
 export class LanguagesController {
   constructor(private readonly languageService: LanguagesService) {}

@@ -26,3 +26,12 @@ export class uuId {
     @IsUUID('4')
     readonly id: string;
 }
+
+export interface File {
+    readonly fieldname: string;
+    readonly originalname: string;
+    readonly encoding: string;
+    readonly mimetype: string;
+    readonly buffer: Buffer;
+    size: number;
+}

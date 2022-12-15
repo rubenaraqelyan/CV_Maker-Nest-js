@@ -4,7 +4,7 @@ import * as uniq from 'uniqid';
 import { users } from './users.model';
 import { InjectSqlModel } from '../database/inject-model-sql';
 const {JWT_SECRET, BASE_API_URL} = process.env
-import {checkPassword, hashPassword} from "../utils/helpers";
+import {checkPassword, hashPassword, writeImage} from "../utils/helpers";
 import Email from "../services/Email";
 
 @Injectable()
@@ -96,6 +96,12 @@ export class UsersService {
     const user = await this.Users.findOne({where: {forgot_password_code: data.code}});
     if (!user) throw new HttpException('The entered code is not correct', HttpStatus.BAD_REQUEST);
     return this.updatePassword(user.id, {password: data.password});
+  }
+
+  async uploadAvatar(id, file) {
+    const data = writeImage(id, file);
+    await this.Users.update(data,{where: {id}});
+    return data;
   }
 
 }

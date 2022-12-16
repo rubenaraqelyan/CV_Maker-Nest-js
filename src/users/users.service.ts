@@ -1,4 +1,4 @@
-import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common';
 import * as JWT from 'jsonwebtoken';
 import * as uniq from 'uniqid';
 import { users } from './users.model';
@@ -8,11 +8,15 @@ import {checkPassword, hashPassword, writeImage} from "../utils/helpers";
 import Email from "../services/Email";
 import {Op} from "sequelize";
 import {authData} from "../dto/auth.dto";
+import {STRIPE_CLIENT} from "../utils/constanst";
+import Stripe from "stripe";
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectSqlModel(users) private Users: typeof users
+    @InjectSqlModel(users) private Users: typeof users,
+    @Inject(STRIPE_CLIENT) private stripe: Stripe,
+
   ) {}
   async signUp(data) {
     data.password = await hashPassword(data.password);
@@ -112,6 +116,22 @@ export class UsersService {
     const defaults = {name, username: `user_${social_id}`, email, social_id, image, verified_at: new Date()};
     const [user] = await this.Users.findOrCreate({ where, defaults });
     return user['dataValues'];
+  }
+
+  async checkCustomer(data) {
+    return this.Users.findOne(data);
+  }
+  async updateCustomer(customer_id, data) {
+    return this.Users.update({customer_id}, {where: data});
+  }
+
+  async createCustomer(data) {
+    const checkCustomer = await this.checkCustomer(data);
+    if (checkCustomer?.customer_id) return checkCustomer;
+    const customer: Stripe.Customer = await this.stripe.customers.create(data);
+    await this.updateCustomer(customer.id,data);
+    checkCustomer.customer_id = customer.id;
+    return checkCustomer;
   }
 
 }

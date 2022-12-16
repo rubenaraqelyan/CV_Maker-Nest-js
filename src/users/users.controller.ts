@@ -159,8 +159,21 @@ export class UsersController {
     const data = await this.usersService.uploadAvatar(id, file);
     return {
       status: 'success',
-      message: 'Avatar success uploaded',
+      message: 'Avatar has ben uploaded',
       data
+    };
+  }
+
+  @ApiHeader(xAuthorization)
+  @ApiResponse(updateResponse)
+  @Post('/customer')
+  async createCustomer(@Req() req: RequestType) {
+    const {name, email} = req.user;
+    const data = await this.usersService.createCustomer({name, email});
+    return {
+      statusCode: 'success',
+      message: 'Customer has ben created',
+      data,
     };
   }
 

@@ -32,6 +32,12 @@ module.exports = {
           defaultValue: null,
           unique: true,
         },
+        customer_id: {
+          type: Sequelize.STRING(255),
+          allowNull: true,
+          defaultValue: null,
+          unique: true,
+        },
         password: {
           type: Sequelize.STRING(255),
           allowNull: true,

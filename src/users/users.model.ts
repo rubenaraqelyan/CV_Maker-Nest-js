@@ -6,14 +6,14 @@ import {
   HasMany,
   BelongsTo,
 } from 'sequelize-typescript';
-import { addresses } from '../addresses/addresses.model';
-import { skills } from '../skills/skills.model';
-import { languages } from '../languages/languages.model';
-import { bios } from '../bios/bios.model';
-import { certificates } from '../certificates/certificates.model';
-import { educations } from '../educations/educations.model';
-import { phone_numbers } from 'src/phone_numbers/phone_numbers.model';
-import { paymentMethods } from 'src/payment_method/payment_methods.model';
+import {addresses} from '../addresses/addresses.model';
+import {skills} from '../skills/skills.model';
+import {languages} from '../languages/languages.model';
+import {bios} from '../bios/bios.model';
+import {certificates} from '../certificates/certificates.model';
+import {educations} from '../educations/educations.model';
+import {phone_numbers} from 'src/phone_numbers/phone_numbers.model';
+import {paymentMethods} from 'src/payment_method/payment_methods.model';
 
 @Table
 export class users extends Model {
@@ -54,10 +54,19 @@ export class users extends Model {
   @Column({
     type: DataType.STRING(255),
     allowNull: true,
+    defaultValue: null,
+    unique: true,
+  })
+  customer_id: string;
+
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: true,
   })
   get password(): null {
     return null;
   }
+
   set password(password: string) {
     const social_id = this.getDataValue('social_id');
     if (!social_id && !password) throw new Error('Password is mandatory!');
@@ -79,6 +88,7 @@ export class users extends Model {
   get socials(): string {
     return JSON.parse(this.getDataValue('socials'));
   }
+
   set socials(value: string) {
     this.setDataValue('socials', JSON.stringify(value));
   }

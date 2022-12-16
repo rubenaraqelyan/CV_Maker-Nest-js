@@ -194,6 +194,12 @@ const updateResponse = {
           username: {
             type: "string"
           },
+          social_id: {
+            type: "string"
+          },
+          customer_id: {
+            type: "string"
+          },
           image: {
             type: "string"
           },

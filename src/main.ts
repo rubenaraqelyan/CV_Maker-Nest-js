@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
-const { NODE_ENV, PORT, BASE_URL, BASE_API_URL, SESSION_SECRET } = process.env;
+const { NODE_ENV, PORT, BASE_URL, SESSION_SECRET } = process.env;
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -10,15 +10,11 @@ import * as session from 'express-session';
 import * as passport from 'passport';
 import * as packageJson from '../package.json';
 import { join } from 'path';
-const SWAGGER_URL = 'api/docs';
+const SWAGGER_URL = 'docs';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    cors: true,
-  });
-  app.setGlobalPrefix('api');
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {cors: true});
   app.useStaticAssets(join(__dirname, '..', '..', 'public'));
-  app.useStaticAssets(join(__dirname, '..', '..', 'web'));
   const config = new DocumentBuilder()
     .setTitle('Generate CV')
     .setDescription('Generate CV apis')
@@ -53,5 +49,5 @@ async function bootstrap() {
 bootstrap().then(() => console.info(`
 WELCOME TO CV MAKER ${NODE_ENV.toUpperCase()}
 SERVER RUN PORT: ${PORT}
-BASE API URL: ${BASE_API_URL}
+BASE API URL: ${BASE_URL}
 SWAGGER URL:  ${BASE_URL+'/'+SWAGGER_URL}`));

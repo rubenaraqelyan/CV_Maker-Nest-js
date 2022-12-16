@@ -3,7 +3,7 @@ import * as JWT from 'jsonwebtoken';
 import * as uniq from 'uniqid';
 import { users } from './users.model';
 import { InjectSqlModel } from '../database/inject-model-sql';
-const {JWT_SECRET, BASE_API_URL} = process.env
+const {JWT_SECRET, BASE_API} = process.env
 import {checkPassword, hashPassword, writeImage} from "../utils/helpers";
 import Email from "../services/Email";
 import {Op} from "sequelize";
@@ -72,7 +72,7 @@ export class UsersService {
     return user;
   }
   async sendVerificationEmail(email, token) {
-    const html = `<h1>CV Maker</h1><div><a href=${BASE_API_URL}/user/email-verify/${token}>Click to confirm verification</a></div>`;
+    const html = `<h1>CV Maker</h1><div><a href=${BASE_API}/user/email-verify/${token}>Click to confirm verification</a></div>`;
     await Email.send(email, 'Please verify your email', html);
   }
   async verifyEmail(id) {

@@ -40,12 +40,12 @@ export class AppModule implements NestModule {
       .apply(AuthMiddleware)
       .exclude(
         { path: '/api/user/sign-in', method: RequestMethod.POST },
-        { path: '/api/user/sign-up', method: RequestMethod.POST },
-        { path: '/api/user/forgot-password', method: RequestMethod.POST },
-        { path: '/api/user/accept-forgot-password', method: RequestMethod.PUT },
-        { path: '/api/user/email-verify/:token', method: RequestMethod.PUT },
-        { path: '/api/auth/google/login', method: RequestMethod.GET },
-        { path: '/api/auth/google/redirect', method: RequestMethod.GET },
+        { path: '/user/sign-up', method: RequestMethod.POST },
+        { path: '/user/forgot-password', method: RequestMethod.POST },
+        { path: '/user/accept-forgot-password', method: RequestMethod.PUT },
+        { path: '/user/email-verify/:token', method: RequestMethod.PUT },
+        { path: '/auth/google/login', method: RequestMethod.GET },
+        { path: '/auth/google/redirect', method: RequestMethod.GET },
       ).forRoutes('*');
   }
 }

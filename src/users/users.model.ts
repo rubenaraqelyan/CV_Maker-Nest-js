@@ -13,7 +13,7 @@ import { bios } from '../bios/bios.model';
 import { certificates } from '../certificates/certificates.model';
 import { educations } from '../educations/educations.model';
 import { phone_numbers } from 'src/phone_numbers/phone_numbers.model';
-import { payment_methods } from 'src/payment_method/payment_methods.model';
+import { paymentMethods } from 'src/payment_method/payment_methods.model';
 
 @Table
 export class users extends Model {
@@ -118,6 +118,6 @@ export class users extends Model {
   @HasMany(() => phone_numbers)
   phone_numbers: phone_numbers[];
 
-  @HasMany(() => payment_methods)
-  payment_methods: payment_methods[];
+  @HasMany(() => paymentMethods)
+  payment_methods: paymentMethods[];
 }

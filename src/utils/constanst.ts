@@ -15,4 +15,10 @@ const avatarImage = {
   height: 800,
 }
 
-export {imageMimeTypes, avatarImage};
+const STRIPE_CLIENT = 'STRIPE_CLIENT';
+
+export {
+  imageMimeTypes,
+  avatarImage,
+  STRIPE_CLIENT,
+};

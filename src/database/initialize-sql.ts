@@ -7,6 +7,7 @@ import {bios} from "../bios/bios.model";
 import {certificates} from "../certificates/certificates.model";
 import {educations} from "../educations/educations.model";
 import { phone_numbers } from 'src/phone_numbers/phone_numbers.model';
+import {paymentMethods} from "../payment_method/payment_methods.model";
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
 export default class Sequelize {
@@ -31,7 +32,8 @@ export default class Sequelize {
         bios,
         certificates,
         educations,
-        phone_numbers
+        phone_numbers,
+        paymentMethods,
       ],
     });
   }

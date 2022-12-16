@@ -29,7 +29,7 @@ export class PhoneNumbersController {
     const { id } = req.user;
     const data = await this.phoneNumbersService.create(id, body);
     return {
-      status: 'success',
+      statusCode: 201,
       message: 'Phone number has been created successfully',
       data,
     };
@@ -42,7 +42,7 @@ export class PhoneNumbersController {
     const { id } = req.user;
     const data = await this.phoneNumbersService.getList(id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Phone number list',
       data,
     };
@@ -60,7 +60,7 @@ export class PhoneNumbersController {
     const { id } = param;
     const data = await this.phoneNumbersService.getById(user_id, id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Get phone number',
       data,
     };
@@ -83,7 +83,7 @@ export class PhoneNumbersController {
     const { id } = param;
     const data = await this.phoneNumbersService.update(user_id, id, body);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Phone number has been updated successfully',
       data,
     };
@@ -101,7 +101,7 @@ export class PhoneNumbersController {
     const {id} = param;
     const data = await this.phoneNumbersService.destroy(user_id, id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Phone number has been removed successfully',
       data
     }

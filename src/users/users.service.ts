@@ -25,6 +25,7 @@ export class UsersService {
     data.username = username;
     data.email = email;
     await this.checkEmail(email);
+    await this.checkUsernameLogin(username);
     const user = await this.Users.create(data);
     const token = this.getToken(user.id,'verify_email');
     return this.sendVerificationEmail(data.email, token);
@@ -62,6 +63,11 @@ export class UsersService {
   }
   async checkUsername(id, username) {
     const check = await this.Users.findOne({where: {username, id: {[Op.ne]: id}}});
+    if (check) throw new HttpException('Username already use', HttpStatus.BAD_REQUEST);
+    return true;
+  }
+  async checkUsernameLogin(username) {
+    const check = await this.Users.findOne({where: {username}});
     if (check) throw new HttpException('Username already use', HttpStatus.BAD_REQUEST);
     return true;
   }

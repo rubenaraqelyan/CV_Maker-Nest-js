@@ -46,7 +46,7 @@ export class UsersController {
   async signUp(@Body() body: UserDto) {
     const data = await this.usersService.signUp(body);
     return {
-      status: 'success',
+      statusCode: 201,
       message: 'Verification has been sent to email',
       data
     }
@@ -59,7 +59,7 @@ export class UsersController {
     const data = await this.usersService.signIn(body);
     const token = this.usersService.getToken(data.id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'User has successfully login',
       data,
       token,
@@ -73,7 +73,7 @@ export class UsersController {
     const {id} = req.user;
     const data = await this.usersService.getUserById(id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Current user',
       data,
     };
@@ -87,7 +87,7 @@ export class UsersController {
     const {id} = req.user;
     const data = await this.usersService.update(id, body);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'User info has been updated successfully ',
       data,
     };
@@ -101,7 +101,7 @@ export class UsersController {
     const {id} = req.user;
     await this.usersService.updatePassword(id, body);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Password has been updated successfully',
     };
   }
@@ -116,7 +116,7 @@ export class UsersController {
     const id = await this.usersService.verifyToken(token, 'verify_email');
     const data = await this.usersService.verifyEmail(id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'User has been verified successfully',
       data
     };
@@ -128,7 +128,7 @@ export class UsersController {
   async forgotPassword(@Body() body: forgotPassword) {
     await this.usersService.sendForgotCodeToEmail(body.email);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Verification code has sent to your email',
     };
   }
@@ -139,7 +139,7 @@ export class UsersController {
   async acceptCodeForgotPassword(@Req() req: RequestType, @Body() body: acceptCodeForgotPassword) {
     await this.usersService.acceptCodeForgotPassword(body);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Password was changed',
     };
   }
@@ -158,7 +158,7 @@ export class UsersController {
     const {id} = req.user;
     const data = await this.usersService.uploadAvatar(id, file);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Avatar has ben uploaded',
       data
     };
@@ -171,7 +171,7 @@ export class UsersController {
     const {name, email} = req.user;
     const data = await this.usersService.createCustomer({name, email});
     return {
-      statusCode: 'success',
+      statusCode: 200,
       message: 'Customer has ben created',
       data,
     };

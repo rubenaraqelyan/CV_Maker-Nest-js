@@ -22,7 +22,7 @@ export class AuthController {
     const {id} = req.user;
     const token = this.usersService.getToken(id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Google social login',
       data: {token}
     };

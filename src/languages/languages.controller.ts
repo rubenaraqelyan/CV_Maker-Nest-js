@@ -19,7 +19,7 @@ export class LanguagesController {
     const {id} = req.user;
     const data = await this.languageService.create(id, body);
     return {
-      status: 'success',
+      statusCode: 201,
       message: 'Language has been created successfully',
       data
     }
@@ -32,7 +32,7 @@ export class LanguagesController {
     const {id} = req.user;
     const data = await this.languageService.getList(id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Language list',
       data
     }
@@ -50,7 +50,7 @@ export class LanguagesController {
     const {id} = param;
     const data = await this.languageService.getById(user_id, id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Get language',
       data
     }
@@ -69,7 +69,7 @@ export class LanguagesController {
     const {id} = param;
     const data = await this.languageService.update(user_id, id, body);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Language has been updated successfully',
       data
     }
@@ -87,7 +87,7 @@ export class LanguagesController {
     const {id} = param;
     const data = await this.languageService.destroy(user_id, id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Language has been removed successfully',
       data
     }

@@ -20,7 +20,7 @@ export class BiosController {
     const {id} = req.user;
     const data = await this.biosService.create(id, body);
     return {
-      status: 'success',
+      statusCode: 201,
       message: 'Bio has been created successfully',
       data
     }
@@ -33,7 +33,7 @@ export class BiosController {
     const {id} = req.user;
     const data = await this.biosService.getList(id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Bios list',
       data
     }
@@ -51,7 +51,7 @@ export class BiosController {
     const {id} = param;
     const data = await this.biosService.getById(user_id, id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Get bio',
       data
     }
@@ -70,7 +70,7 @@ export class BiosController {
     const {id} = param;
     const data = await this.biosService.update(user_id, id, body);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Bio has been updated successfully',
       data
     }
@@ -88,7 +88,7 @@ export class BiosController {
     const {id} = param;
     const data = await this.biosService.destroy(user_id, id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Bio has been removed successfully',
       data
     }

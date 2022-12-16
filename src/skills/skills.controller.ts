@@ -21,7 +21,7 @@ export class SkillsController {
     const {id} = req.user;
     const data = await this.skillsService.create(id, body);
     return {
-      status: 'success',
+      statusCode: 201,
       message: 'Skill has been created successfully',
       data
     }
@@ -34,7 +34,7 @@ export class SkillsController {
     const {id} = req.user;
     const data = await this.skillsService.getList(id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Skills list',
       data
     }
@@ -52,7 +52,7 @@ export class SkillsController {
     const {id} = param;
     const data = await this.skillsService.getById(user_id, id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Get skill',
       data
     }
@@ -71,7 +71,7 @@ export class SkillsController {
     const {id} = param;
     const data = await this.skillsService.update(user_id, id, body);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Skill has been updated successfully',
       data
     }
@@ -89,7 +89,7 @@ export class SkillsController {
     const {id} = param;
     const data = await this.skillsService.destroy(user_id, id);
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Skill has been removed successfully',
       data
     }

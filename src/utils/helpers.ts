@@ -2,8 +2,9 @@ import * as bcrypt from 'bcrypt'
 import * as _ from "lodash";
 import * as fs from "fs";
 import * as path from "path";
+import * as sharp from "sharp";
 import {HttpException, HttpStatus} from "@nestjs/common";
-import {imageMimeTypes} from "./constanst";
+import {avatarImage, imageMimeTypes} from "./constanst";
 import {File} from "../dto/main.dto";
 
 const hashPassword = async (password: string) => await bcrypt.hash(password, 11);
@@ -18,16 +19,19 @@ const validateImage = (file) => {
   if (!extension) throw new HttpException('Image type error', HttpStatus.UNPROCESSABLE_ENTITY);
   return extension;
 }
-const writeImage = (fileName: string, file: File) => {
-  const extension = validateImage(file);
-  const folderName = 'avatars';
-  const direction = path.resolve('public', folderName);
+const writeImage = async (fileName: string, file: File) => {
+  validateImage(file);
+  const direction = path.resolve('public', avatarImage.folderName);
   if (!fs.existsSync(direction)) {
     fs.mkdirSync(direction, {recursive: true});
   }
-  const writeDirection = path.join(direction, fileName) + extension;
-  const image = path.join(folderName, fileName) + extension;
+  const writeDirection = path.join(direction, fileName) + avatarImage.extension;
+  const image = path.join(avatarImage.folderName, fileName) + avatarImage.extension;
   fs.writeFileSync(writeDirection,file.buffer);
+  await sharp(file.buffer)
+    .resize(avatarImage.width, avatarImage.height)
+    .toFormat(avatarImage.format)
+    .toFile(writeDirection);
   return {image};
 }
 

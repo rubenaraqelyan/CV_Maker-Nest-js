@@ -7,5 +7,12 @@ const imageMimeTypes = {
   'image/tiff': '.tiff',
   "image/heif": ".heif",
 }
+const avatarImage = {
+  folderName:'avatars',
+  extension: '.webp',
+  format: 'webp',
+  width: 800,
+  height: 800,
+}
 
-export {imageMimeTypes};
+export {imageMimeTypes, avatarImage};

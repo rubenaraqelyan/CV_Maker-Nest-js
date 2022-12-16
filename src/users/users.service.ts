@@ -101,7 +101,7 @@ export class UsersService {
     return this.updatePassword(user.id, {password: data.password});
   }
   async uploadAvatar(id, file) {
-    const data = writeImage(id, file);
+    const data = await writeImage(id, file);
     await this.Users.update(data,{where: {id}});
     return data;
   }

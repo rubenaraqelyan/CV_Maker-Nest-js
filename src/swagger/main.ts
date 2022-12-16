@@ -1,6 +1,6 @@
 const response = {
   status: {
-    type: "number"
+    type: "string"
   }
 ,
   message: {

@@ -135,7 +135,7 @@ export class UsersService {
     const checkCustomer = await this.checkCustomer(data);
     if (checkCustomer?.customer_id) return checkCustomer;
     const customer: Stripe.Customer = await this.stripe.customers.create(data);
-    await this.updateCustomer(customer.id,data);
+    await this.updateCustomer(customer.id, data);
     checkCustomer.customer_id = customer.id;
     return checkCustomer;
   }

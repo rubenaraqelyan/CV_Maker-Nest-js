@@ -3,7 +3,6 @@ import {Stripe} from "stripe";
 import {STRIPE_CLIENT} from "../utils/constanst";
 const {STRIPE_SECRET_KEY} = process.env;
 
-
 @Module({})
 export class StripeModule {
   static forRoot(): DynamicModule {

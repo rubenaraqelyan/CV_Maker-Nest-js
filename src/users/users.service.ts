@@ -39,8 +39,9 @@ export class UsersService {
     const decoded = await JWT.verify(token, JWT_SECRET + prefix);
     return decoded?.id;
   }
-  getUserById(id) {
-    return this.Users.findByPk(id);
+  async getUserById(id) {
+    const user = await this.Users.findByPk(id);
+    return user['dataValues'];
   }
   async update(id, data) {
     const username = data.username.toLowerCase();
@@ -99,7 +100,6 @@ export class UsersService {
     if (!user) throw new HttpException('The entered code is not correct', HttpStatus.BAD_REQUEST);
     return this.updatePassword(user.id, {password: data.password});
   }
-
   async uploadAvatar(id, file) {
     const data = writeImage(id, file);
     await this.Users.update(data,{where: {id}});

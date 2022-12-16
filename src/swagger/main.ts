@@ -9,8 +9,8 @@ const response = {
 }
 const xAuthorization = {
   name: 'x-authorization',
-  description: 'Authorization',
-  required: true
+  description: 'Authorization (if Google oAuth token is not needed)',
+  required: false
 }
 
 const emptyResponse = (description: string) => ({

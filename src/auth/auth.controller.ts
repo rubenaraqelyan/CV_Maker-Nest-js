@@ -3,7 +3,7 @@ import { GoogleAuthGuard } from '../services/GoogleGuard';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {UsersService} from "../users/users.service";
 import {RequestType} from "../dto/main.dto";
-import {OAuthLoginResponse, OAuthRedirectResponse, verifyUserResponse} from "../swagger/users";
+import {OAuthLoginResponse, OAuthRedirectResponse} from "../swagger/users";
 
 @ApiTags('Google OAuth')
 @Controller('auth')
@@ -13,9 +13,7 @@ export class AuthController {
   @Get('google/login')
   @ApiResponse(OAuthLoginResponse)
   @UseGuards(GoogleAuthGuard)
-  handleLogin(@Req() req: RequestType) {
-    console.log(req)
-  }
+  handleLogin() {}
 
   @Get('google/redirect')
   @ApiResponse(OAuthRedirectResponse)

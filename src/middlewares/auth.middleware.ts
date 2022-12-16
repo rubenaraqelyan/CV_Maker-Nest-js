@@ -16,6 +16,9 @@ export class AuthMiddleware implements NestMiddleware {
         req.user = user['dataValues'];
         return next();
       }
+      if (req.user) {
+        return next();
+      }
       next(new HttpException('Forbidden', HttpStatus.FORBIDDEN));
     } catch (e) {
       return next(new HttpException(`${e.name} ${e.message}`, HttpStatus.FORBIDDEN));

@@ -3,7 +3,6 @@ import { STRIPE_CLIENT } from '../utils/constanst';
 import Stripe from 'stripe';
 import { InjectSqlModel } from '../database/inject-model-sql';
 import { payment_methods } from './payment_methods.model';
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 @Injectable()
 export class PaymentMethodService {
   constructor(
@@ -47,15 +46,17 @@ export class PaymentMethodService {
     return this.PaymentMethods.findAll({ where: { user_id } });
   }
   async getById(user_id, id) {
-    const data = await this.PaymentMethods.findOne({where: {user_id, id}});
-    if (!data) throw new HttpException('Payment method not found', HttpStatus.NOT_FOUND)
+    const data = await this.PaymentMethods.findOne({ where: { user_id, id } });
+    if (!data)
+      throw new HttpException('Payment method not found', HttpStatus.NOT_FOUND);
     return data;
   }
 
   async destroy(user_id, id) {
     const data = await this.getById(user_id, id);
-    if (!data) throw new HttpException('Payment method not found', HttpStatus.NOT_FOUND)
-    await this.PaymentMethods.destroy({where: {user_id, id}});
+    if (!data)
+      throw new HttpException('Payment method not found', HttpStatus.NOT_FOUND);
+    await this.PaymentMethods.destroy({ where: { user_id, id } });
     return data;
   }
 }

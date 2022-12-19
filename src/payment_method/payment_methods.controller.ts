@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Post,
   Req,
@@ -23,7 +24,6 @@ import {
   getPaymentMethodResponse,
 } from 'src/swagger/payment_methods';
 import { PaymentMethodService } from './payment_methods.service';
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 @ApiTags('Payment methods')
 @Controller('payment-method')
@@ -45,7 +45,7 @@ export class PaymentMethodController {
       cvc,
     );
     return {
-      status: 'success',
+      statusCode: 200,
       message: 'Payment method has been created successfully',
       data,
     };
@@ -69,17 +69,17 @@ export class PaymentMethodController {
   @ApiResponse(createPaymentMethodResponse)
   @ApiParam({
     name: 'id',
-    type: 'string'
+    type: 'string',
   })
-  async getById(@Req() req: RequestType, @Param() param: uuId){
-    const {id: user_id} = req.user;
-    const {id} = param;
+  async getById(@Req() req: RequestType, @Param() param: uuId) {
+    const { id: user_id } = req.user;
+    const { id } = param;
     const data = await this.paymentMethodsService.getById(user_id, id);
     return {
       statusCode: 200,
       message: 'Get Payment method',
-      data
-    }
+      data,
+    };
   }
 
   @Delete('/:id')

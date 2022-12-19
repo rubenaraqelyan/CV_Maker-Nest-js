@@ -3,9 +3,11 @@ import * as _ from "lodash";
 import * as fs from "fs";
 import * as path from "path";
 import * as sharp from "sharp";
-import {HttpException, HttpStatus} from "@nestjs/common";
+import * as ejs from "ejs";
+import {HttpException, HttpStatus, UnprocessableEntityException} from "@nestjs/common";
 import {avatarImage, imageMimeTypes} from "./constanst";
 import {File} from "../dto/main.dto";
+import {ValidationError} from "class-validator";
 
 const hashPassword = async (password: string) => await bcrypt.hash(password, 11);
 
@@ -35,8 +37,28 @@ const writeImage = async (fileName: string, file: File) => {
   return {image};
 }
 
+const buildErrorObject = (errors: ValidationError[]) => {
+  const messages = errors.map(e => {
+    const constraints = {};
+    for (const rule in e?.constraints) {
+      constraints[e?.property] = {
+        message: e?.constraints[rule],
+        rule
+      }
+    }
+    return constraints
+  })
+  return new UnprocessableEntityException(messages)
+}
+
+const renderHtmlFile = async (direction, options) => {
+  return ejs.renderFile(direction, options);
+}
+
 export {
   hashPassword,
   checkPassword,
-  writeImage
+  writeImage,
+  buildErrorObject,
+  renderHtmlFile
 }

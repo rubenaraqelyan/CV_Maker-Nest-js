@@ -11,21 +11,14 @@ export class PaymentMethodService {
     private PaymentMethods: typeof payment_methods,
   ) {}
 
-  async createPaymentMethod(
-    user_id,
-    type,
-    card_number,
-    exp_month,
-    exp_year,
-    cvc,
-  ) {
+  async createPaymentMethod(user_id, type, number, exp_month, exp_year, cvc) {
     const paymentMethod = await this.stripe.paymentMethods.create({
-      type: type,
+      type,
       card: {
-        number: card_number,
-        exp_month: exp_month,
-        exp_year: exp_year,
-        cvc: cvc,
+        number,
+        exp_month,
+        exp_year,
+        cvc,
       },
     });
     if (paymentMethod) {

@@ -106,13 +106,13 @@ export class UsersController {
     };
   }
 
-  @Put('/email-verify/:token')
+  @Get('/email-verify/:token')
   @ApiParam({
     name: 'token',
     type: 'string'
   })
   @ApiResponse(verifyUserResponse)
-  async verifyUser(@Req() req: RequestType, @Param('token') token: string) {
+  async verifyUser(@Param('token') token: string) {
     const id = await this.usersService.verifyToken(token, 'verify_email');
     const data = await this.usersService.verifyEmail(id);
     return {

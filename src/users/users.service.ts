@@ -3,13 +3,14 @@ import * as JWT from 'jsonwebtoken';
 import * as uniq from 'uniqid';
 import { users } from './users.model';
 import { InjectSqlModel } from '../database/inject-model-sql';
-const {JWT_SECRET, BASE_API} = process.env
-import {checkPassword, hashPassword, writeImage} from "../utils/helpers";
+const {JWT_SECRET} = process.env;
+import {checkPassword, hashPassword, renderHtmlFile, writeImage} from "../utils/helpers";
 import Email from "../services/Email";
 import {Op} from "sequelize";
 import {authData} from "../dto/auth.dto";
-import {STRIPE_CLIENT} from "../utils/constanst";
+import {options, STRIPE_CLIENT} from "../utils/constanst";
 import Stripe from "stripe";
+import * as path from "path";
 
 @Injectable()
 export class UsersService {
@@ -82,7 +83,8 @@ export class UsersService {
     return user;
   }
   async sendVerificationEmail(email, token) {
-    const html = `<h1>CV Maker</h1><div><a href=${BASE_API}/user/email-verify/${token}>Click to confirm verification</a></div>`;
+    const direction = path.resolve('src','emailTemplates','verification.html');
+    const html = await renderHtmlFile(direction, options(email, token));
     await Email.send(email, 'Please verify your email', html);
   }
   async verifyEmail(id) {

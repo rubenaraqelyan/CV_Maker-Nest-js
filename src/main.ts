@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 const { NODE_ENV, PORT, BASE_URL, SESSION_SECRET } = process.env;
-import { ValidationPipe } from '@nestjs/common';
+import {ValidationPipe} from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -10,6 +10,7 @@ import * as session from 'express-session';
 import * as passport from 'passport';
 import * as packageJson from '../package.json';
 import { join } from 'path';
+import {buildErrorObject} from "./utils/helpers";
 const SWAGGER_URL = 'docs';
 
 async function bootstrap() {
@@ -41,6 +42,7 @@ async function bootstrap() {
       transform: true,
       whitelist: true,
       forbidNonWhitelisted: true,
+      exceptionFactory: buildErrorObject
     }),
   );
 

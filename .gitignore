@@ -7,6 +7,8 @@
 node_modules/
 dist/
 yarn.lock
+.env
+.gitignore
 
 # Compiled Java class files
 *.class
@@ -48,6 +50,3 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-
-.env
-.gitignore

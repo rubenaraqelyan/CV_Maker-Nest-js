@@ -8,6 +8,9 @@ import {certificates} from "../certificates/certificates.model";
 import {educations} from "../educations/educations.model";
 import { phone_numbers } from 'src/phone_numbers/phone_numbers.model';
 import {payment_methods} from "../payment_method/payment_methods.model";
+import {plans} from "../plans/plans.model";
+import {users_plans} from "../plans/users_plans.model";
+import {subscriptions} from "../subscriptions/subscriptions.model";
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
 export default class Sequelize {
@@ -34,6 +37,9 @@ export default class Sequelize {
         educations,
         phone_numbers,
         payment_methods,
+        plans,
+        users_plans,
+        subscriptions
       ],
     });
   }

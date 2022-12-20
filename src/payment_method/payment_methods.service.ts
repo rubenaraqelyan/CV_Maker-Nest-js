@@ -23,16 +23,14 @@ export class PaymentMethodService {
     });
     if (paymentMethod) {
       const pm_id = paymentMethod.id;
-      const createPaymentMethodDb = this.PaymentMethods.create({
+      return this.PaymentMethods.create({
         user_id,
         pm_id,
         exp_month,
         exp_year,
       });
-      return createPaymentMethodDb;
-    } else {
-      throw new HttpException('Invalid payment method', HttpStatus.BAD_REQUEST);
     }
+    throw new HttpException('Invalid payment method', HttpStatus.BAD_REQUEST);
   }
 
   async getList(user_id) {

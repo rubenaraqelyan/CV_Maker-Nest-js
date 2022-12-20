@@ -1,7 +1,8 @@
-import {Table, Column, Model, DataType, ForeignKey, HasMany, BelongsTo} from 'sequelize-typescript';
+import {Table, Column, Model, DataType, ForeignKey, HasMany, BelongsTo, BelongsToMany} from 'sequelize-typescript';
 import {users} from "../users/users.model";
+import {plans} from "./plans.model";
 @Table
-export class languages extends Model {
+export class users_plans extends Model {
   @Column({
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,
@@ -18,19 +19,18 @@ export class languages extends Model {
   })
   user_id: string;
 
+  @ForeignKey(() => plans)
   @Column({
-    type: DataType.STRING(255),
+    type: DataType.UUID,
     allowNull: false,
-  },)
-  language: string;
-
-  @Column({
-    type: DataType.STRING(255),
-    allowNull: false,
-  },)
-  level: string;
+    field: 'plan_id'
+  })
+  plan_id: string;
 
   @BelongsTo(() => users)
-  users: users;
+  user: users;
+
+  @BelongsTo(() => plans)
+  plan: plans;
 
 }

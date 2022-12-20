@@ -1,4 +1,3 @@
-import {ApiProperty} from "@nestjs/swagger";
 import {IsNotEmpty, IsString, IsUUID} from "class-validator";
 import { NextFunction, Request, Response } from 'express';
 

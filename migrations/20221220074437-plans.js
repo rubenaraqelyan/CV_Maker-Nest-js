@@ -38,6 +38,11 @@ module.exports = {
           allowNull: false,
           defaultValue: 0
         },
+        product_id: {
+          type: Sequelize.STRING(255),
+          allowNull: true,
+          defaultValue: null
+        },
         price_id: {
           type: Sequelize.STRING(255),
           allowNull: true,

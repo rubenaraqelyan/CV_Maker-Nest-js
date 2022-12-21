@@ -5,10 +5,16 @@ import {SequelizeModule} from "@nestjs/sequelize";
 import {plans} from "./plans.model";
 import {users_plans} from "./users_plans.model";
 import {users} from "../users/users.model";
-import {languages} from "../languages/languages.model";
+import {StripeModule} from "../services/Stripe.module";
+import {PaymentMethodModule} from "../payment_method/payment_methods.module";
+import {subscriptions} from "./subscriptions.model";
 
 @Module({
-  imports: [SequelizeModule.forFeature([users, plans, users_plans, languages])],
+  imports: [
+    StripeModule.forRoot(),
+    SequelizeModule.forFeature([users, plans, users_plans, subscriptions]),
+    PaymentMethodModule
+  ],
   controllers: [PlansController],
   providers: [PlansService]
 })

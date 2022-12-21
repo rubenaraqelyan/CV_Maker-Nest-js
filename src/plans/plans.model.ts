@@ -44,6 +44,13 @@ export class plans extends Model {
     allowNull: true,
     defaultValue: null
   },)
+  product_id: string;
+
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: true,
+    defaultValue: null
+  },)
   price_id: string;
 
   @BelongsToMany(() => users, () => users_plans,'plan_id')

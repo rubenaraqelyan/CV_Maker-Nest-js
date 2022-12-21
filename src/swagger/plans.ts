@@ -16,10 +16,6 @@ const createPlanBody = {
       price: {
         type: "number"
       },
-      price_id: {
-        type: "string",
-        require: "false"
-      }
     }
   }
 };
@@ -43,14 +39,15 @@ const createPlanResponse = {
           },
           disabled: {
             type: "boolean",
-            required: "false"
           },
           price: {
             type: "number"
           },
+          product_id: {
+            type: "string",
+          },
           price_id: {
             type: "string",
-            required: "false"
           }
         },
       }
@@ -79,14 +76,15 @@ const getPlanResponse = {
             },
             disabled: {
               type: "boolean",
-              required: "false"
             },
             price: {
               type: "number"
             },
+            product_id: {
+              type: "string",
+            },
             price_id: {
               type: "string",
-              required: "false"
             }
           },
         }
@@ -117,6 +115,9 @@ const connectPlanResponse = {
           },
           price: {
             type: "string"
+          },
+          product_id: {
+            type: "string",
           },
           price_id: {
             type: "string"

@@ -20,8 +20,4 @@ export class plan {
   @IsNumber()
   readonly price: number;
 
-  @IsOptional()
-  @IsString()
-  readonly price_id: string;
-
 }

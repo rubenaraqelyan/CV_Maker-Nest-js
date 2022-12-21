@@ -5,18 +5,21 @@ import {xAuthorization} from "../swagger/main";
 import {RequestType, uuId} from "../dto/main.dto";
 import {plan} from "../dto/plans.dto";
 import {createPlanBody, createPlanResponse, getPlanResponse} from "../swagger/plans";
+import {PaymentMethodService} from "../payment_method/payment_methods.service";
 
 @ApiTags('Plans')
 @Controller('plan')
 export class PlansController {
-  constructor(private readonly planService: PlansService) {}
+  constructor(
+    private readonly planService: PlansService,
+    private readonly paymentMethodService: PaymentMethodService,
+  ) {}
   @Post('/')
   @ApiHeader(xAuthorization)
   @ApiResponse(createPlanResponse)
   @ApiBody(createPlanBody)
   async create(@Req() req: RequestType, @Body() body: plan){
-    const {id} = req.user;
-    const data = await this.planService.create(id, body);
+    const data = await this.planService.create(body);
     return {
       statusCode: 201,
       message: 'Plan has been created successfully',
@@ -108,10 +111,13 @@ export class PlansController {
     name: 'id',
     type: 'string'
   })
-  async connectPlan(@Req() req: RequestType, @Param() param: uuId){
-    const {id: user_id} = req.user;
-    const {id} = param;
-    const data = await this.planService.connectPlan(user_id, id);
+  async connectPlan(@Req() req: RequestType, @Body() body: uuId, @Param() param: uuId){
+    const {id: user_id, name, email} = req.user;
+    const {id: plan_id} = param;
+    const {id: payment_method_id} = body;
+    const {customer_id: customer} = await this.paymentMethodService.getCustomer({name, email});
+    const {pm_id} = await this.paymentMethodService.getById(user_id, payment_method_id);
+    const data = await this.planService.connectPlan({user_id, customer, plan_id, pm_id});
     return {
       statusCode: 200,
       message: 'Plan has been connected successfully',

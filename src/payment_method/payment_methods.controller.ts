@@ -33,16 +33,18 @@ export class PaymentMethodController {
   @ApiBody(createPaymentMethodBody)
   @ApiResponse(createPaymentMethodResponse)
   async create(@Req() req: RequestType, @Body() body: payment_method) {
-    const { type, card_number, exp_month, exp_year, cvc } = body;
-    const { id } = req.user;
-    const data = await this.paymentMethodsService.createPaymentMethod(
-      id,
+    const { type, card_number: number, exp_month, exp_year, cvc } = body;
+    const {id: user_id, name, email} = req.user;
+    const {customer_id: customer} = await this.paymentMethodsService.getCustomer({name, email});
+    const data = await this.paymentMethodsService.createPaymentMethod({
+      user_id,
+      customer,
       type,
-      card_number,
+      number,
       exp_month,
       exp_year,
       cvc,
-    );
+  });
     return {
       statusCode: 200,
       message: 'Payment method has been created successfully',

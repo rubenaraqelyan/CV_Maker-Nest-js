@@ -164,17 +164,4 @@ export class UsersController {
     };
   }
 
-  @ApiHeader(xAuthorization)
-  @ApiResponse(updateResponse)
-  @Post('/customer')
-  async createCustomer(@Req() req: RequestType) {
-    const {name, email} = req.user;
-    const data = await this.usersService.createCustomer({name, email});
-    return {
-      statusCode: 200,
-      message: 'Customer has ben created',
-      data,
-    };
-  }
-
 }

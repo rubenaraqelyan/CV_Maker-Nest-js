@@ -126,23 +126,4 @@ export class UsersService {
     return user['dataValues'];
   }
 
-  async checkCustomer(data) {
-    return this.Users.findOne(data);
-  }
-
-  async updateCustomer(customer_id, data) {
-    return this.Users.update({customer_id}, {where: data});
-  }
-
-  async createCustomer(data) {
-    const customerDB = await this.checkCustomer(data);
-    const customer_id = customerDB.customer_id;
-    const checkInStripe = await this.stripe.customers.retrieve(customer_id).catch((e) => console.info('createCustomer -> ⚠-Customer not found-⚠'));
-    if (customer_id && checkInStripe) return customerDB;
-    const customer: Stripe.Customer = await this.stripe.customers.create(data);
-    await this.updateCustomer(customer.id, data);
-    customerDB.customer_id = customer.id;
-    return customerDB;
-  }
-
 }

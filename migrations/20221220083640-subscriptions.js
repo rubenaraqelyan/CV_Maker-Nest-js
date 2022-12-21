@@ -37,13 +37,23 @@ module.exports = {
           allowNull: false,
           // stripe subscription id
         },
-        exp_date: {
-          type: Sequelize.STRING(255),
+        expired: {
+          type: "TIMESTAMP",
           allowNull: false,
           // stripe
         },
         status: {
           type: Sequelize.STRING(255),
+          allowNull: false,
+          // stripe
+        },
+        discount: {
+          type: Sequelize.FLOAT,
+          allowNull: true,
+          // stripe
+        },
+        cancel_at: {
+          type: Sequelize.BOOLEAN,
           allowNull: false,
           // stripe
         },

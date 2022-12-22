@@ -5,7 +5,9 @@ import {users_plans} from "./users_plans.model";
 import {users} from "../users/users.model";
 import {subscriptions} from "./subscriptions.model";
 import {STRIPE_CLIENT} from "../utils/constanst";
+const {STRIPE_WEBHOOK_REVEAL} = process.env;
 import Stripe from "stripe";
+import {UsersService} from "../users/users.service";
 
 @Injectable()
 export class PlansService {
@@ -15,6 +17,7 @@ export class PlansService {
     @InjectSqlModel(users_plans) private UsersPlans: typeof users_plans,
     @InjectSqlModel(users) private Users: typeof users,
     @InjectSqlModel(subscriptions) private Subscriptions: typeof subscriptions,
+    // private readonly usersService: UsersService
   ) {
   }
 
@@ -84,17 +87,21 @@ export class PlansService {
     return data;
   }
 
-  async connectedPlan(user_id, plan_id) {
-    return this.UsersPlans.findOne({
-      where: {user_id, plan_id},
-      attributes: {exclude: ['user_id', 'plan_id']},
-      include: [
-        {
-          model: plans,
-          attributes: {exclude: ['user_id', 'plan_id']},
-        }
-      ]
-    });
+  async connectedPlan(event) {
+    const {customer} = event.object;
+    // const a = await this.usersService.getUserByCustomer(customer);
+
+    // await this.UsersPlans.create({user_id, plan_id});
+    // return this.UsersPlans.findOne({
+    //   where: {user_id, plan_id},
+    //   attributes: {exclude: ['user_id', 'plan_id']},
+    //   include: [
+    //     {
+    //       model: plans,
+    //       attributes: {exclude: ['user_id', 'plan_id']},
+    //     }
+    //   ]
+    // });
   }
 
   async connectedPlans(user_id) {
@@ -110,10 +117,9 @@ export class PlansService {
     });
   }
 
-  async connectPlan({user_id, customer, plan_id, pm_id}) {
+  async subscribePlan({user_id, customer, plan_id, pm_id}) {
     try {
       const {price_id: price, price: amount} = await this.getById(plan_id);
-      console.log(8888, pm_id)
       const sub = await this.stripe.subscriptions.create({
         customer,
         items: [{price}],
@@ -142,17 +148,34 @@ export class PlansService {
         cancel_at: sub.cancel_at_period_end
       })
 
-      // await this.UsersPlans.create({user_id, plan_id});
-      // return this.connectedPlan(user_id, plan_id);
     } catch (e) {
-      console.log(e)
       throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
     }
   }
 
+  async webhook(req){
+    const event = await this.stripe.webhooks.constructEvent(
+      req.rawBody,
+      req.headers['stripe-signature'],
+      STRIPE_WEBHOOK_REVEAL
+    );
+    // switch(event.type) {
+    //   case x: return await this.connectedPlan(event)
+    //   case y:
+    //     // code block
+    //     break;
+    //   default: return
+    // }
+    console.log(event)
+    // await this.UsersPlans.create({user_id, plan_id});
+    // return this.connectedPlan(user_id, plan_id);
+  }
+
+
+
   async disconnectPlan(user_id, plan_id) {
     await this.UsersPlans.destroy({where: {user_id, plan_id}});
-    return this.connectedPlan(user_id, plan_id);
+    // return this.connectedPlan(user_id, plan_id);
   }
 
 }

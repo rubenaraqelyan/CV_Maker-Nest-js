@@ -50,6 +50,8 @@ export class AppModule implements NestModule {
         { path: '/user/email-verify/:token', method: RequestMethod.GET },
         { path: '/auth/google/login', method: RequestMethod.GET },
         { path: '/auth/google/redirect', method: RequestMethod.GET },
+        { path: '/plan/webhook', method: RequestMethod.POST },
+        { path: '/plan/webhook', method: RequestMethod.GET },
       ).forRoutes('*');
   }
 }

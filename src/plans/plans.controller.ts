@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, Req} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, RawBodyRequest, Req} from '@nestjs/common';
 import {ApiBody, ApiHeader, ApiParam, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {PlansService} from "./plans.service";
 import {xAuthorization} from "../swagger/main";
@@ -111,16 +111,16 @@ export class PlansController {
     name: 'id',
     type: 'string'
   })
-  async connectPlan(@Req() req: RequestType, @Body() body: uuId, @Param() param: uuId){
+  async subscribePlan(@Req() req: RequestType, @Body() body: uuId, @Param() param: uuId){
     const {id: user_id, name, email} = req.user;
     const {id: plan_id} = param;
     const {id: payment_method_id} = body;
     const {customer_id: customer} = await this.paymentMethodService.getCustomer({name, email});
     const {pm_id} = await this.paymentMethodService.getById(user_id, payment_method_id);
-    const data = await this.planService.connectPlan({user_id, customer, plan_id, pm_id});
+    const data = await this.planService.subscribePlan({user_id, customer, plan_id, pm_id});
     return {
       statusCode: 200,
-      message: 'Plan has been connected successfully',
+      message: 'Plan has been subscribe successfully',
       data
     }
   }
@@ -141,6 +141,11 @@ export class PlansController {
       message: 'Plan has been disconnect successfully',
       data
     }
+  }
+
+  @Post('/webhook')
+  async webhook(@Req() req: RawBodyRequest<Request>) {
+    await this.planService.webhook(req)
   }
 
 }

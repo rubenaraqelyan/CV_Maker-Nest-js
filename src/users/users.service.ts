@@ -126,4 +126,9 @@ export class UsersService {
     return user['dataValues'];
   }
 
+  async getUserByCustomer(customer_id) {
+    const user = await this.Users.findOne({where: customer_id});
+    console.log(user)
+  }
+
 }

@@ -52,7 +52,6 @@ export class UsersController {
         data
       }
     } catch (e) {
-      console.log(8888888, e)
       return catchError(e);
     }
   }

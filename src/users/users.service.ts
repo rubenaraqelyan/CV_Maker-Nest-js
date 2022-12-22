@@ -117,7 +117,11 @@ export class UsersService {
   async verifyEmail(id) {
     const user = await this.getUserById(id);
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    if (user.verified_at) throw new HttpException('Your email already verified', HttpStatus.BAD_REQUEST);
+    if (user.verified_at) throw new HttpError({
+      statusCode: HttpStatus.BAD_REQUEST,
+      message: 'Bad request',
+      messages: {email: 'Email already verified'}
+    });
     await this.Users.update({verified_at: new Date()}, {where: {id}});
     const token = this.getToken(id);
     return {token};
@@ -126,7 +130,11 @@ export class UsersService {
   async sendForgotCodeToEmail(email) {
     const forgot_password_code = uniq.time();
     const user = await this.Users.findOne({where: {email}});
-    if (!user) throw new HttpException('Email not found', HttpStatus.NOT_FOUND);
+    if (user) throw new HttpError({
+      statusCode: HttpStatus.NOT_FOUND,
+      message: 'Bad request',
+      messages: {email: 'Email not found'}
+    });
     await this.Users.update({forgot_password_code}, {where: {id: user.id}})
     await this.Users.sequelize.query(`
     create event ${forgot_password_code}

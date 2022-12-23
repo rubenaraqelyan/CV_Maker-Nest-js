@@ -16,7 +16,7 @@ import { phone_numbers } from 'src/phone_numbers/phone_numbers.model';
 import { payment_methods } from 'src/payment_method/payment_methods.model';
 import {plans} from "../plans/plans.model";
 import {users_plans} from "../plans/users_plans.model";
-import {subscriptions} from "../subscriptions/subscriptions.model";
+import {subscriptions} from "../plans/subscriptions.model";
 
 @Table
 export class users extends Model {

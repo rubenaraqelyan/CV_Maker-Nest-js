@@ -1,16 +1,16 @@
 export default class HttpError extends Error {
   statusCode: number;
-  messages: object;
+  messagesGroup: object;
 
-  constructor(props: { statusCode: number, message: string, messages?: object }) {
+  constructor(props: { statusCode: number, message: string, messagesGroup?: object }) {
     super()
-    const {statusCode, message, messages} = props;
+    const {statusCode, message, messagesGroup} = props;
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, HttpError)
     }
     this.statusCode = statusCode;
     this.message = message;
-    this.messages = messages
+    this.messagesGroup = messagesGroup;
     this.name = 'Http error';
   }
 }

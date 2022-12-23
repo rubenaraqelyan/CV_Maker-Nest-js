@@ -39,13 +39,13 @@ const writeImage = async (fileName: string, file: File) => {
 }
 
 const buildErrorObject = (errors: ValidationError[]) => {
-  const messages = {};
-  errors.forEach(e => messages[e.property] = Object.values(e.constraints)[0]);
+  const messagesGroup = {};
+  errors.forEach(e => messagesGroup[e.property] = Object.values(e.constraints)[0]);
 
   return new UnprocessableEntityException({
     statusCode: HttpStatus.UNPROCESSABLE_ENTITY,
     message: 'Validation error',
-    messages: messages
+    messagesGroup
   })
 }
 

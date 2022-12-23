@@ -13,6 +13,7 @@ import {
   subscribeToggleBody
 } from "../swagger/plans";
 import {PaymentMethodService} from "../payment_method/payment_methods.service";
+import {catchError} from "../utils/helpers";
 
 @ApiTags('Plans')
 @Controller('plan')
@@ -29,12 +30,12 @@ export class PlansController {
     try {
       const data = await this.planService.create(body);
       return {
-        statusCode: 201,
+        status: 201,
         message: 'Plan has been created successfully',
         data
       }
     } catch (e) {
-
+      return catchError(e);
     }
   }
 
@@ -45,12 +46,12 @@ export class PlansController {
     try {
       const data = await this.planService.getList();
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Plans list',
         data
       }
     } catch (e) {
-
+      return catchError(e);
     }
   }
 
@@ -62,12 +63,12 @@ export class PlansController {
       const {id} = req.user;
       const data = await this.planService.connectedPlans(id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Connected plans list',
         data
       }
     } catch (e) {
-
+      return catchError(e);
     }
   }
 
@@ -83,12 +84,12 @@ export class PlansController {
       const {id} = param;
       const data = await this.planService.getById(id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Get Plan',
         data
       }
     } catch (e) {
-
+      return catchError(e);
     }
   }
 
@@ -105,12 +106,12 @@ export class PlansController {
       const {id} = param;
       const data = await this.planService.update(id, body);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Plan has been updated successfully',
         data
       }
     } catch (e) {
-
+      return catchError(e);
     }
   }
 
@@ -126,12 +127,12 @@ export class PlansController {
       const {id} = param;
       const data = await this.planService.destroy(id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Plan has been removed successfully',
         data
       }
     } catch (e) {
-
+      return catchError(e);
     }
   }
 
@@ -152,12 +153,12 @@ export class PlansController {
       const {pm_id} = await this.paymentMethodService.getById(user_id, payment_method_id);
       const data = await this.planService.subscribe({user_id, customer, plan_id, pm_id});
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Plan has been subscribe successfully',
         data
       }
     } catch (e) {
-
+      return catchError(e);
     }
   }
 
@@ -176,11 +177,11 @@ export class PlansController {
       const {cancel_at} = body;
       await this.planService.subscribeToggle({user_id, plan_id, cancel_at});
       return {
-        statusCode: 200,
+        status: 200,
         message: `Plan has been ${cancel_at ? 'subscribe' : 'unsubscribe'} successfully`,
       }
     } catch (e) {
-
+      return catchError(e);
     }
   }
 
@@ -197,12 +198,12 @@ export class PlansController {
       const {id: plan_id} = param;
       const data = await this.planService.subscribeDelete({user_id, plan_id});
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Plan has been disconnect successfully',
         data
       }
     } catch (e) {
-
+      return catchError(e);
     }
   }
 

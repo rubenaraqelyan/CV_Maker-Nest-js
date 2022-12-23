@@ -11,15 +11,15 @@ import {authData} from "../dto/auth.dto";
 import {options, STRIPE_CLIENT} from "../utils/constanst";
 import Stripe from "stripe";
 import * as path from "path";
+import HttpError from "../utils/HttpError";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectSqlModel(users) private Users: typeof users,
     @Inject(STRIPE_CLIENT) private stripe: Stripe,
-  ) {
-  }
 
+  ) {}
   async signUp(data) {
     data.password = await hashPassword(data.password);
     const username = data.username.toLowerCase();
@@ -72,19 +72,31 @@ export class UsersService {
 
   async checkUsername(id, username) {
     const check = await this.Users.findOne({where: {username, id: {[Op.ne]: id}}});
-    if (check) throw new HttpException('Username already use', HttpStatus.BAD_REQUEST);
+    if (check) throw new HttpError({
+      status: HttpStatus.BAD_REQUEST,
+      message: 'Bad request',
+      messagesGroup: {username: 'Username already use'}
+    });
     return true;
   }
 
   async checkUsernameLogin(username) {
     const check = await this.Users.findOne({where: {username}});
-    if (check) throw new HttpException('Username already use', HttpStatus.BAD_REQUEST);
+    if (check) throw new HttpError({
+      status: HttpStatus.BAD_REQUEST,
+      message: 'Bad request',
+      messagesGroup: {username: 'Username already use'}
+    });
     return true;
   }
 
   async checkEmail(email) {
     const check = await this.Users.findOne({where: {email}});
-    if (check) throw new HttpException('Email already use', HttpStatus.BAD_REQUEST);
+    if (check) throw new HttpError({
+      status: HttpStatus.BAD_REQUEST,
+      message: 'Bad request',
+      messagesGroup: {email: 'Email already use'}
+    });
     return true;
   }
 
@@ -95,7 +107,7 @@ export class UsersService {
   }
 
   async sendVerificationEmail(email, token) {
-    const direction = path.resolve('src', 'emailTemplates', 'verification.html');
+    const direction = path.resolve('src','emailTemplates','verification.html');
     const html = await renderHtmlFile(direction, options(email, token));
     await Email.send(email, 'Please verify your email', html);
   }
@@ -103,16 +115,23 @@ export class UsersService {
   async verifyEmail(id) {
     const user = await this.getUserById(id);
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    if (user.verified_at) throw new HttpException('Your email already verified', HttpStatus.BAD_REQUEST);
+    if (user.verified_at) throw new HttpError({
+      status: HttpStatus.BAD_REQUEST,
+      message: 'Bad request',
+      messagesGroup: {email: 'Email already verified'}
+    });
     await this.Users.update({verified_at: new Date()}, {where: {id}});
     const token = this.getToken(id);
     return {token};
   }
-
   async sendForgotCodeToEmail(email) {
     const forgot_password_code = uniq.time();
     const user = await this.Users.findOne({where: {email}});
-    if (!user) throw new HttpException('Email not found', HttpStatus.NOT_FOUND);
+    if (user) throw new HttpError({
+      status: HttpStatus.NOT_FOUND,
+      message: 'Bad request',
+      messagesGroup: {email: 'Email not found'}
+    });
     await this.Users.update({forgot_password_code}, {where: {id: user.id}})
     await this.Users.sequelize.query(`
     create event ${forgot_password_code}
@@ -124,7 +143,11 @@ export class UsersService {
 
   async acceptCodeForgotPassword(data) {
     const user = await this.Users.findOne({where: {forgot_password_code: data.code}});
-    if (!user) throw new HttpException('The entered code is not correct', HttpStatus.BAD_REQUEST);
+    if (!user) throw new HttpError({
+      status: HttpStatus.BAD_REQUEST,
+      message: 'Bad request',
+      messagesGroup: {code: 'Code is not correct'}
+    });
     return this.updatePassword(user.id, {password: data.password});
   }
 

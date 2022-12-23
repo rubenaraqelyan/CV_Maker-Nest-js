@@ -15,7 +15,7 @@ describe('AddressesController', () => {
   }
 
   const responseMock = {
-    statusCode: jest.fn(x => statusResponseMock),
+    status: jest.fn(x => statusResponseMock),
     send: jest.fn(x => x)
   } as unknown as Response;
 
@@ -39,7 +39,7 @@ describe('AddressesController', () => {
         country: '',
         zip: ''
       });
-      expect(responseMock.statusCode).toHaveBeenCalledWith(422);
+      expect(responseMock.status).toHaveBeenCalledWith(422);
     });
   })
 });

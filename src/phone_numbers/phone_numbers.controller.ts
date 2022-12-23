@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Req,
+} from '@nestjs/common';
 import {
   ApiBody,
   ApiHeader,
@@ -15,7 +24,7 @@ import {
   createPhoneNumberResponse,
   getPhoneNumbersResponse,
 } from 'src/swagger/phone_numbers';
-
+import { catchError } from '../utils/helpers';
 @ApiTags('Phone numbers')
 @Controller('phone-number')
 export class PhoneNumbersController {
@@ -26,13 +35,17 @@ export class PhoneNumbersController {
   @ApiResponse(createPhoneNumberResponse)
   @ApiBody(createPhoneNumberBody)
   async createPhoneNumber(@Req() req: RequestType, @Body() body: phone_number) {
-    const { id } = req.user;
-    const data = await this.phoneNumbersService.create(id, body);
-    return {
-      statusCode: 201,
-      message: 'Phone number has been created successfully',
-      data,
-    };
+    try {
+      const { id } = req.user;
+      const data = await this.phoneNumbersService.create(id, body);
+      return {
+        status: 201,
+        message: 'Phone number has been created successfully',
+        data,
+      };
+    } catch (e) {
+      return catchError(e);
+    }
   }
 
   @Get('/')
@@ -42,7 +55,7 @@ export class PhoneNumbersController {
     const { id } = req.user;
     const data = await this.phoneNumbersService.getList(id);
     return {
-      statusCode: 200,
+      status: 200,
       message: 'Phone number list',
       data,
     };
@@ -56,14 +69,18 @@ export class PhoneNumbersController {
     type: 'string',
   })
   async getById(@Req() req: RequestType, @Param() param: uuId) {
-    const { id: user_id } = req.user;
-    const { id } = param;
-    const data = await this.phoneNumbersService.getById(user_id, id);
-    return {
-      statusCode: 200,
-      message: 'Get phone number',
-      data,
-    };
+    try {
+      const { id: user_id } = req.user;
+      const { id } = param;
+      const data = await this.phoneNumbersService.getById(user_id, id);
+      return {
+        status: 200,
+        message: 'Get phone number',
+        data,
+      };
+    } catch (e) {
+      return catchError(e);
+    }
   }
 
   @Put('/:id')
@@ -79,14 +96,18 @@ export class PhoneNumbersController {
     @Param() param: uuId,
     @Body() body: phone_number,
   ) {
-    const { id: user_id } = req.user;
-    const { id } = param;
-    const data = await this.phoneNumbersService.update(user_id, id, body);
-    return {
-      statusCode: 200,
-      message: 'Phone number has been updated successfully',
-      data,
-    };
+    try {
+      const { id: user_id } = req.user;
+      const { id } = param;
+      const data = await this.phoneNumbersService.update(user_id, id, body);
+      return {
+        status: 200,
+        message: 'Phone number has been updated successfully',
+        data,
+      };
+    } catch (e) {
+      return catchError(e);
+    }
   }
 
   @Delete('/:id')
@@ -94,16 +115,20 @@ export class PhoneNumbersController {
   @ApiResponse(createPhoneNumberResponse)
   @ApiParam({
     name: 'id',
-    type: 'string'
+    type: 'string',
   })
-  async destroy(@Req() req: RequestType, @Param() param: uuId){
-    const {id: user_id} = req.user;
-    const {id} = param;
-    const data = await this.phoneNumbersService.destroy(user_id, id);
-    return {
-      statusCode: 200,
-      message: 'Phone number has been removed successfully',
-      data
+  async destroy(@Req() req: RequestType, @Param() param: uuId) {
+    try {
+      const { id: user_id } = req.user;
+      const { id } = param;
+      const data = await this.phoneNumbersService.destroy(user_id, id);
+      return {
+        status: 200,
+        message: 'Phone number has been removed successfully',
+        data,
+      };
+    } catch (e) {
+      return catchError(e);
     }
   }
 }

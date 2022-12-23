@@ -38,27 +38,31 @@ const writeImage = async (fileName: string, file: File) => {
 }
 
 const buildErrorObject = (errors: ValidationError[]) => {
-  const messages = errors.map(e => {
-    const constraints = {};
-    for (const rule in e?.constraints) {
-      constraints[e?.property] = {
-        message: e?.constraints[rule],
-        rule
-      }
-    }
-    return constraints
+  const messagesGroup = {};
+  errors.forEach(e => messagesGroup[e.property] = Object.values(e.constraints)[0]);
+
+  return new UnprocessableEntityException({
+    status: HttpStatus.UNPROCESSABLE_ENTITY,
+    message: 'Validation error',
+    messagesGroup
   })
-  return new UnprocessableEntityException(messages)
 }
 
 const renderHtmlFile = async (direction, options) => {
   return ejs.renderFile(direction, options);
 }
 
+const catchError = (e) => ({
+  status: e.status || 500,
+  message: e?.message,
+  messages: e?.messages
+})
+
 export {
   hashPassword,
   checkPassword,
   writeImage,
   buildErrorObject,
-  renderHtmlFile
+  renderHtmlFile,
+  catchError
 }

@@ -23,6 +23,7 @@ import {
   getPaymentMethodResponse,
 } from 'src/swagger/payment_methods';
 import { PaymentMethodService } from './payment_methods.service';
+import {catchError} from "../utils/helpers";
 
 @ApiTags('Payment methods')
 @Controller('payment-method')
@@ -47,12 +48,12 @@ export class PaymentMethodController {
         cvc,
       });
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Payment method has been created successfully',
         data,
       };
     } catch (e) {
-
+      return catchError(e);
     }
   }
 
@@ -64,12 +65,12 @@ export class PaymentMethodController {
       const { id } = req.user;
       const data = await this.paymentMethodsService.getList(id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Payment method list',
         data,
       };
     } catch (e) {
-
+      return catchError(e);
     }
   }
 
@@ -86,12 +87,12 @@ export class PaymentMethodController {
       const { id } = param;
       const data = await this.paymentMethodsService.getById(user_id, id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Get Payment method',
         data,
       };
     } catch (e) {
-
+      return catchError(e);
     }
   }
 
@@ -108,12 +109,12 @@ export class PaymentMethodController {
       const { id } = param;
       const data = await this.paymentMethodsService.destroy(user_id, id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Payment method has been removed successfully',
         data,
       };
     } catch (e) {
-
+      return catchError(e);
     }
   }
 }

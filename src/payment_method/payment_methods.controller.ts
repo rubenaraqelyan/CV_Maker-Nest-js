@@ -33,36 +33,44 @@ export class PaymentMethodController {
   @ApiBody(createPaymentMethodBody)
   @ApiResponse(createPaymentMethodResponse)
   async create(@Req() req: RequestType, @Body() body: payment_method) {
-    const { type, card_number: number, exp_month, exp_year, cvc } = body;
-    const {id: user_id, name, email} = req.user;
-    const {customer_id: customer} = await this.paymentMethodsService.getCustomer({name, email});
-    const data = await this.paymentMethodsService.createPaymentMethod({
-      user_id,
-      customer,
-      type,
-      number,
-      exp_month,
-      exp_year,
-      cvc,
-  });
-    return {
-      statusCode: 200,
-      message: 'Payment method has been created successfully',
-      data,
-    };
+    try {
+      const { type, card_number: number, exp_month, exp_year, cvc } = body;
+      const {id: user_id, name, email} = req.user;
+      const {customer_id: customer} = await this.paymentMethodsService.getCustomer({name, email});
+      const data = await this.paymentMethodsService.createPaymentMethod({
+        user_id,
+        customer,
+        type,
+        number,
+        exp_month,
+        exp_year,
+        cvc,
+      });
+      return {
+        statusCode: 200,
+        message: 'Payment method has been created successfully',
+        data,
+      };
+    } catch (e) {
+
+    }
   }
 
   @Get('/')
   @ApiHeader(xAuthorization)
   @ApiResponse(getPaymentMethodResponse)
   async getList(@Req() req: RequestType) {
-    const { id } = req.user;
-    const data = await this.paymentMethodsService.getList(id);
-    return {
-      statusCode: 200,
-      message: 'Payment method list',
-      data,
-    };
+    try {
+      const { id } = req.user;
+      const data = await this.paymentMethodsService.getList(id);
+      return {
+        statusCode: 200,
+        message: 'Payment method list',
+        data,
+      };
+    } catch (e) {
+
+    }
   }
 
   @Get('/:id')
@@ -73,14 +81,18 @@ export class PaymentMethodController {
     type: 'string',
   })
   async getById(@Req() req: RequestType, @Param() param: uuId) {
-    const { id: user_id } = req.user;
-    const { id } = param;
-    const data = await this.paymentMethodsService.getById(user_id, id);
-    return {
-      statusCode: 200,
-      message: 'Get Payment method',
-      data,
-    };
+    try {
+      const { id: user_id } = req.user;
+      const { id } = param;
+      const data = await this.paymentMethodsService.getById(user_id, id);
+      return {
+        statusCode: 200,
+        message: 'Get Payment method',
+        data,
+      };
+    } catch (e) {
+
+    }
   }
 
   @Delete('/:id')
@@ -91,13 +103,17 @@ export class PaymentMethodController {
     type: 'string',
   })
   async destroy(@Req() req: RequestType, @Param() param: uuId) {
-    const { id: user_id } = req.user;
-    const { id } = param;
-    const data = await this.paymentMethodsService.destroy(user_id, id);
-    return {
-      statusCode: 200,
-      message: 'Payment method has been removed successfully',
-      data,
-    };
+    try {
+      const { id: user_id } = req.user;
+      const { id } = param;
+      const data = await this.paymentMethodsService.destroy(user_id, id);
+      return {
+        statusCode: 200,
+        message: 'Payment method has been removed successfully',
+        data,
+      };
+    } catch (e) {
+
+    }
   }
 }

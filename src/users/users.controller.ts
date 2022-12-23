@@ -33,7 +33,6 @@ import {
 import {RequestType} from "../dto/main.dto";
 import {emptyResponse, xAuthorization} from "../swagger/main";
 import {FileInterceptor} from "@nestjs/platform-express";
-import {GoogleAuthGuard} from "../services/GoogleGuard";
 
 @ApiTags('Users')
 @Controller('user')

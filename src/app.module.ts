@@ -17,7 +17,6 @@ import { PhoneNumbersModule } from './phone_numbers/phone_numbers.module';
 import { AuthModule } from './auth/auth.module';
 import { PaymentMethodModule } from './payment_method/payment_methods.module';
 import { PlansModule } from './plans/plans.module';
-import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import Sequelize from "./database/initialize-sql";
 
 @Module({
@@ -35,7 +34,6 @@ import Sequelize from "./database/initialize-sql";
     PhoneNumbersModule,
     PaymentMethodModule,
     PlansModule,
-    SubscriptionsModule
   ],
 })
 export class AppModule implements NestModule {

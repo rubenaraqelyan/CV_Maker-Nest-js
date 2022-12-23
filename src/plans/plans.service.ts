@@ -113,7 +113,6 @@ export class PlansService {
   async connectPlan({user_id, customer, plan_id, pm_id}) {
     try {
       const {price_id: price, price: amount} = await this.getById(plan_id);
-      console.log(8888, pm_id)
       const sub = await this.stripe.subscriptions.create({
         customer,
         items: [{price}],

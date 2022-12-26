@@ -11,6 +11,7 @@ import {payment_methods} from "../payment_method/payment_methods.model";
 import {plans} from "../plans/plans.model";
 import {users_plans} from "../plans/users_plans.model";
 import {subscriptions} from "../plans/subscriptions.model";
+import { user_cvs } from 'src/user_cvs/user_cvs.model';
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
 export default class Sequelize {
@@ -39,7 +40,8 @@ export default class Sequelize {
         payment_methods,
         plans,
         users_plans,
-        subscriptions
+        subscriptions,
+        user_cvs
       ],
     });
   }

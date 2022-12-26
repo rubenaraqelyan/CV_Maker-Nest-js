@@ -77,7 +77,7 @@ export class UsersService {
     if (check) throw new HttpError({
       statusCode: HttpStatus.BAD_REQUEST,
       message: 'Bad request',
-      messages: {username: 'Username already use'}
+      messagesGroup: {username: 'Username already use'}
     });
     return true;
   }
@@ -87,7 +87,7 @@ export class UsersService {
     if (check) throw new HttpError({
       statusCode: HttpStatus.BAD_REQUEST,
       message: 'Bad request',
-      messages: {username: 'Username already use'}
+      messagesGroup: {username: 'Username already use'}
     });
     return true;
   }
@@ -97,7 +97,7 @@ export class UsersService {
     if (check) throw new HttpError({
       statusCode: HttpStatus.BAD_REQUEST,
       message: 'Bad request',
-      messages: {email: 'Email already use'}
+      messagesGroup: {email: 'Email already use'}
     });
     return true;
   }
@@ -120,7 +120,7 @@ export class UsersService {
     if (user.verified_at) throw new HttpError({
       statusCode: HttpStatus.BAD_REQUEST,
       message: 'Bad request',
-      messages: {email: 'Email already verified'}
+      messagesGroup: {email: 'Email already verified'}
     });
     await this.Users.update({verified_at: new Date()}, {where: {id}});
     const token = this.getToken(id);
@@ -133,7 +133,7 @@ export class UsersService {
     if (user) throw new HttpError({
       statusCode: HttpStatus.NOT_FOUND,
       message: 'Bad request',
-      messages: {email: 'Email not found'}
+      messagesGroup: {email: 'Email not found'}
     });
     await this.Users.update({forgot_password_code}, {where: {id: user.id}})
     await this.Users.sequelize.query(`
@@ -149,7 +149,7 @@ export class UsersService {
     if (!user) throw new HttpError({
       statusCode: HttpStatus.BAD_REQUEST,
       message: 'Bad request',
-      messages: {code: 'Code is not correct'}
+      messagesGroup: {code: 'Code is not correct'}
     });
     return this.updatePassword(user.id, {password: data.password});
   }

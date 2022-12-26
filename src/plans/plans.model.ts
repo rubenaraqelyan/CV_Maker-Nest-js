@@ -1,7 +1,7 @@
-import {Table, Column, Model, DataType, ForeignKey, HasMany, BelongsTo, BelongsToMany} from 'sequelize-typescript';
+import {Table, Column, Model, DataType, HasMany, BelongsToMany} from 'sequelize-typescript';
 import {users} from "../users/users.model";
 import {users_plans} from "./users_plans.model";
-import {subscriptions} from "../subscriptions/subscriptions.model";
+import {subscriptions} from "./subscriptions.model";
 @Table
 export class plans extends Model {
   @Column({

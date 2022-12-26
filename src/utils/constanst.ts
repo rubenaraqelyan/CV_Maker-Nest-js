@@ -25,7 +25,8 @@ const options = (email: string, token: string) => ({
   facebook: 'https://imgur.com/pvqGGJp.png',
   instagram: 'https://imgur.com/U1rrvPD.png',
   twitter: 'https://imgur.com/dlxlYE5.png',
-  verify: 'https://imgur.com/cEWqKLp.png' || 'https://imgur.com/Sa7XP1o.png'
+  verifyDark: 'https://imgur.com/cEWqKLp.png',
+  verifyLight: 'https://imgur.com/Sa7XP1o.png'
 })
 
 export {

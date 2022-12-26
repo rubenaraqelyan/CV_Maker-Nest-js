@@ -41,7 +41,7 @@ export class CertificatesController {
       const { id } = req.user;
       const data = await this.certificatesService.create(id, body);
       return {
-        statusCode: 201,
+        status: 201,
         message: 'Certificate has been created successfully',
         data,
       };
@@ -57,7 +57,7 @@ export class CertificatesController {
     const { id } = req.user;
     const data = await this.certificatesService.getList(id);
     return {
-      statusCode: 200,
+      status: 200,
       message: 'Certificates list',
       data,
     };
@@ -76,7 +76,7 @@ export class CertificatesController {
       const { id } = param;
       const data = await this.certificatesService.getById(user_id, id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Get certificate',
         data,
       };
@@ -102,7 +102,7 @@ export class CertificatesController {
       const { id } = param;
       const data = await this.certificatesService.update(user_id, id, body);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Certificate has been updated successfully',
         data,
       };
@@ -124,7 +124,7 @@ export class CertificatesController {
       const { id } = param;
       const data = await this.certificatesService.destroy(user_id, id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Certificate has been removed successfully',
         data,
       };

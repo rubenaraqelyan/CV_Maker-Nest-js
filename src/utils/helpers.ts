@@ -8,7 +8,6 @@ import {HttpException, HttpStatus, UnprocessableEntityException} from "@nestjs/c
 import {avatarImage, imageMimeTypes} from "./constanst";
 import {File} from "../dto/main.dto";
 import {ValidationError} from "class-validator";
-import HttpError from "./HttpError";
 
 const hashPassword = async (password: string) => await bcrypt.hash(password, 11);
 
@@ -43,7 +42,7 @@ const buildErrorObject = (errors: ValidationError[]) => {
   errors.forEach(e => messagesGroup[e.property] = Object.values(e.constraints)[0]);
 
   return new UnprocessableEntityException({
-    statusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+    status: HttpStatus.UNPROCESSABLE_ENTITY,
     message: 'Validation error',
     messagesGroup
   })
@@ -54,9 +53,9 @@ const renderHtmlFile = async (direction, options) => {
 }
 
 const catchError = (e) => ({
-  statusCode: e?.statusCode || e.status || 500,
+  status: e.status || 500,
   message: e?.message,
-  messages: e?.messages
+  messagesGroup: e?.messagesGroup
 })
 
 export {

@@ -55,7 +55,7 @@ const renderHtmlFile = async (direction, options) => {
 const catchError = (e) => ({
   status: e.status || 500,
   message: e?.message,
-  messages: e?.messages
+  messagesGroup: e?.messagesGroup
 })
 
 export {

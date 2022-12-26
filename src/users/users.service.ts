@@ -13,6 +13,8 @@ import {options, STRIPE_CLIENT} from "../utils/constanst";
 import Stripe from "stripe";
 import * as path from "path";
 import HttpError from "../utils/HttpError";
+import {plans} from "../plans/plans.model";
+import {users_plans} from "../plans/users_plans.model";
 
 @Injectable()
 export class UsersService {
@@ -53,7 +55,14 @@ export class UsersService {
   }
 
   async getUserById(id) {
-    const user = await this.Users.findByPk(id);
+    const user = await this.Users.findByPk(id, {
+      include: [{
+        model: users_plans,
+        include: [
+          { model: plans },
+        ]
+      }]
+    });
     return user['dataValues'];
   }
 

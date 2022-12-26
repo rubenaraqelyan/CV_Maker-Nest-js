@@ -171,7 +171,6 @@ export class PlansService {
   async webhook(req){
     console.info('-------webhook-------')
     try {
-
       const event = await this.stripe.webhooks.constructEvent(
         req.rawBody,
         req.headers['stripe-signature'],

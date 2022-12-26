@@ -128,9 +128,57 @@ const connectPlanResponse = {
   }
 };
 
+const subscribeResponse = {
+  description: "Plan subscribe response by payment method id",
+  schema: {
+    properties: {
+      ...response,
+      data: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string"
+          },
+          plan_id: {
+            type: "string"
+          },
+          sub_id: {
+            type: "string"
+          },
+          pm_id: {
+            type: "string",
+          }
+        },
+      }
+    }
+  }
+};
+
+const subscribeBody = {
+  schema: {
+    properties: {
+      id: {
+        type: "string"
+      }
+    }
+  }
+};
+const subscribeToggleBody = {
+  schema: {
+    properties: {
+      cancel_at: {
+        type: "boolean"
+      }
+    }
+  }
+};
+
 export {
   createPlanBody,
   createPlanResponse,
   getPlanResponse,
-  connectPlanResponse
+  connectPlanResponse,
+  subscribeResponse,
+  subscribeBody,
+  subscribeToggleBody
 }

@@ -40,7 +40,7 @@ export class EducationsController {
       const { id } = req.user;
       const data = await this.educationsService.create(id, body);
       return {
-        statusCode: 201,
+        status: 201,
         message: 'Education has been created successfully',
         data,
       };
@@ -57,7 +57,7 @@ export class EducationsController {
       const { id } = req.user;
       const data = await this.educationsService.getList(id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Educations list',
         data,
       };
@@ -79,7 +79,7 @@ export class EducationsController {
       const { id } = param;
       const data = await this.educationsService.getById(user_id, id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Get Education',
         data,
       };
@@ -105,7 +105,7 @@ export class EducationsController {
       const { id } = param;
       const data = await this.educationsService.update(user_id, id, body);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Education has been updated successfully',
         data,
       };

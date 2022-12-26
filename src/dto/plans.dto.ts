@@ -21,3 +21,10 @@ export class plan {
   readonly price: number;
 
 }
+export class planSubscribeToggle {
+  @IsNotEmpty()
+  @IsBoolean()
+  readonly cancel_at: boolean;
+
+
+}

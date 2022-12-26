@@ -17,7 +17,7 @@ export class PaymentMethodService {
   }
 
   async checkCustomer(data) {
-    return this.Users.findOne(data);
+    return this.Users.findOne({where: data});
   }
 
   async updateCustomer(customer_id, data) {

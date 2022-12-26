@@ -39,7 +39,7 @@ export class AddressesController {
       const { id } = req.user;
       const data = await this.addressesService.getList(id);
       return {
-        statusCode: 201,
+        status: 201,
         message: 'Get addresses',
         data,
       };
@@ -57,7 +57,7 @@ export class AddressesController {
       const { id } = req.user;
       const data = await this.addressesService.create(id, body);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Address has been created successfully',
         data,
       };
@@ -79,7 +79,7 @@ export class AddressesController {
       const { id } = param;
       const data = await this.addressesService.getById(user_id, id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Get address',
         data,
       };
@@ -106,7 +106,7 @@ export class AddressesController {
       const { id } = param;
       const data = await this.addressesService.update(user_id, id, body);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Address has been updated successfully',
         data,
       };
@@ -128,7 +128,7 @@ export class AddressesController {
       const { id } = param;
       const data = await this.addressesService.destroy(user_id, id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Address has been removed successfully',
         data,
       };

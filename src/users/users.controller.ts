@@ -6,7 +6,7 @@ import {
   Post,
   Put,
   Req,
-  UploadedFile,
+  UploadedFile, UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import {ApiBody, ApiConsumes, ApiHeader, ApiParam, ApiResponse, ApiTags} from '@nestjs/swagger';
@@ -47,7 +47,7 @@ export class UsersController {
     try {
       const data = await this.usersService.signUp(body);
       return {
-        statusCode: 201,
+        status: 201,
         message: 'Verification has been sent to email',
         data
       }
@@ -64,7 +64,7 @@ export class UsersController {
       const data = await this.usersService.signIn(body);
       const token = this.usersService.getToken(data.id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'User has successfully login',
         data,
         token,
@@ -82,7 +82,7 @@ export class UsersController {
       const {id} = req.user;
       const data = await this.usersService.getUserById(id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Current user',
         data,
       };
@@ -100,7 +100,7 @@ export class UsersController {
       const {id} = req.user;
       const data = await this.usersService.update(id, body);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'User info has been updated successfully ',
         data,
       };
@@ -118,7 +118,7 @@ export class UsersController {
       const {id} = req.user;
       await this.usersService.updatePassword(id, body);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Password has been updated successfully',
       };
     } catch (e) {
@@ -137,7 +137,7 @@ export class UsersController {
       const id = await this.usersService.verifyToken(token, 'verify_email');
       const data = await this.usersService.verifyEmail(id);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'User has been verified successfully',
         data
       };
@@ -153,7 +153,7 @@ export class UsersController {
     try {
       await this.usersService.sendForgotCodeToEmail(body.email);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Verification code has sent to your email',
       };
     } catch (e) {
@@ -168,7 +168,7 @@ export class UsersController {
     try {
       await this.usersService.acceptCodeForgotPassword(body);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Password was changed',
       };
     } catch (e) {
@@ -191,7 +191,7 @@ export class UsersController {
       const {id} = req.user;
       const data = await this.usersService.uploadAvatar(id, file);
       return {
-        statusCode: 200,
+        status: 200,
         message: 'Avatar has ben uploaded',
         data
       };

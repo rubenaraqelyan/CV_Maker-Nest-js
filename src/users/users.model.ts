@@ -140,4 +140,7 @@ export class users extends Model {
   @BelongsToMany(() => plans, () => users_plans, 'user_id')
   plans: plans[];
 
+  @HasMany(() => users_plans)
+  pl: plans[];
+
 }

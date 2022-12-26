@@ -45,6 +45,23 @@ export class UserCvsController {
     }
   }
 
+  @Get('/in-month')
+  @ApiHeader(xAuthorization)
+  @ApiResponse(createCvResponse)
+  async getInMonth(@Req() req: RequestType) {
+    try {
+      const { id } = req.user;
+      const data = await this.userCvsService.getInMonth(id);
+      return {
+        statusCode: 200,
+        message: 'Get in mouth',
+        data,
+      };
+    } catch (e) {
+      return catchError(e);
+    }
+  }
+
   @Get('/:id')
   @ApiHeader(xAuthorization)
   @ApiResponse(createCvResponse)
@@ -88,4 +105,5 @@ export class UserCvsController {
       return catchError(e);
     }
   }
+
 }

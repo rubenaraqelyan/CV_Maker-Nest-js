@@ -4,7 +4,7 @@ import {
   Model,
   DataType,
   HasMany,
-  BelongsTo, BelongsToMany,
+  BelongsToMany,
 } from 'sequelize-typescript';
 import { addresses } from '../addresses/addresses.model';
 import { skills } from '../skills/skills.model';
@@ -141,6 +141,6 @@ export class users extends Model {
   plans: plans[];
 
   @HasMany(() => users_plans)
-  pl: plans[];
+  userPlans: plans[];
 
 }

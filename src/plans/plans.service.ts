@@ -5,6 +5,7 @@ import {users_plans} from "./users_plans.model";
 import {users} from "../users/users.model";
 import {subscriptions} from "./subscriptions.model";
 import {STRIPE_CLIENT} from "../utils/constanst";
+const {STRIPE_WEBHOOK_REVEAL} = process.env;
 import Stripe from "stripe";
 
 @Injectable()
@@ -77,24 +78,27 @@ export class PlansService {
   }
 
   async destroy(id) {
-    const data = await this.getById(id);
-    if (!data) throw new HttpException('Plan not found', HttpStatus.NOT_FOUND);
-    await this.stripe.products.del(data.product_id);
-    await this.Plans.destroy({where: {id}});
-    return data;
+    try {
+      const data = await this.getById(id);
+      if (!data) throw new HttpException('Plan not found', HttpStatus.NOT_FOUND);
+      await this.stripe.products.del(data.product_id);
+      await this.Plans.destroy({where: {id}});
+      return data;
+    } catch (e) {
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
+    }
   }
 
-  async connectedPlan(user_id, plan_id) {
-    return this.UsersPlans.findOne({
-      where: {user_id, plan_id},
-      attributes: {exclude: ['user_id', 'plan_id']},
-      include: [
-        {
-          model: plans,
-          attributes: {exclude: ['user_id', 'plan_id']},
-        }
-      ]
-    });
+  async connectUserToPlan(event) {
+    const {subscription} = event.data.object;
+    const {user_id, plan_id} = await this.getPlanBySubscription(subscription);
+    return this.UsersPlans.create({user_id, plan_id});
+  }
+
+  async checkUserPlan(data) {
+    const check = await this.UsersPlans.findOne({where: data});
+    if (check) throw new HttpException('User plan already use', HttpStatus.BAD_REQUEST);
+    return false;
   }
 
   async connectedPlans(user_id) {
@@ -110,28 +114,18 @@ export class PlansService {
     });
   }
 
-  async connectPlan({user_id, customer, plan_id, pm_id}) {
+  async subscribe({user_id, customer, plan_id, pm_id: payment_method}) {
     try {
+      await this.checkUserPlan({user_id, plan_id});
       const {price_id: price, price: amount} = await this.getById(plan_id);
       const sub = await this.stripe.subscriptions.create({
         customer,
         items: [{price}],
-        payment_behavior: 'default_incomplete'
+        payment_behavior: 'default_incomplete',
+        expand: ['latest_invoice.payment_intent']
       });
 
-      const {id} = await this.stripe.paymentIntents.create({
-        customer,
-        payment_method: pm_id,
-        amount: +(amount + '0'),
-        currency: 'usd',
-        payment_method_types: ['card'],
-      });
-
-      await this.stripe.paymentIntents.confirm(id, {
-        payment_method: pm_id
-      });
-
-      return this.Subscriptions.create({
+      await this.Subscriptions.create({
         user_id,
         plan_id,
         sub_id: sub.id,
@@ -141,17 +135,85 @@ export class PlansService {
         cancel_at: sub.cancel_at_period_end
       })
 
-      // await this.UsersPlans.create({user_id, plan_id});
-      // return this.connectedPlan(user_id, plan_id);
+      const {id} = await this.stripe.paymentIntents.create({
+        customer,
+        payment_method,
+        amount: +(amount + '0'),
+        currency: 'usd',
+        payment_method_types: ['card'],
+      });
+
+      await this.stripe.paymentIntents.confirm(id, {payment_method});
+
+      return {
+        cus_id: customer,
+        pm_id: payment_method,
+        sub_id: sub.id,
+        pi_id: id
+      }
+
     } catch (e) {
-      console.log(e)
+      throw new HttpException(`${e.name}: ${e.message}`, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async subscribeToggle({user_id, plan_id, cancel_at}) {
+    try {
+      const sub = await this.getSubscriptionByPlanId(user_id, plan_id);
+      await this.stripe.subscriptions.update(sub.sub_id, {cancel_at_period_end: cancel_at});
+      await this.Subscriptions.update({cancel_at},{where: {plan_id}});
+      return sub;
+    } catch (e) {
       throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
     }
   }
 
-  async disconnectPlan(user_id, plan_id) {
-    await this.UsersPlans.destroy({where: {user_id, plan_id}});
-    return this.connectedPlan(user_id, plan_id);
+  async webhook(req){
+    console.info('-------webhook-------')
+    try {
+      const event = await this.stripe.webhooks.constructEvent(
+        req.rawBody,
+        req.headers['stripe-signature'],
+        STRIPE_WEBHOOK_REVEAL
+      );
+
+      switch(event.type) {
+        case 'invoice.payment_succeeded': return await this.connectUserToPlan(event);
+        case 'invoice.payment_failed': return;
+        default: return
+      }
+
+    } catch (e) {
+      console.error(`${e.name}: ${e.message}`);
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async subscribeDelete(data) {
+    try {
+      await this.UsersPlans.destroy({where: data});
+      const sub = await this.Subscriptions.findOne({where: data});
+      if (!sub) throw new HttpException('Connection not found', HttpStatus.NOT_FOUND);
+      await this.Subscriptions.destroy({where: data});
+      await this.stripe.subscriptions.del(sub.sub_id);
+      return sub;
+    } catch (e) {
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async getPlanBySubscription(sub_id) {
+    const plan = await this.Subscriptions.findOne({
+      where: {sub_id},
+      attributes: ['user_id', 'plan_id']
+    })
+    if (!plan) throw new HttpException('Plan not found', HttpStatus.NOT_FOUND);
+    return plan
+  }
+  async getSubscriptionByPlanId(user_id, plan_id) {
+    const sub = await this.Subscriptions.findOne({where: {user_id, plan_id}})
+    if (!sub) throw new HttpException('Subscription not found', HttpStatus.NOT_FOUND);
+    return sub;
   }
 
 }

@@ -14,7 +14,10 @@ import {buildErrorObject} from "./utils/helpers";
 const SWAGGER_URL = 'docs';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {cors: true});
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    cors: true,
+    rawBody: true
+  });
   app.useStaticAssets(join(__dirname, '..', '..', 'public'));
   const config = new DocumentBuilder()
     .setTitle('Generate CV')

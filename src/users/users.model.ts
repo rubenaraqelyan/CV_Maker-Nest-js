@@ -4,7 +4,7 @@ import {
   Model,
   DataType,
   HasMany,
-  BelongsTo, BelongsToMany,
+  BelongsToMany,
 } from 'sequelize-typescript';
 import { addresses } from '../addresses/addresses.model';
 import { skills } from '../skills/skills.model';
@@ -16,7 +16,8 @@ import { phone_numbers } from 'src/phone_numbers/phone_numbers.model';
 import { payment_methods } from 'src/payment_method/payment_methods.model';
 import {plans} from "../plans/plans.model";
 import {users_plans} from "../plans/users_plans.model";
-import {subscriptions} from "../subscriptions/subscriptions.model";
+import {subscriptions} from "../plans/subscriptions.model";
+import { user_cvs } from 'src/user_cvs/user_cvs.model';
 
 @Table
 export class users extends Model {
@@ -137,7 +138,13 @@ export class users extends Model {
   @HasMany(() => subscriptions)
   subscriptions: subscriptions[];
 
+  @HasMany(() => user_cvs)
+  userCvs: user_cvs[];
+
   @BelongsToMany(() => plans, () => users_plans, 'user_id')
   plans: plans[];
+
+  @HasMany(() => users_plans)
+  userPlans: plans[];
 
 }

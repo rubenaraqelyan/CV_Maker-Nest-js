@@ -17,8 +17,8 @@ import { PhoneNumbersModule } from './phone_numbers/phone_numbers.module';
 import { AuthModule } from './auth/auth.module';
 import { PaymentMethodModule } from './payment_method/payment_methods.module';
 import { PlansModule } from './plans/plans.module';
-import { SubscriptionsModule } from './subscriptions/subscriptions.module';
-import Sequelize from "./database/initialize-sql";
+import Sequelize from './database/initialize-sql';
+import { UserCvsModule } from './user_cvs/user_cvs.module';
 
 @Module({
   imports: [
@@ -35,7 +35,7 @@ import Sequelize from "./database/initialize-sql";
     PhoneNumbersModule,
     PaymentMethodModule,
     PlansModule,
-    SubscriptionsModule
+    UserCvsModule,
   ],
 })
 export class AppModule implements NestModule {
@@ -50,6 +50,9 @@ export class AppModule implements NestModule {
         { path: '/user/email-verify/:token', method: RequestMethod.GET },
         { path: '/auth/google/login', method: RequestMethod.GET },
         { path: '/auth/google/redirect', method: RequestMethod.GET },
-      ).forRoutes('*');
+        { path: '/plan/webhook', method: RequestMethod.POST },
+        { path: '/plan/webhook', method: RequestMethod.GET },
+      )
+      .forRoutes('*');
   }
 }

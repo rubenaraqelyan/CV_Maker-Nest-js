@@ -3,7 +3,6 @@ import * as JWT from 'jsonwebtoken';
 import * as uniq from 'uniqid';
 import {users} from './users.model';
 import {InjectSqlModel} from '../database/inject-model-sql';
-
 const {JWT_SECRET} = process.env;
 import {checkPassword, hashPassword, renderHtmlFile, writeImage} from "../utils/helpers";
 import Email from "../services/Email";
@@ -13,15 +12,17 @@ import {options, STRIPE_CLIENT} from "../utils/constanst";
 import Stripe from "stripe";
 import * as path from "path";
 import HttpError from "../utils/HttpError";
+import {plans} from "../plans/plans.model";
+import {users_plans} from "../plans/users_plans.model";
+import {user_cvs} from "../user_cvs/user_cvs.model";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectSqlModel(users) private Users: typeof users,
     @Inject(STRIPE_CLIENT) private stripe: Stripe,
-  ) {
-  }
 
+  ) {}
   async signUp(data) {
     data.password = await hashPassword(data.password);
     const username = data.username.toLowerCase();
@@ -53,8 +54,22 @@ export class UsersService {
   }
 
   async getUserById(id) {
-    const user = await this.Users.findByPk(id);
-    return user['dataValues'];
+    const user = await this.Users.findByPk(id, {
+      include: [{
+        model: users_plans,
+        include: [
+          { model: plans },
+        ]
+      },
+        {
+          model: user_cvs,
+          attributes: ['id']
+        },
+      ]
+    });
+    const data = user['dataValues'];
+    user.setDataValue('userCvs', data.userCvs.length);
+    return data;
   }
 
   async update(id, data) {
@@ -75,7 +90,7 @@ export class UsersService {
   async checkUsername(id, username) {
     const check = await this.Users.findOne({where: {username, id: {[Op.ne]: id}}});
     if (check) throw new HttpError({
-      statusCode: HttpStatus.BAD_REQUEST,
+      status: HttpStatus.BAD_REQUEST,
       message: 'Bad request',
       messagesGroup: {username: 'Username already use'}
     });
@@ -85,7 +100,7 @@ export class UsersService {
   async checkUsernameLogin(username) {
     const check = await this.Users.findOne({where: {username}});
     if (check) throw new HttpError({
-      statusCode: HttpStatus.BAD_REQUEST,
+      status: HttpStatus.BAD_REQUEST,
       message: 'Bad request',
       messagesGroup: {username: 'Username already use'}
     });
@@ -95,7 +110,7 @@ export class UsersService {
   async checkEmail(email) {
     const check = await this.Users.findOne({where: {email}});
     if (check) throw new HttpError({
-      statusCode: HttpStatus.BAD_REQUEST,
+      status: HttpStatus.BAD_REQUEST,
       message: 'Bad request',
       messagesGroup: {email: 'Email already use'}
     });
@@ -109,7 +124,7 @@ export class UsersService {
   }
 
   async sendVerificationEmail(email, token) {
-    const direction = path.resolve('src', 'emailTemplates', 'verification.html');
+    const direction = path.resolve('src','emailTemplates','verification.html');
     const html = await renderHtmlFile(direction, options(email, token));
     await Email.send(email, 'Please verify your email', html);
   }
@@ -118,7 +133,7 @@ export class UsersService {
     const user = await this.getUserById(id);
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     if (user.verified_at) throw new HttpError({
-      statusCode: HttpStatus.BAD_REQUEST,
+      status: HttpStatus.BAD_REQUEST,
       message: 'Bad request',
       messagesGroup: {email: 'Email already verified'}
     });
@@ -126,12 +141,11 @@ export class UsersService {
     const token = this.getToken(id);
     return {token};
   }
-
   async sendForgotCodeToEmail(email) {
     const forgot_password_code = uniq.time();
     const user = await this.Users.findOne({where: {email}});
     if (user) throw new HttpError({
-      statusCode: HttpStatus.NOT_FOUND,
+      status: HttpStatus.NOT_FOUND,
       message: 'Bad request',
       messagesGroup: {email: 'Email not found'}
     });
@@ -147,7 +161,7 @@ export class UsersService {
   async acceptCodeForgotPassword(data) {
     const user = await this.Users.findOne({where: {forgot_password_code: data.code}});
     if (!user) throw new HttpError({
-      statusCode: HttpStatus.BAD_REQUEST,
+      status: HttpStatus.BAD_REQUEST,
       message: 'Bad request',
       messagesGroup: {code: 'Code is not correct'}
     });

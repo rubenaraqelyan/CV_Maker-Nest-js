@@ -139,7 +139,7 @@ export class users extends Model {
   subscriptions: subscriptions[];
 
   @HasMany(() => user_cvs)
-  user_cvs: user_cvs[];
+  userCvs: user_cvs[];
 
   @BelongsToMany(() => plans, () => users_plans, 'user_id')
   plans: plans[];

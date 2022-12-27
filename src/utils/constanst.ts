@@ -28,9 +28,15 @@ const options = (email: string, token: string) => ({
   verify: 'https://imgur.com/cEWqKLp.png' || 'https://imgur.com/Sa7XP1o.png'
 })
 
+const stripeConf = {
+  currency: 'usd',
+  payment_method_types: ['card']
+}
+
 export {
   imageMimeTypes,
   avatarImage,
   STRIPE_CLIENT,
   options,
+  stripeConf,
 };

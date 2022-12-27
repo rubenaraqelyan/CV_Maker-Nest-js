@@ -24,7 +24,8 @@ import {
   getEducationResponse,
 } from '../swagger/educations';
 import { educations } from '../dto/educations.dto';
-import { catchError } from '../utils/helpers';
+import {catchError, response} from '../utils/helpers';
+import messages from "../messages";
 
 @ApiTags('Educations')
 @Controller('education')
@@ -39,11 +40,10 @@ export class EducationsController {
     try {
       const { id } = req.user;
       const data = await this.educationsService.create(id, body);
-      return {
-        status: 201,
-        message: 'Education has been created successfully',
+      return response({
+        message: messages.eductionCreated,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -56,11 +56,10 @@ export class EducationsController {
     try {
       const { id } = req.user;
       const data = await this.educationsService.getList(id);
-      return {
-        status: 200,
-        message: 'Educations list',
+      return response({
+        message: messages.eductionList,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -78,11 +77,10 @@ export class EducationsController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.educationsService.getById(user_id, id);
-      return {
-        status: 200,
-        message: 'Get Education',
+      return response({
+        message: messages.eductionGet,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -104,11 +102,10 @@ export class EducationsController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.educationsService.update(user_id, id, body);
-      return {
-        status: 200,
-        message: 'Education has been updated successfully',
+      return response({
+        message: messages.eductionUpdate,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -126,11 +123,10 @@ export class EducationsController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.educationsService.destroy(user_id, id);
-      return {
-        status: 200,
-        message: 'Education has been removed successfully',
+      return response({
+        message: messages.eductionRemoved,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }

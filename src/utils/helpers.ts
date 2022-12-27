@@ -6,7 +6,7 @@ import * as sharp from "sharp";
 import * as ejs from "ejs";
 import {HttpException, HttpStatus, UnprocessableEntityException} from "@nestjs/common";
 import {avatarImage, imageMimeTypes} from "./constanst";
-import {File} from "../dto/main.dto";
+import {File, returnResponse} from "../dto/main.dto";
 import {ValidationError} from "class-validator";
 
 const hashPassword = async (password: string) => await bcrypt.hash(password, 11);
@@ -52,6 +52,11 @@ const renderHtmlFile = async (direction, options) => {
   return ejs.renderFile(direction, options);
 }
 
+const response = (params: returnResponse) => ({
+  status: params?.status || HttpStatus.OK,
+  ...params
+});
+
 const catchError = (e) => ({
   status: e.status || 500,
   message: e?.message,
@@ -64,5 +69,6 @@ export {
   writeImage,
   buildErrorObject,
   renderHtmlFile,
+  response,
   catchError
 }

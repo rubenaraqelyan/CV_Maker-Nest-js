@@ -4,9 +4,11 @@ import {plans} from "./plans.model";
 import {users_plans} from "./users_plans.model";
 import {users} from "../users/users.model";
 import {subscriptions} from "./subscriptions.model";
-import {STRIPE_CLIENT} from "../utils/constanst";
+import {STRIPE_CLIENT, stripeConf} from "../utils/constanst";
+const {currency, payment_method_types} = stripeConf;
 const {STRIPE_WEBHOOK_REVEAL} = process.env;
 import Stripe from "stripe";
+import messages from "../messages";
 
 @Injectable()
 export class PlansService {
@@ -25,7 +27,7 @@ export class PlansService {
       const {id: product} = await this.stripe.products.create({name});
       const {id} = await this.stripe.prices.create({
         unit_amount,
-        currency: 'usd',
+        currency,
         recurring: {interval: 'year'},
         product,
       });
@@ -39,7 +41,7 @@ export class PlansService {
 
   async getById(id) {
     const data = await this.Plans.findByPk(id);
-    if (!data) throw new HttpException('Plan not found', HttpStatus.NOT_FOUND)
+    if (!data) throw new HttpException(messages.planNotFound, HttpStatus.NOT_FOUND)
     return data;
   }
 
@@ -63,7 +65,7 @@ export class PlansService {
       if (+unit_amount !== +oldPrice) {
         const {id} = await this.stripe.prices.create({
           unit_amount,
-          currency: 'usd',
+          currency,
           recurring: {interval: 'year'},
           product,
         });
@@ -80,8 +82,7 @@ export class PlansService {
   async destroy(id) {
     try {
       const data = await this.getById(id);
-      if (!data) throw new HttpException('Plan not found', HttpStatus.NOT_FOUND);
-      await this.stripe.products.del(data.product_id);
+      await this.stripe.products.del(data?.product_id);
       await this.Plans.destroy({where: {id}});
       return data;
     } catch (e) {
@@ -97,7 +98,7 @@ export class PlansService {
 
   async checkUserPlan(data) {
     const check = await this.UsersPlans.findOne({where: data});
-    if (check) throw new HttpException('User plan already use', HttpStatus.BAD_REQUEST);
+    if (check) throw new HttpException(messages.planAlreadyUse, HttpStatus.BAD_REQUEST);
     return false;
   }
 
@@ -139,8 +140,8 @@ export class PlansService {
         customer,
         payment_method,
         amount: +(amount + '0'),
-        currency: 'usd',
-        payment_method_types: ['card'],
+        currency,
+        payment_method_types,
       });
 
       await this.stripe.paymentIntents.confirm(id, {payment_method});
@@ -193,9 +194,8 @@ export class PlansService {
     try {
       await this.UsersPlans.destroy({where: data});
       const sub = await this.Subscriptions.findOne({where: data});
-      if (!sub) throw new HttpException('Connection not found', HttpStatus.NOT_FOUND);
+      await this.stripe.subscriptions.del(sub?.sub_id);
       await this.Subscriptions.destroy({where: data});
-      await this.stripe.subscriptions.del(sub.sub_id);
       return sub;
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
@@ -207,12 +207,12 @@ export class PlansService {
       where: {sub_id},
       attributes: ['user_id', 'plan_id']
     })
-    if (!plan) throw new HttpException('Plan not found', HttpStatus.NOT_FOUND);
+    if (!plan) throw new HttpException(messages.planNotFound, HttpStatus.NOT_FOUND);
     return plan
   }
   async getSubscriptionByPlanId(user_id, plan_id) {
     const sub = await this.Subscriptions.findOne({where: {user_id, plan_id}})
-    if (!sub) throw new HttpException('Subscription not found', HttpStatus.NOT_FOUND);
+    if (!sub) throw new HttpException(messages.subscriptionNotFound, HttpStatus.NOT_FOUND);
     return sub;
   }
 

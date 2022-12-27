@@ -1,10 +1,11 @@
-import { Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
+import {Controller, Delete, Get, HttpStatus, Param, Post, Put, Req} from '@nestjs/common';
 import { ApiHeader, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { xAuthorization } from 'src/swagger/main';
 import { UserCvsService } from './user_cvs.service';
 import { RequestType, uuId } from '../dto/main.dto';
-import { catchError } from '../utils/helpers';
+import {catchError, response} from '../utils/helpers';
 import { createCvResponse, getCvResponse } from '../swagger/user_cvs';
+import messages from "../messages";
 
 @ApiTags('CVs')
 @Controller('user-cvs')
@@ -18,11 +19,10 @@ export class UserCvsController {
     try {
       const { id } = req.user;
       const data = await this.userCvsService.create(id);
-      return {
-        statusCode: 201,
-        message: 'CV has been created successfully',
+      return response({
+        message: messages.cvCreated,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -35,11 +35,10 @@ export class UserCvsController {
     try {
       const { id } = req.user;
       const data = await this.userCvsService.getList(id);
-      return {
-        statusCode: 200,
-        message: 'CVs list',
+      return response({
+        message: messages.cvList,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -57,11 +56,10 @@ export class UserCvsController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.userCvsService.getById(user_id, id);
-      return {
-        statusCode: 200,
-        message: 'Get CV',
+      return response({
+        message: messages.cvGet,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -79,11 +77,10 @@ export class UserCvsController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.userCvsService.destroy(user_id, id);
-      return {
-        statusCode: 200,
-        message: 'CV has been removed successfully',
+      return response({
+        message: messages.cvRemoved,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }

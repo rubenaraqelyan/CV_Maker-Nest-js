@@ -25,7 +25,8 @@ import {
 } from '../swagger/certificates';
 import { certificates } from '../dto/certificates.dto';
 import { skill } from '../dto/skills.dto';
-import { catchError } from '../utils/helpers';
+import {catchError, response} from '../utils/helpers';
+import messages from "../messages";
 
 @ApiTags('Certificates')
 @Controller('certificate')
@@ -40,11 +41,10 @@ export class CertificatesController {
     try {
       const { id } = req.user;
       const data = await this.certificatesService.create(id, body);
-      return {
-        status: 201,
-        message: 'Certificate has been created successfully',
+      return response({
+        message: messages.certificateCreated,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -56,11 +56,10 @@ export class CertificatesController {
   async getList(@Req() req: RequestType) {
     const { id } = req.user;
     const data = await this.certificatesService.getList(id);
-    return {
-      status: 200,
-      message: 'Certificates list',
+    return response({
+      message: messages.certificateList,
       data,
-    };
+    });
   }
 
   @Get('/:id')
@@ -75,11 +74,10 @@ export class CertificatesController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.certificatesService.getById(user_id, id);
-      return {
-        status: 200,
-        message: 'Get certificate',
+      return response({
+        message: messages.certificateGet,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -101,11 +99,10 @@ export class CertificatesController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.certificatesService.update(user_id, id, body);
-      return {
-        status: 200,
-        message: 'Certificate has been updated successfully',
+      return response({
+        message: messages.certificatesUpdate,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -123,11 +120,10 @@ export class CertificatesController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.certificatesService.destroy(user_id, id);
-      return {
-        status: 200,
-        message: 'Certificate has been removed successfully',
+      return response({
+        message: messages.certificateRemoved,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }

@@ -24,9 +24,8 @@ import {
   getSkillResponse,
 } from '../swagger/skills';
 import { skill } from '../dto/skills.dto';
-import { createAddressResponse } from '../swagger/addresses';
-import { createLanguageResponse } from '../swagger/languages';
-import { catchError } from '../utils/helpers';
+import {catchError, response} from '../utils/helpers';
+import messages from "../messages";
 
 @ApiTags('Skills')
 @Controller('skill')
@@ -41,11 +40,10 @@ export class SkillsController {
     try {
       const { id } = req.user;
       const data = await this.skillsService.create(id, body);
-      return {
-        status: 201,
-        message: 'Skill has been created successfully',
+      return response({
+        message: messages.skillCreated,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -58,11 +56,10 @@ export class SkillsController {
     try {
       const { id } = req.user;
       const data = await this.skillsService.getList(id);
-      return {
-        status: 200,
-        message: 'Skills list',
+      return response({
+        message: messages.skillList,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -80,11 +77,10 @@ export class SkillsController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.skillsService.getById(user_id, id);
-      return {
-        status: 200,
-        message: 'Get skill',
+      return response({
+        message: messages.skillGet,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -107,11 +103,10 @@ export class SkillsController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.skillsService.update(user_id, id, body);
-      return {
-        status: 200,
-        message: 'Skill has been updated successfully',
+      return response({
+        message: messages.skillUpdated,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -129,11 +124,10 @@ export class SkillsController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.skillsService.destroy(user_id, id);
-      return {
-        status: 200,
-        message: 'Skill has been removed successfully',
+      return response({
+        message: messages.skillRemoved,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }

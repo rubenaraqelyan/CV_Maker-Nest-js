@@ -1,6 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectSqlModel} from "../database/inject-model-sql";
 import {certificates} from "./certificates.model";
+import messages from "../messages";
 
 @Injectable()
 export class CertificatesService {
@@ -14,7 +15,7 @@ export class CertificatesService {
   }
   async getById(user_id, id) {
     const data = await this.Certificates.findOne({where: {user_id, id}});
-    if (!data) throw new HttpException('Certificate not found', HttpStatus.NOT_FOUND)
+    if (!data) throw new HttpException(messages.certificateNOtFound, HttpStatus.NOT_FOUND)
     return data;
   }
   async getList(user_id) {
@@ -27,7 +28,7 @@ export class CertificatesService {
   }
   async destroy(user_id, id) {
     const data = await this.getById(user_id, id);
-    if (!data) throw new HttpException('Certificate not found', HttpStatus.NOT_FOUND)
+    if (!data) throw new HttpException(messages.certificateNOtFound, HttpStatus.NOT_FOUND)
     await this.Certificates.destroy({where: {user_id, id}});
     return data;
   }

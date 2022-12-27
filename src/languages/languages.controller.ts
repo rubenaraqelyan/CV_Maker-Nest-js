@@ -24,7 +24,8 @@ import {
   getLanguageResponse,
 } from '../swagger/languages';
 import { language } from '../dto/languages.dto';
-import { catchError } from '../utils/helpers';
+import {catchError, response} from '../utils/helpers';
+import messages from "../messages";
 
 @ApiTags('Languages')
 @Controller('language')
@@ -39,11 +40,10 @@ export class LanguagesController {
     try {
       const { id } = req.user;
       const data = await this.languageService.create(id, body);
-      return {
-        status: 201,
-        message: 'Language has been created successfully',
+      return response({
+        message: messages.languageCreate,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -56,11 +56,10 @@ export class LanguagesController {
     try {
       const { id } = req.user;
       const data = await this.languageService.getList(id);
-      return {
-        status: 200,
-        message: 'Language list',
+      return response({
+        message: messages.languageList,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -78,11 +77,10 @@ export class LanguagesController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.languageService.getById(user_id, id);
-      return {
-        status: 200,
-        message: 'Get language',
+      return response({
+        message: messages.languageGet,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -105,11 +103,10 @@ export class LanguagesController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.languageService.update(user_id, id, body);
-      return {
-        status: 200,
-        message: 'Language has been updated successfully',
+      return response({
+        message: messages.languageUpdate,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -127,11 +124,10 @@ export class LanguagesController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.languageService.destroy(user_id, id);
-      return {
-        status: 200,
-        message: 'Language has been removed successfully',
+      return response({
+        message: messages.languageRemoved,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }

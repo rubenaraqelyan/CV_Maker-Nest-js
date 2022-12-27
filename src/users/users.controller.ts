@@ -1,12 +1,12 @@
 import {
   Body,
   Controller,
-  Get,
+  Get, HttpStatus,
   Param,
   Post,
   Put,
   Req,
-  UploadedFile, UseGuards,
+  UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import {ApiBody, ApiConsumes, ApiHeader, ApiParam, ApiResponse, ApiTags} from '@nestjs/swagger';
@@ -33,7 +33,8 @@ import {
 import {RequestType} from "../dto/main.dto";
 import {emptyResponse, xAuthorization} from "../swagger/main";
 import {FileInterceptor} from "@nestjs/platform-express";
-import {catchError} from "../utils/helpers";
+import {catchError, response} from "../utils/helpers";
+import messages from "../messages";
 
 @ApiTags('Users')
 @Controller('user')
@@ -46,11 +47,10 @@ export class UsersController {
   async signUp(@Body() body: UserDto) {
     try {
       const data = await this.usersService.signUp(body);
-      return {
-        status: 201,
-        message: 'Verification has been sent to email',
+      return response({
+        message: messages.verification,
         data
-      }
+      })
     } catch (e) {
       return catchError(e);
     }
@@ -63,12 +63,10 @@ export class UsersController {
     try {
       const data = await this.usersService.signIn(body);
       const token = this.usersService.getToken(data.id);
-      return {
-        status: 200,
-        message: 'User has successfully login',
-        data,
-        token,
-      };
+      return response({
+        message: messages.login,
+        data: {...data, token}
+      });
     } catch (e){
       return catchError(e);
     }
@@ -81,11 +79,10 @@ export class UsersController {
     try {
       const {id} = req.user;
       const data = await this.usersService.getUserById(id);
-      return {
-        status: 200,
-        message: 'Current user',
+      return response({
+        message: messages.currentUser,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -99,11 +96,10 @@ export class UsersController {
     try {
       const {id} = req.user;
       const data = await this.usersService.update(id, body);
-      return {
-        status: 200,
-        message: 'User info has been updated successfully ',
+      return response({
+        message: messages.userUpdated,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -117,10 +113,9 @@ export class UsersController {
     try {
       const {id} = req.user;
       await this.usersService.updatePassword(id, body);
-      return {
-        status: 200,
-        message: 'Password has been updated successfully',
-      };
+      return response({
+        message: messages.passwordUpdated,
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -136,11 +131,10 @@ export class UsersController {
     try {
       const id = await this.usersService.verifyToken(token, 'verify_email');
       const data = await this.usersService.verifyEmail(id);
-      return {
-        status: 200,
-        message: 'User has been verified successfully',
+      return response({
+        message: messages.userVerified,
         data
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -152,10 +146,9 @@ export class UsersController {
   async forgotPassword(@Body() body: forgotPassword) {
     try {
       await this.usersService.sendForgotCodeToEmail(body.email);
-      return {
-        status: 200,
-        message: 'Verification code has sent to your email',
-      };
+      return response({
+        message: messages.verificationCodeSent,
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -167,10 +160,9 @@ export class UsersController {
   async acceptCodeForgotPassword(@Req() req: RequestType, @Body() body: acceptCodeForgotPassword) {
     try {
       await this.usersService.acceptCodeForgotPassword(body);
-      return {
-        status: 200,
-        message: 'Password was changed',
-      };
+      return response({
+        message: messages.passwordChanged,
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -190,11 +182,10 @@ export class UsersController {
     try {
       const {id} = req.user;
       const data = await this.usersService.uploadAvatar(id, file);
-      return {
-        status: 200,
-        message: 'Avatar has ben uploaded',
+      return response({
+        message: messages.avatarUploaded,
         data
-      };
+      });
     } catch (e) {
       return catchError(e);
     }

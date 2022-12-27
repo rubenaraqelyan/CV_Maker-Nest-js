@@ -4,6 +4,7 @@ import Stripe from 'stripe';
 import {InjectSqlModel} from '../database/inject-model-sql';
 import {payment_methods} from './payment_methods.model';
 import {users} from "../users/users.model";
+import messages from "../messages";
 
 @Injectable()
 export class PaymentMethodService {
@@ -68,14 +69,14 @@ export class PaymentMethodService {
   async getById(user_id, id) {
     const data = await this.PaymentMethods.findOne({where: {user_id, id}});
     if (!data)
-      throw new HttpException('Payment method not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(messages.paymentMethodNotFound, HttpStatus.NOT_FOUND);
     return data;
   }
 
   async destroy(user_id, id) {
     const data = await this.getById(user_id, id);
     if (!data)
-      throw new HttpException('Payment method not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(messages.paymentMethodNotFound, HttpStatus.NOT_FOUND);
     await this.PaymentMethods.destroy({where: {user_id, id}});
     return data;
   }

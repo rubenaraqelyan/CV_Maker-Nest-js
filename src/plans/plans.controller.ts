@@ -13,7 +13,8 @@ import {
   subscribeToggleBody
 } from "../swagger/plans";
 import {PaymentMethodService} from "../payment_method/payment_methods.service";
-import {catchError} from "../utils/helpers";
+import {catchError, response} from "../utils/helpers";
+import messages from "../messages";
 
 @ApiTags('Plans')
 @Controller('plan')
@@ -29,11 +30,10 @@ export class PlansController {
   async create(@Req() req: RequestType, @Body() body: plan){
     try {
       const data = await this.planService.create(body);
-      return {
-        status: 201,
-        message: 'Plan has been created successfully',
+      response({
+        message: messages.planCreated,
         data
-      }
+      })
     } catch (e) {
       return catchError(e);
     }
@@ -45,11 +45,10 @@ export class PlansController {
   async getList(@Req() req: RequestType){
     try {
       const data = await this.planService.getList();
-      return {
-        status: 200,
-        message: 'Plans list',
+      return response({
+        message: messages.planList,
         data
-      }
+      })
     } catch (e) {
       return catchError(e);
     }
@@ -62,11 +61,10 @@ export class PlansController {
     try {
       const {id} = req.user;
       const data = await this.planService.connectedPlans(id);
-      return {
-        status: 200,
-        message: 'Connected plans list',
+      return response({
+        message: messages.planConnectedList,
         data
-      }
+      })
     } catch (e) {
       return catchError(e);
     }
@@ -83,11 +81,10 @@ export class PlansController {
     try {
       const {id} = param;
       const data = await this.planService.getById(id);
-      return {
-        status: 200,
-        message: 'Get Plan',
+      return response({
+        message: messages.planGet,
         data
-      }
+      })
     } catch (e) {
       return catchError(e);
     }
@@ -105,11 +102,10 @@ export class PlansController {
     try {
       const {id} = param;
       const data = await this.planService.update(id, body);
-      return {
-        status: 200,
-        message: 'Plan has been updated successfully',
+      return response({
+        message: messages.planUpdated,
         data
-      }
+      })
     } catch (e) {
       return catchError(e);
     }
@@ -126,11 +122,10 @@ export class PlansController {
     try {
       const {id} = param;
       const data = await this.planService.destroy(id);
-      return {
-        status: 200,
-        message: 'Plan has been removed successfully',
+      return response({
+        message: messages.planRemoved,
         data
-      }
+      })
     } catch (e) {
       return catchError(e);
     }
@@ -152,11 +147,10 @@ export class PlansController {
       const {customer_id: customer} = await this.paymentMethodService.getCustomer({name, email});
       const {pm_id} = await this.paymentMethodService.getById(user_id, payment_method_id);
       const data = await this.planService.subscribe({user_id, customer, plan_id, pm_id});
-      return {
-        status: 200,
-        message: 'Plan has been subscribe successfully',
+      return response({
+        message: messages.planSubscribe,
         data
-      }
+      })
     } catch (e) {
       return catchError(e);
     }
@@ -176,10 +170,9 @@ export class PlansController {
       const {id: plan_id} = param;
       const {cancel_at} = body;
       await this.planService.subscribeToggle({user_id, plan_id, cancel_at});
-      return {
-        status: 200,
+      return response({
         message: `Plan has been ${cancel_at ? 'subscribe' : 'unsubscribe'} successfully`,
-      }
+      })
     } catch (e) {
       return catchError(e);
     }
@@ -197,11 +190,10 @@ export class PlansController {
       const {id: user_id} = req.user;
       const {id: plan_id} = param;
       const data = await this.planService.subscribeDelete({user_id, plan_id});
-      return {
-        status: 200,
-        message: 'Plan has been disconnect successfully',
+      return response({
+        message: messages.planDisconnect,
         data
-      }
+      })
     } catch (e) {
       return catchError(e);
     }

@@ -1,10 +1,11 @@
-import { Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
-import { ApiHeader, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {Controller, Delete, Get, Param, Post, Query, Req} from '@nestjs/common';
+import { ApiHeader, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { xAuthorization } from 'src/swagger/main';
 import { UserCvsService } from './user_cvs.service';
 import { RequestType, uuId } from '../dto/main.dto';
 import { catchError } from '../utils/helpers';
 import { createCvResponse, getCvResponse } from '../swagger/user_cvs';
+import {inMath} from "../dto/user_cvs.dto";
 
 @ApiTags('CVs')
 @Controller('user-cvs')
@@ -38,6 +39,34 @@ export class UserCvsController {
       return {
         statusCode: 200,
         message: 'CVs list',
+        data,
+      };
+    } catch (e) {
+      return catchError(e);
+    }
+  }
+
+  @Get('/between')
+  @ApiHeader(xAuthorization)
+  @ApiQuery({
+    name: 'end',
+    required: false,
+    type: 'string',
+  })
+  @ApiQuery({
+    name: 'start',
+    required: false,
+    type: 'string',
+  })
+  @ApiResponse(createCvResponse)
+  async getBetween(@Req() req: RequestType, @Query() query: inMath) {
+    try {
+      const { id } = req.user;
+      const { start, end } = query;
+      const data = await this.userCvsService.getBetween(id, start, end);
+      return {
+        statusCode: 200,
+        message: 'Get CVs by between dates',
         data,
       };
     } catch (e) {
@@ -88,4 +117,5 @@ export class UserCvsController {
       return catchError(e);
     }
   }
+
 }

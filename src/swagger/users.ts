@@ -142,6 +142,46 @@ const getMeResponse = {
                 }
               }
             }
+          },
+          userPlans: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                id: {
+                  type: "string"
+                },
+                plan: {
+                  type: "object",
+                  properties: {
+                    id: {
+                      type: "string"
+                    },
+                    name: {
+                      type: "string"
+                    },
+                    number: {
+                      type: "number"
+                    },
+                    disabled: {
+                      type: "boolean"
+                    },
+                    price: {
+                      type: "number"
+                    },
+                    product_id: {
+                      type: "string"
+                    },
+                    price_id: {
+                      type: "string"
+                    },
+                  }
+                }
+              }
+            }
+          },
+          userCvs: {
+            type: "number"
           }
         }
       }
@@ -283,10 +323,10 @@ const uploadAvatarBody = {
   description: "User response",
   schema: {
     type: 'object',
-      properties: {
+    properties: {
       file: {
         type: 'string',
-          format: 'binary',
+        format: 'binary',
       },
     },
   },

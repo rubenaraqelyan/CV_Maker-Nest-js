@@ -1,6 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectSqlModel} from 'src/database/inject-model-sql';
 import {user_cvs} from './user_cvs.model';
+import {Op} from "sequelize";
 
 @Injectable()
 export class UserCvsService {
@@ -34,11 +35,18 @@ export class UserCvsService {
     return data;
   }
 
-  async getInMonth(id) {
-    const select = `select *
-      from user_cvs
-      where user_id = '${id}'`
-    return this.UserCvs.sequelize.query(select, {nest: true});
+  async getBetween(id, start?, end?) {
+    let where = {};
+    if (start && end) {
+      where = {
+        where: {
+          created_at: {
+            [Op.between]: [start, end]
+          }
+        }
+      };
+    }
+    return this.UserCvs.findAll(where);
   }
 
 }

@@ -58,6 +58,7 @@ export class UsersService {
     const user = await this.Users.findByPk(id, {
       include: [{
         model: users_plans,
+        attributes: ['id'],
         include: [
           { model: plans },
         ]

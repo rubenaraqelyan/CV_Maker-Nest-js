@@ -1,6 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectSqlModel} from 'src/database/inject-model-sql';
 import {user_cvs} from './user_cvs.model';
+import {Op} from "sequelize";
 import messages from "../messages";
 
 @Injectable()
@@ -33,5 +34,19 @@ export class UserCvsService {
     const data = await this.getById(user_id, id);
     await this.UserCvs.destroy({where: {user_id, id}});
     return data;
+  }
+
+  async getBetween(id, start?, end?) {
+    let where = {};
+    if (start && end) {
+      where = {
+        where: {
+          created_at: {
+            [Op.between]: [start, end]
+          }
+        }
+      };
+    }
+    return this.UserCvs.findAll(where);
   }
 }

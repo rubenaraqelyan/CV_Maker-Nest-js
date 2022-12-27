@@ -20,6 +20,7 @@ export default {
   cvCreated: 'CV has been created successfully',
   cvList: 'CVs list',
   cvGet: 'Get CV',
+  cvGetBetween: 'Get CVs by between dates',
   cvRemoved: 'CV has been removed successfully',
   cvNotFound: 'CV not found',
   skillCreated: 'Skill has been created successfully',

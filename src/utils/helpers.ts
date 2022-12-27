@@ -58,7 +58,7 @@ const response = (params: returnResponse) => ({
 });
 
 const catchError = (e) => ({
-  status: e.status || 500,
+  status: e.status || HttpStatus.INTERNAL_SERVER_ERROR,
   message: e?.message,
   messagesGroup: e?.messagesGroup
 })

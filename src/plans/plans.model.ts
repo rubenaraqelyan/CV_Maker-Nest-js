@@ -56,6 +56,9 @@ export class plans extends Model {
   @BelongsToMany(() => users, () => users_plans,'plan_id')
   users: users;
 
+  @HasMany(() => users_plans)
+  plansUsers: users[];
+
   @HasMany(() => subscriptions)
   subscriptions: subscriptions[];
 

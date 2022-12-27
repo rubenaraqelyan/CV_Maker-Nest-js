@@ -12,6 +12,9 @@ import {options, STRIPE_CLIENT} from "../utils/constanst";
 import Stripe from "stripe";
 import * as path from "path";
 import HttpError from "../utils/HttpError";
+import {plans} from "../plans/plans.model";
+import {users_plans} from "../plans/users_plans.model";
+import {user_cvs} from "../user_cvs/user_cvs.model";
 
 @Injectable()
 export class UsersService {
@@ -51,8 +54,22 @@ export class UsersService {
   }
 
   async getUserById(id) {
-    const user = await this.Users.findByPk(id);
-    return user['dataValues'];
+    const user = await this.Users.findByPk(id, {
+      include: [{
+        model: users_plans,
+        include: [
+          { model: plans },
+        ]
+      },
+        {
+          model: user_cvs,
+          attributes: ['id']
+        },
+      ]
+    });
+    const data = user['dataValues'];
+    user.setDataValue('userCvs', data.userCvs.length);
+    return data;
   }
 
   async update(id, data) {

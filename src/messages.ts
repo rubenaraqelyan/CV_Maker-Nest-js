@@ -82,5 +82,7 @@ export default {
   addressGet: 'Get address',
   addressUpdated: 'Address has been updated successfully',
   addressRemoved: 'Address has been removed successfully',
-  addressNotFound: 'Address not found'
+  addressNotFound: 'Address not found',
+  avatarIsMandatory: 'Avatar is mandatory',
+  imageTypeError: 'Image type error'
 }

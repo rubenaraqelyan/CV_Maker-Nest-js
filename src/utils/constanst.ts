@@ -1,5 +1,7 @@
-const {BASE_URL} = process.env;
-
+const STRIPE_CLIENT = 'STRIPE_CLIENT';
+const STRIPE_CURRENCY = 'usd';
+const PAYMENT_METHOD_TYPE = 'card';
+const INTERVAL = 'year';
 const imageMimeTypes = {
   'image/jpeg': '.jpg',
   'image/gif': '.gif',
@@ -17,26 +19,11 @@ const avatarImage = {
   height: 800,
 }
 
-const STRIPE_CLIENT = 'STRIPE_CLIENT';
-
-const options = (email: string, token: string) => ({
-  email,
-  verification_url: `${BASE_URL}/user/email-verify/${token}`,
-  facebook: 'https://imgur.com/pvqGGJp.png',
-  instagram: 'https://imgur.com/U1rrvPD.png',
-  twitter: 'https://imgur.com/dlxlYE5.png',
-  verify: 'https://imgur.com/cEWqKLp.png' || 'https://imgur.com/Sa7XP1o.png'
-})
-
-const stripeConf = {
-  currency: 'usd',
-  payment_method_types: ['card']
-}
-
 export {
   imageMimeTypes,
   avatarImage,
   STRIPE_CLIENT,
-  options,
-  stripeConf,
+  STRIPE_CURRENCY,
+  PAYMENT_METHOD_TYPE,
+  INTERVAL
 };

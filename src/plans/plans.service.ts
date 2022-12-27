@@ -1,14 +1,13 @@
 import {HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common';
+import Stripe from "stripe";
 import {InjectSqlModel} from "../database/inject-model-sql";
 import {plans} from "./plans.model";
 import {users_plans} from "./users_plans.model";
 import {users} from "../users/users.model";
 import {subscriptions} from "./subscriptions.model";
-import {STRIPE_CLIENT, stripeConf} from "../utils/constanst";
-const {currency, payment_method_types} = stripeConf;
-const {STRIPE_WEBHOOK_REVEAL} = process.env;
-import Stripe from "stripe";
+import {STRIPE_CLIENT, STRIPE_CURRENCY, PAYMENT_METHOD_TYPE, INTERVAL} from "../utils/constanst";
 import messages from "../messages";
+const {STRIPE_WEBHOOK_REVEAL} = process.env;
 
 @Injectable()
 export class PlansService {
@@ -27,8 +26,8 @@ export class PlansService {
       const {id: product} = await this.stripe.products.create({name});
       const {id} = await this.stripe.prices.create({
         unit_amount,
-        currency,
-        recurring: {interval: 'year'},
+        currency: STRIPE_CURRENCY,
+        recurring: {interval: INTERVAL},
         product,
       });
       data.price_id = id;
@@ -65,8 +64,8 @@ export class PlansService {
       if (+unit_amount !== +oldPrice) {
         const {id} = await this.stripe.prices.create({
           unit_amount,
-          currency,
-          recurring: {interval: 'year'},
+          currency: STRIPE_CURRENCY,
+          recurring: {interval: INTERVAL},
           product,
         });
         dataUpdate.price_id = id;
@@ -140,8 +139,8 @@ export class PlansService {
         customer,
         payment_method,
         amount: +(amount + '0'),
-        currency,
-        payment_method_types,
+        currency: STRIPE_CURRENCY,
+        payment_method_types: [PAYMENT_METHOD_TYPE],
       });
 
       await this.stripe.paymentIntents.confirm(id, {payment_method});

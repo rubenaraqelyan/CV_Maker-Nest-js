@@ -1,6 +1,7 @@
 import {HttpException, HttpStatus, Injectable, NestMiddleware} from '@nestjs/common';
 import {RequestType, response, next, } from '../dto/main.dto';
 import {UsersService} from "../users/users.service";
+import messages from "../messages";
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -10,7 +11,7 @@ export class AuthMiddleware implements NestMiddleware {
       const token = req.headers['x-authorization'];
       if (token) {
         const id = await this.usersService.verifyToken(token);
-        if (!id) next(new HttpException('Forbidden', HttpStatus.FORBIDDEN));
+        if (!id) next(new HttpException(messages.forbidden, HttpStatus.FORBIDDEN));
         const user = await this.usersService.findById(id);
         if (!user) next(new HttpException('Forbidden', HttpStatus.FORBIDDEN));
         req.user = user['dataValues'];

@@ -17,6 +17,8 @@ export default {
   emailNotFound: 'Email not found',
   CodeNotCorrect: 'Code is not correct',
   emailAlreadyVerified: 'Email already verified',
+  authGoogleRedirect: 'Google social login',
+  forbidden: 'Forbidden',
   cvCreated: 'CV has been created successfully',
   cvList: 'CVs list',
   cvGet: 'Get CV',

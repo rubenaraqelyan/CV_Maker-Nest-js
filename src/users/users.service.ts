@@ -8,7 +8,8 @@ import {checkPassword, hashPassword, renderHtmlFile, writeImage} from "../utils/
 import Email from "../services/Email";
 import {Op} from "sequelize";
 import {authData} from "../dto/auth.dto";
-import {options, STRIPE_CLIENT} from "../utils/constanst";
+import {STRIPE_CLIENT} from "../utils/constanst";
+import {options} from "../utils/helpers";
 import Stripe from "stripe";
 import * as path from "path";
 import HttpError from "../utils/HttpError";

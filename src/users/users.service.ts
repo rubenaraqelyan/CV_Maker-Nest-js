@@ -43,7 +43,7 @@ export class UsersService {
     const checkUser = user ? await checkPassword(data.password, user?.getDataValue('password')) : null;
     if (!checkUser || !user) throw new HttpException(messages.INVALID_USERNAME_OR_PASSWORD, HttpStatus.UNPROCESSABLE_ENTITY);
     if (!user.verified_at) throw new HttpException(messages.VERIFY_YOUR_EMAIL, HttpStatus.UNPROCESSABLE_ENTITY);
-    return user;
+    return user.toJSON();
   }
 
   getToken(id, prefix = '') {

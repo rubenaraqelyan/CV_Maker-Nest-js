@@ -2,7 +2,7 @@ const STRIPE_CLIENT = 'STRIPE_CLIENT';
 const STRIPE_CURRENCY = 'usd';
 const PAYMENT_METHOD_TYPE = 'card';
 const INTERVAL = 'year';
-const imageMimeTypes = {
+const IMAGE_MIME_TYPES = {
   'image/jpeg': '.jpg',
   'image/gif': '.gif',
   'image/png': '.png',
@@ -11,7 +11,7 @@ const imageMimeTypes = {
   'image/tiff': '.tiff',
   "image/heif": ".heif",
 }
-const avatarImage = {
+const AVATAR_IMAGE = {
   folderName:'avatars',
   extension: '.webp',
   format: 'webp',
@@ -20,8 +20,8 @@ const avatarImage = {
 }
 
 export {
-  imageMimeTypes,
-  avatarImage,
+  IMAGE_MIME_TYPES,
+  AVATAR_IMAGE,
   STRIPE_CLIENT,
   STRIPE_CURRENCY,
   PAYMENT_METHOD_TYPE,

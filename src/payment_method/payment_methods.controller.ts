@@ -23,7 +23,8 @@ import {
   getPaymentMethodResponse,
 } from 'src/swagger/payment_methods';
 import { PaymentMethodService } from './payment_methods.service';
-import {catchError} from "../utils/helpers";
+import {catchError, response} from "../utils/helpers";
+import messages from "../utils/messages";
 
 @ApiTags('Payment methods')
 @Controller('payment-method')
@@ -47,11 +48,10 @@ export class PaymentMethodController {
         exp_year,
         cvc,
       });
-      return {
-        status: 200,
-        message: 'Payment method has been created successfully',
+      return response({
+        message: messages.PAYMENT_METHOD_CREATED,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -64,11 +64,10 @@ export class PaymentMethodController {
     try {
       const { id } = req.user;
       const data = await this.paymentMethodsService.getList(id);
-      return {
-        status: 200,
-        message: 'Payment method list',
+      return response({
+        message: messages.PAYMENT_METHOD_LIST,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -86,11 +85,10 @@ export class PaymentMethodController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.paymentMethodsService.getById(user_id, id);
-      return {
-        status: 200,
-        message: 'Get Payment method',
+      return response({
+        message: messages.PAYMENT_METHOD_GET,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -108,11 +106,10 @@ export class PaymentMethodController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.paymentMethodsService.destroy(user_id, id);
-      return {
-        status: 200,
-        message: 'Payment method has been removed successfully',
+      return response({
+        message: messages.PAYMENT_METHOD_REMOVED,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }

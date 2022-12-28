@@ -1,6 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectSqlModel} from "../database/inject-model-sql";
 import {skills} from "./skills.model";
+import messages from "../utils/messages";
 
 @Injectable()
 export class SkillsService {
@@ -13,7 +14,7 @@ export class SkillsService {
   }
   async getById(user_id, id) {
     const data = await this.Skills.findOne({where: {user_id, id}});
-    if (!data) throw new HttpException('Skill not found', HttpStatus.NOT_FOUND)
+    if (!data) throw new HttpException(messages.SKILL_NOT_FOUND, HttpStatus.NOT_FOUND)
     return data;
   }
   async getList(user_id) {

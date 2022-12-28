@@ -4,6 +4,8 @@ import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {UsersService} from "../users/users.service";
 import {RequestType} from "../dto/main.dto";
 import {OAuthLoginResponse, OAuthRedirectResponse} from "../swagger/users";
+import {response} from "../utils/helpers";
+import messages from "../utils/messages";
 
 @ApiTags('Google OAuth')
 @Controller('auth')
@@ -21,11 +23,10 @@ export class AuthController {
   handleRedirect(@Req() req: RequestType) {
     const {id} = req.user;
     const token = this.usersService.getToken(id);
-    return {
-      status: 200,
-      message: 'Google social login',
+    return response({
+      message: messages.AUTH_GOOGLE_REDIRECT,
       data: {token}
-    };
+    });
   }
 
 }

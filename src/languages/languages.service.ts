@@ -1,6 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectSqlModel} from "../database/inject-model-sql";
 import {languages} from "./languages.model";
+import messages from "../utils/messages";
 
 @Injectable()
 export class LanguagesService {
@@ -14,7 +15,7 @@ export class LanguagesService {
   }
   async getById(user_id, id) {
     const data = await this.Languages.findOne({where: {user_id, id}});
-    if (!data) throw new HttpException('Language not found', HttpStatus.NOT_FOUND)
+    if (!data) throw new HttpException(messages.LANGUAGE_NOT_FOUND, HttpStatus.NOT_FOUND)
     return data;
   }
   async getList(user_id) {

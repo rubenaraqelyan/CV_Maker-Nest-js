@@ -24,8 +24,8 @@ import {
   createBioResponse,
   getBioResponse,
 } from '../swagger/bios';
-import { skill } from '../dto/skills.dto';
-import { catchError } from '../utils/helpers';
+import {catchError, response} from '../utils/helpers';
+import messages from "../utils/messages";
 
 @ApiTags('Bios')
 @Controller('bios')
@@ -40,11 +40,10 @@ export class BiosController {
     try {
       const { id } = req.user;
       const data = await this.biosService.create(id, body);
-      return {
-        status: 201,
-        message: 'Bio has been created successfully',
+      return response({
+        message: messages.BIO_CREATED,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -57,11 +56,10 @@ export class BiosController {
     try {
       const { id } = req.user;
       const data = await this.biosService.getList(id);
-      return {
-        status: 200,
-        message: 'Bios list',
+      return response({
+        message: messages.BIO_LIST,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -79,11 +77,10 @@ export class BiosController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.biosService.getById(user_id, id);
-      return {
-        status: 200,
-        message: 'Get bio',
+      return response({
+        message: messages.BIO_GET,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -106,11 +103,10 @@ export class BiosController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.biosService.update(user_id, id, body);
-      return {
-        status: 200,
-        message: 'Bio has been updated successfully',
+      return response({
+        message: messages.BIO_UPDATED,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -128,11 +124,10 @@ export class BiosController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.biosService.destroy(user_id, id);
-      return {
-        status: 200,
-        message: 'Bio has been removed successfully',
+      return response({
+        message: messages.BIO_REMOVED,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }

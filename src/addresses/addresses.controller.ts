@@ -25,7 +25,7 @@ import {
 import { address } from '../dto/address.dto';
 import { xAuthorization } from '../swagger/main';
 import {catchError, response} from '../utils/helpers';
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @ApiTags('Addresses')
 @Controller('address')
@@ -41,7 +41,7 @@ export class AddressesController {
       const { id } = req.user;
       const data = await this.addressesService.create(id, body);
       return response({
-        message: messages.addressCreated,
+        message: messages.ADDRESS_CREATED,
         data,
       });
     } catch (e) {
@@ -57,7 +57,7 @@ export class AddressesController {
       const { id } = req.user;
       const data = await this.addressesService.getList(id);
       return response({
-        message: messages.addressGetList,
+        message: messages.ADDRESS_GET_LIST,
         data,
       });
     } catch (e) {
@@ -78,7 +78,7 @@ export class AddressesController {
       const { id } = param;
       const data = await this.addressesService.getById(user_id, id);
       return response({
-        message: messages.addressGet,
+        message: messages.ADDRESS_GET,
         data,
       });
     } catch (e) {
@@ -104,7 +104,7 @@ export class AddressesController {
       const { id } = param;
       const data = await this.addressesService.update(user_id, id, body);
       return response({
-        message: messages.addressUpdated,
+        message: messages.ADDRESS_UPDATED,
         data,
       });
     } catch (e) {
@@ -125,7 +125,7 @@ export class AddressesController {
       const { id } = param;
       const data = await this.addressesService.destroy(user_id, id);
       return response({
-        message: messages.addressRemoved,
+        message: messages.ADDRESS_REMOVED,
         data,
       });
     } catch (e) {

@@ -25,7 +25,7 @@ import {
   getPhoneNumbersResponse,
 } from 'src/swagger/phone_numbers';
 import {catchError, response} from '../utils/helpers';
-import messages from "../messages";
+import messages from "../utils/messages";
 @ApiTags('Phone numbers')
 @Controller('phone-number')
 export class PhoneNumbersController {
@@ -40,7 +40,7 @@ export class PhoneNumbersController {
       const { id } = req.user;
       const data = await this.phoneNumbersService.create(id, body);
       return response({
-        message: messages.phoneNumberCreated,
+        message: messages.PHONE_NUMBER_CREATED,
         data,
       });
     } catch (e) {
@@ -55,7 +55,7 @@ export class PhoneNumbersController {
     const { id } = req.user;
     const data = await this.phoneNumbersService.getList(id);
     return response({
-      message: messages.phoneNumberList,
+      message: messages.PHONE_NUMBER_LIST,
       data,
     });
   }
@@ -73,7 +73,7 @@ export class PhoneNumbersController {
       const { id } = param;
       const data = await this.phoneNumbersService.getById(user_id, id);
       return response({
-        message: messages.phoneNumberGet,
+        message: messages.PHONE_NUMBER_GET,
         data,
       });
     } catch (e) {
@@ -99,7 +99,7 @@ export class PhoneNumbersController {
       const { id } = param;
       const data = await this.phoneNumbersService.update(user_id, id, body);
       return response({
-        message: messages.phoneNumberUpdate,
+        message: messages.PHONE_NUMBER_UPDATE,
         data,
       });
     } catch (e) {
@@ -120,7 +120,7 @@ export class PhoneNumbersController {
       const { id } = param;
       const data = await this.phoneNumbersService.destroy(user_id, id);
       return response({
-        message: messages.phoneNumberRemoved,
+        message: messages.PHONE_NUMBER_REMOVED,
         data,
       });
     } catch (e) {

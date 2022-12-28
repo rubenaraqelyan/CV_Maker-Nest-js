@@ -1,7 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectSqlModel} from "../database/inject-model-sql";
 import {educations} from "./educations.model";
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @Injectable()
 export class EducationsService {
@@ -15,7 +15,7 @@ export class EducationsService {
   }
   async getById(user_id, id) {
     const data = await this.Educations.findOne({where: {user_id, id}});
-    if (!data) throw new HttpException(messages.eductionNotFound, HttpStatus.NOT_FOUND)
+    if (!data) throw new HttpException(messages.EDUCTION_NOT_FOUND, HttpStatus.NOT_FOUND)
     return data;
   }
   async getList(user_id) {
@@ -28,7 +28,7 @@ export class EducationsService {
   }
   async destroy(user_id, id) {
     const data = await this.getById(user_id, id);
-    if (!data) throw new HttpException(messages.eductionNotFound, HttpStatus.NOT_FOUND)
+    if (!data) throw new HttpException(messages.EDUCTION_NOT_FOUND, HttpStatus.NOT_FOUND)
     await this.Educations.destroy({where: {user_id, id}});
     return data;
   }

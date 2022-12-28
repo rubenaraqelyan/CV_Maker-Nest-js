@@ -25,7 +25,7 @@ import {
 } from '../swagger/languages';
 import { language } from '../dto/languages.dto';
 import {catchError, response} from '../utils/helpers';
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @ApiTags('Languages')
 @Controller('language')
@@ -41,7 +41,7 @@ export class LanguagesController {
       const { id } = req.user;
       const data = await this.languageService.create(id, body);
       return response({
-        message: messages.languageCreate,
+        message: messages.LANGUAGE_CREATE,
         data,
       });
     } catch (e) {
@@ -57,7 +57,7 @@ export class LanguagesController {
       const { id } = req.user;
       const data = await this.languageService.getList(id);
       return response({
-        message: messages.languageList,
+        message: messages.LANGUAGE_LIST,
         data,
       });
     } catch (e) {
@@ -78,7 +78,7 @@ export class LanguagesController {
       const { id } = param;
       const data = await this.languageService.getById(user_id, id);
       return response({
-        message: messages.languageGet,
+        message: messages.LANGUAGE_GET,
         data,
       });
     } catch (e) {
@@ -104,7 +104,7 @@ export class LanguagesController {
       const { id } = param;
       const data = await this.languageService.update(user_id, id, body);
       return response({
-        message: messages.languageUpdate,
+        message: messages.LANGUAGE_UPDATE,
         data,
       });
     } catch (e) {
@@ -125,7 +125,7 @@ export class LanguagesController {
       const { id } = param;
       const data = await this.languageService.destroy(user_id, id);
       return response({
-        message: messages.languageRemoved,
+        message: messages.LANGUAGE_REMOVED,
         data,
       });
     } catch (e) {

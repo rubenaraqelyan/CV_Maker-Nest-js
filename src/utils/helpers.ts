@@ -8,7 +8,7 @@ import {HttpException, HttpStatus, UnprocessableEntityException} from "@nestjs/c
 import {avatarImage, imageMimeTypes} from "./constanst";
 import {File, returnResponse} from "../dto/main.dto";
 import {ValidationError} from "class-validator";
-import messages from "../messages";
+import messages from "./messages";
 const {BASE_URL} = process.env;
 
 const hashPassword = async (password: string) => await bcrypt.hash(password, 11);
@@ -18,9 +18,9 @@ const checkPassword = async (password: string, hash: string) => {
 }
 
 const validateImage = (file) => {
-  if (_.isEmpty(file)) throw new HttpException(messages.avatarIsMandatory, HttpStatus.UNPROCESSABLE_ENTITY);
+  if (_.isEmpty(file)) throw new HttpException(messages.AVATAR_IS_MANDATORY, HttpStatus.UNPROCESSABLE_ENTITY);
   const extension = imageMimeTypes[file.mimetype];
-  if (!extension) throw new HttpException(messages.imageTypeError, HttpStatus.UNPROCESSABLE_ENTITY);
+  if (!extension) throw new HttpException(messages.IMAGE_TYPE_ERROR, HttpStatus.UNPROCESSABLE_ENTITY);
   return extension;
 }
 const writeImage = async (fileName: string, file: File) => {

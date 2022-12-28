@@ -6,7 +6,7 @@ import {users_plans} from "./users_plans.model";
 import {users} from "../users/users.model";
 import {subscriptions} from "./subscriptions.model";
 import {STRIPE_CLIENT, STRIPE_CURRENCY, PAYMENT_METHOD_TYPE, INTERVAL} from "../utils/constanst";
-import messages from "../messages";
+import messages from "../utils/messages";
 const {STRIPE_WEBHOOK_REVEAL} = process.env;
 
 @Injectable()
@@ -40,7 +40,7 @@ export class PlansService {
 
   async getById(id) {
     const data = await this.Plans.findByPk(id);
-    if (!data) throw new HttpException(messages.planNotFound, HttpStatus.NOT_FOUND)
+    if (!data) throw new HttpException(messages.PLAN_NOT_FOUND, HttpStatus.NOT_FOUND)
     return data;
   }
 
@@ -97,7 +97,7 @@ export class PlansService {
 
   async checkUserPlan(data) {
     const check = await this.UsersPlans.findOne({where: data});
-    if (check) throw new HttpException(messages.planAlreadyUse, HttpStatus.BAD_REQUEST);
+    if (check) throw new HttpException(messages.PLAN_ALREADY_USE, HttpStatus.BAD_REQUEST);
     return false;
   }
 
@@ -206,12 +206,12 @@ export class PlansService {
       where: {sub_id},
       attributes: ['user_id', 'plan_id']
     })
-    if (!plan) throw new HttpException(messages.planNotFound, HttpStatus.NOT_FOUND);
+    if (!plan) throw new HttpException(messages.PLAN_NOT_FOUND, HttpStatus.NOT_FOUND);
     return plan
   }
   async getSubscriptionByPlanId(user_id, plan_id) {
     const sub = await this.Subscriptions.findOne({where: {user_id, plan_id}})
-    if (!sub) throw new HttpException(messages.subscriptionNotFound, HttpStatus.NOT_FOUND);
+    if (!sub) throw new HttpException(messages.SUBSCRIPTION_NOT_FOUND, HttpStatus.NOT_FOUND);
     return sub;
   }
 

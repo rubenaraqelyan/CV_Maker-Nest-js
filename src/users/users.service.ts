@@ -16,7 +16,7 @@ import HttpError from "../utils/HttpError";
 import {plans} from "../plans/plans.model";
 import {users_plans} from "../plans/users_plans.model";
 import {user_cvs} from "../user_cvs/user_cvs.model";
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @Injectable()
 export class UsersService {
@@ -41,8 +41,8 @@ export class UsersService {
   async signIn(data) {
     const user = await this.Users.findOne({where: {email: data.email}});
     const checkUser = user ? await checkPassword(data.password, user?.getDataValue('password')) : null;
-    if (!checkUser || !user) throw new HttpException(messages.invalidUsernameOrPassword, HttpStatus.UNPROCESSABLE_ENTITY);
-    if (!user.verified_at) throw new HttpException(messages.verifyYourEmail, HttpStatus.UNPROCESSABLE_ENTITY);
+    if (!checkUser || !user) throw new HttpException(messages.INVALID_USERNAME_OR_PASSWORD, HttpStatus.UNPROCESSABLE_ENTITY);
+    if (!user.verified_at) throw new HttpException(messages.VERIFY_YOUR_EMAIL, HttpStatus.UNPROCESSABLE_ENTITY);
     return user;
   }
 
@@ -94,8 +94,8 @@ export class UsersService {
     const check = await this.Users.findOne({where: {username, id: {[Op.ne]: id}}});
     if (check) throw new HttpError({
       status: HttpStatus.BAD_REQUEST,
-      message: messages.badRequest,
-      messagesGroup: {username: messages.usernameAlreadyUse}
+      message: messages.BAD_REQUEST,
+      messagesGroup: {username: messages.USERNAME_ALREADY_USE}
     });
     return true;
   }
@@ -104,8 +104,8 @@ export class UsersService {
     const check = await this.Users.findOne({where: {username}});
     if (check) throw new HttpError({
       status: HttpStatus.BAD_REQUEST,
-      message: messages.badRequest,
-      messagesGroup: {username: messages.usernameAlreadyUse}
+      message: messages.BAD_REQUEST,
+      messagesGroup: {username: messages.USERNAME_ALREADY_USE}
     });
     return true;
   }
@@ -114,31 +114,31 @@ export class UsersService {
     const check = await this.Users.findOne({where: {email}});
     if (check) throw new HttpError({
       status: HttpStatus.BAD_REQUEST,
-      message: messages.badRequest,
-      messagesGroup: {email: messages.emailAlreadyUse}
+      message: messages.BAD_REQUEST,
+      messagesGroup: {email: messages.EMAIL_ALREADY_USE}
     });
     return true;
   }
 
   async findById(id) {
     const user = await this.Users.findByPk(id);
-    if (!user) throw new HttpException(messages.invalidUsernameOrPassword, HttpStatus.UNPROCESSABLE_ENTITY);
+    if (!user) throw new HttpException(messages.INVALID_USERNAME_OR_PASSWORD, HttpStatus.UNPROCESSABLE_ENTITY);
     return user;
   }
 
   async sendVerificationEmail(email, token) {
     const direction = path.resolve('src','emailTemplates','verification.html');
     const html = await renderHtmlFile(direction, options(email, token));
-    await Email.send(email, messages.verifyYourEmail, html);
+    await Email.send(email, messages.VERIFY_YOUR_EMAIL, html);
   }
 
   async verifyEmail(id) {
     const user = await this.getUserById(id);
-    if (!user) throw new HttpException(messages.userNotFound, HttpStatus.NOT_FOUND);
+    if (!user) throw new HttpException(messages.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
     if (user.verified_at) throw new HttpError({
       status: HttpStatus.BAD_REQUEST,
-      message: messages.badRequest,
-      messagesGroup: {email: messages.emailAlreadyVerified}
+      message: messages.BAD_REQUEST,
+      messagesGroup: {email: messages.EMAIL_ALREADY_VERIFIED}
     });
     await this.Users.update({verified_at: new Date()}, {where: {id}});
     const token = this.getToken(id);
@@ -149,8 +149,8 @@ export class UsersService {
     const user = await this.Users.findOne({where: {email}});
     if (user) throw new HttpError({
       status: HttpStatus.NOT_FOUND,
-      message: messages.badRequest,
-      messagesGroup: {email: messages.emailNotFound}
+      message: messages.BAD_REQUEST,
+      messagesGroup: {email: messages.EMAIL_NOT_FOUND}
     });
     await this.Users.update({forgot_password_code}, {where: {id: user.id}})
     await this.Users.sequelize.query(`
@@ -165,8 +165,8 @@ export class UsersService {
     const user = await this.Users.findOne({where: {forgot_password_code: data.code}});
     if (!user) throw new HttpError({
       status: HttpStatus.BAD_REQUEST,
-      message: messages.badRequest,
-      messagesGroup: {code: messages.CodeNotCorrect}
+      message: messages.BAD_REQUEST,
+      messagesGroup: {code: messages.CODE_NOT_CORRECT}
     });
     return this.updatePassword(user.id, {password: data.password});
   }

@@ -34,7 +34,7 @@ import {RequestType} from "../dto/main.dto";
 import {emptyResponse, xAuthorization} from "../swagger/main";
 import {FileInterceptor} from "@nestjs/platform-express";
 import {catchError, response} from "../utils/helpers";
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @ApiTags('Users')
 @Controller('user')
@@ -48,7 +48,7 @@ export class UsersController {
     try {
       const data = await this.usersService.signUp(body);
       return response({
-        message: messages.verification,
+        message: messages.VERIFICATION,
         data
       })
     } catch (e) {
@@ -64,7 +64,7 @@ export class UsersController {
       const data = await this.usersService.signIn(body);
       const token = this.usersService.getToken(data.id);
       return response({
-        message: messages.login,
+        message: messages.LOGIN,
         data: {...data, token}
       });
     } catch (e){
@@ -80,7 +80,7 @@ export class UsersController {
       const {id} = req.user;
       const data = await this.usersService.getUserById(id);
       return response({
-        message: messages.currentUser,
+        message: messages.CURRENT_USER,
         data,
       });
     } catch (e) {
@@ -97,7 +97,7 @@ export class UsersController {
       const {id} = req.user;
       const data = await this.usersService.update(id, body);
       return response({
-        message: messages.userUpdated,
+        message: messages.USER_UPDATED,
         data,
       });
     } catch (e) {
@@ -114,7 +114,7 @@ export class UsersController {
       const {id} = req.user;
       await this.usersService.updatePassword(id, body);
       return response({
-        message: messages.passwordUpdated,
+        message: messages.PASSWORD_UPDATED,
       });
     } catch (e) {
       return catchError(e);
@@ -132,7 +132,7 @@ export class UsersController {
       const id = await this.usersService.verifyToken(token, 'verify_email');
       const data = await this.usersService.verifyEmail(id);
       return response({
-        message: messages.userVerified,
+        message: messages.USER_VERIFIED,
         data
       });
     } catch (e) {
@@ -147,7 +147,7 @@ export class UsersController {
     try {
       await this.usersService.sendForgotCodeToEmail(body.email);
       return response({
-        message: messages.verificationCodeSent,
+        message: messages.VERIFICATION_CODE_SENT,
       });
     } catch (e) {
       return catchError(e);
@@ -161,7 +161,7 @@ export class UsersController {
     try {
       await this.usersService.acceptCodeForgotPassword(body);
       return response({
-        message: messages.passwordChanged,
+        message: messages.PASSWORD_CHANGED,
       });
     } catch (e) {
       return catchError(e);
@@ -183,7 +183,7 @@ export class UsersController {
       const {id} = req.user;
       const data = await this.usersService.uploadAvatar(id, file);
       return response({
-        message: messages.avatarUploaded,
+        message: messages.AVATAR_UPLOADED,
         data
       });
     } catch (e) {

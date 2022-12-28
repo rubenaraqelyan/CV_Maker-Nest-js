@@ -5,7 +5,7 @@ import {UsersService} from "../users/users.service";
 import {RequestType} from "../dto/main.dto";
 import {OAuthLoginResponse, OAuthRedirectResponse} from "../swagger/users";
 import {response} from "../utils/helpers";
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @ApiTags('Google OAuth')
 @Controller('auth')
@@ -24,7 +24,7 @@ export class AuthController {
     const {id} = req.user;
     const token = this.usersService.getToken(id);
     return response({
-      message: messages.authGoogleRedirect,
+      message: messages.AUTH_GOOGLE_REDIRECT,
       data: {token}
     });
   }

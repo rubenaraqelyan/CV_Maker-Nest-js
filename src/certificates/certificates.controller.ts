@@ -26,7 +26,7 @@ import {
 import { certificates } from '../dto/certificates.dto';
 import { skill } from '../dto/skills.dto';
 import {catchError, response} from '../utils/helpers';
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @ApiTags('Certificates')
 @Controller('certificate')
@@ -42,7 +42,7 @@ export class CertificatesController {
       const { id } = req.user;
       const data = await this.certificatesService.create(id, body);
       return response({
-        message: messages.certificateCreated,
+        message: messages.CERTIFICATE_CREATED,
         data,
       });
     } catch (e) {
@@ -57,7 +57,7 @@ export class CertificatesController {
     const { id } = req.user;
     const data = await this.certificatesService.getList(id);
     return response({
-      message: messages.certificateList,
+      message: messages.CERTIFICATE_LIST,
       data,
     });
   }
@@ -75,7 +75,7 @@ export class CertificatesController {
       const { id } = param;
       const data = await this.certificatesService.getById(user_id, id);
       return response({
-        message: messages.certificateGet,
+        message: messages.CERTIFICATE_GET,
         data,
       });
     } catch (e) {
@@ -100,7 +100,7 @@ export class CertificatesController {
       const { id } = param;
       const data = await this.certificatesService.update(user_id, id, body);
       return response({
-        message: messages.certificatesUpdate,
+        message: messages.CERTIFICATES_UPDATE,
         data,
       });
     } catch (e) {
@@ -121,7 +121,7 @@ export class CertificatesController {
       const { id } = param;
       const data = await this.certificatesService.destroy(user_id, id);
       return response({
-        message: messages.certificateRemoved,
+        message: messages.CERTIFICATE_REMOVED,
         data,
       });
     } catch (e) {

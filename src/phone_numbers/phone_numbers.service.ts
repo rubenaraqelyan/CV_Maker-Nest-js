@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectSqlModel } from 'src/database/inject-model-sql';
 import { phone_numbers } from './phone_numbers.model';
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @Injectable()
 export class PhoneNumbersService {
@@ -20,7 +20,7 @@ export class PhoneNumbersService {
 
   async getById(user_id, id) {
     const data = await this.PhoneNumbers.findOne({ where: { user_id, id } });
-    if (!data) throw new HttpException(messages.phoneNumberNotFound, HttpStatus.NOT_FOUND);
+    if (!data) throw new HttpException(messages.PHONE_NUMBER_NOT_FOUND, HttpStatus.NOT_FOUND);
     return data;
   }
 

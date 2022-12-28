@@ -25,7 +25,7 @@ import {
   getBioResponse,
 } from '../swagger/bios';
 import {catchError, response} from '../utils/helpers';
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @ApiTags('Bios')
 @Controller('bios')
@@ -41,7 +41,7 @@ export class BiosController {
       const { id } = req.user;
       const data = await this.biosService.create(id, body);
       return response({
-        message: messages.bioCreated,
+        message: messages.BIO_CREATED,
         data,
       });
     } catch (e) {
@@ -57,7 +57,7 @@ export class BiosController {
       const { id } = req.user;
       const data = await this.biosService.getList(id);
       return response({
-        message: messages.bioList,
+        message: messages.BIO_LIST,
         data,
       });
     } catch (e) {
@@ -78,7 +78,7 @@ export class BiosController {
       const { id } = param;
       const data = await this.biosService.getById(user_id, id);
       return response({
-        message: messages.bioGet,
+        message: messages.BIO_GET,
         data,
       });
     } catch (e) {
@@ -104,7 +104,7 @@ export class BiosController {
       const { id } = param;
       const data = await this.biosService.update(user_id, id, body);
       return response({
-        message: messages.bioUpdated,
+        message: messages.BIO_UPDATED,
         data,
       });
     } catch (e) {
@@ -125,7 +125,7 @@ export class BiosController {
       const { id } = param;
       const data = await this.biosService.destroy(user_id, id);
       return response({
-        message: messages.bioRemoved,
+        message: messages.BIO_REMOVED,
         data,
       });
     } catch (e) {

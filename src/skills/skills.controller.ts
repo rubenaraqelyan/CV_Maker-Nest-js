@@ -25,7 +25,7 @@ import {
 } from '../swagger/skills';
 import { skill } from '../dto/skills.dto';
 import {catchError, response} from '../utils/helpers';
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @ApiTags('Skills')
 @Controller('skill')
@@ -41,7 +41,7 @@ export class SkillsController {
       const { id } = req.user;
       const data = await this.skillsService.create(id, body);
       return response({
-        message: messages.skillCreated,
+        message: messages.SKILL_CREATED,
         data,
       });
     } catch (e) {
@@ -57,7 +57,7 @@ export class SkillsController {
       const { id } = req.user;
       const data = await this.skillsService.getList(id);
       return response({
-        message: messages.skillList,
+        message: messages.SKILL_LIST,
         data,
       });
     } catch (e) {
@@ -78,7 +78,7 @@ export class SkillsController {
       const { id } = param;
       const data = await this.skillsService.getById(user_id, id);
       return response({
-        message: messages.skillGet,
+        message: messages.SKILL_GET,
         data,
       });
     } catch (e) {
@@ -104,7 +104,7 @@ export class SkillsController {
       const { id } = param;
       const data = await this.skillsService.update(user_id, id, body);
       return response({
-        message: messages.skillUpdated,
+        message: messages.SKILL_UPDATED,
         data,
       });
     } catch (e) {
@@ -125,7 +125,7 @@ export class SkillsController {
       const { id } = param;
       const data = await this.skillsService.destroy(user_id, id);
       return response({
-        message: messages.skillRemoved,
+        message: messages.SKILL_REMOVED,
         data,
       });
     } catch (e) {

@@ -14,7 +14,7 @@ import {
 } from "../swagger/plans";
 import {PaymentMethodService} from "../payment_method/payment_methods.service";
 import {catchError, response} from "../utils/helpers";
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @ApiTags('Plans')
 @Controller('plan')
@@ -31,7 +31,7 @@ export class PlansController {
     try {
       const data = await this.planService.create(body);
       response({
-        message: messages.planCreated,
+        message: messages.PLAN_CREATED,
         data
       })
     } catch (e) {
@@ -46,7 +46,7 @@ export class PlansController {
     try {
       const data = await this.planService.getList();
       return response({
-        message: messages.planList,
+        message: messages.PLAN_LIST,
         data
       })
     } catch (e) {
@@ -62,7 +62,7 @@ export class PlansController {
       const {id} = req.user;
       const data = await this.planService.connectedPlans(id);
       return response({
-        message: messages.planConnectedList,
+        message: messages.PLAN_CONNECTED_LIST,
         data
       })
     } catch (e) {
@@ -82,7 +82,7 @@ export class PlansController {
       const {id} = param;
       const data = await this.planService.getById(id);
       return response({
-        message: messages.planGet,
+        message: messages.PLAN_GET,
         data
       })
     } catch (e) {
@@ -103,7 +103,7 @@ export class PlansController {
       const {id} = param;
       const data = await this.planService.update(id, body);
       return response({
-        message: messages.planUpdated,
+        message: messages.PLAN_UPDATED,
         data
       })
     } catch (e) {
@@ -123,7 +123,7 @@ export class PlansController {
       const {id} = param;
       const data = await this.planService.destroy(id);
       return response({
-        message: messages.planRemoved,
+        message: messages.PLAN_REMOVED,
         data
       })
     } catch (e) {
@@ -148,7 +148,7 @@ export class PlansController {
       const {pm_id} = await this.paymentMethodService.getById(user_id, payment_method_id);
       const data = await this.planService.subscribe({user_id, customer, plan_id, pm_id});
       return response({
-        message: messages.planSubscribe,
+        message: messages.PLAN_SUBSCRIBE,
         data
       })
     } catch (e) {
@@ -191,7 +191,7 @@ export class PlansController {
       const {id: plan_id} = param;
       const data = await this.planService.subscribeDelete({user_id, plan_id});
       return response({
-        message: messages.planDisconnect,
+        message: messages.PLAN_DISCONNECT,
         data
       })
     } catch (e) {

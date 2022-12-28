@@ -5,7 +5,7 @@ import { UserCvsService } from './user_cvs.service';
 import { RequestType, uuId } from '../dto/main.dto';
 import {catchError, response} from '../utils/helpers';
 import { createCvResponse, getCvResponse } from '../swagger/user_cvs';
-import messages from "../messages";
+import messages from "../utils/messages";
 import {inMath} from "../dto/user_cvs.dto";
 
 @ApiTags('CVs')
@@ -21,7 +21,7 @@ export class UserCvsController {
       const { id } = req.user;
       const data = await this.userCvsService.create(id);
       return response({
-        message: messages.cvCreated,
+        message: messages.CV_CREATED,
         data,
       });
     } catch (e) {
@@ -37,7 +37,7 @@ export class UserCvsController {
       const { id } = req.user;
       const data = await this.userCvsService.getList(id);
       return response({
-        message: messages.cvList,
+        message: messages.CV_LIST,
         data,
       });
     } catch (e) {
@@ -64,7 +64,7 @@ export class UserCvsController {
       const { start, end } = query;
       const data = await this.userCvsService.getBetween(id, start, end);
       return response({
-        message: messages.cvGetBetween,
+        message: messages.CV_GET_BETWEEN,
         data,
       });
     } catch (e) {
@@ -85,7 +85,7 @@ export class UserCvsController {
       const { id } = param;
       const data = await this.userCvsService.getById(user_id, id);
       return response({
-        message: messages.cvGet,
+        message: messages.CV_GET,
         data,
       });
     } catch (e) {
@@ -106,7 +106,7 @@ export class UserCvsController {
       const { id } = param;
       const data = await this.userCvsService.destroy(user_id, id);
       return response({
-        message: messages.cvRemoved,
+        message: messages.CV_REMOVED,
         data,
       });
     } catch (e) {

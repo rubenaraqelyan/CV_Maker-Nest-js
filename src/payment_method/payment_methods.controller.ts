@@ -24,7 +24,7 @@ import {
 } from 'src/swagger/payment_methods';
 import { PaymentMethodService } from './payment_methods.service';
 import {catchError, response} from "../utils/helpers";
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @ApiTags('Payment methods')
 @Controller('payment-method')
@@ -49,7 +49,7 @@ export class PaymentMethodController {
         cvc,
       });
       return response({
-        message: messages.paymentMethodCreated,
+        message: messages.PAYMENT_METHOD_CREATED,
         data,
       });
     } catch (e) {
@@ -65,7 +65,7 @@ export class PaymentMethodController {
       const { id } = req.user;
       const data = await this.paymentMethodsService.getList(id);
       return response({
-        message: messages.paymentMethodList,
+        message: messages.PAYMENT_METHOD_LIST,
         data,
       });
     } catch (e) {
@@ -86,7 +86,7 @@ export class PaymentMethodController {
       const { id } = param;
       const data = await this.paymentMethodsService.getById(user_id, id);
       return response({
-        message: messages.paymentMethodGet,
+        message: messages.PAYMENT_METHOD_GET,
         data,
       });
     } catch (e) {
@@ -107,7 +107,7 @@ export class PaymentMethodController {
       const { id } = param;
       const data = await this.paymentMethodsService.destroy(user_id, id);
       return response({
-        message: messages.paymentMethodRemoved,
+        message: messages.PAYMENT_METHOD_REMOVED,
         data,
       });
     } catch (e) {

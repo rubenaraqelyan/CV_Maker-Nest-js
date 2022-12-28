@@ -25,7 +25,7 @@ import {
 } from '../swagger/educations';
 import { educations } from '../dto/educations.dto';
 import {catchError, response} from '../utils/helpers';
-import messages from "../messages";
+import messages from "../utils/messages";
 
 @ApiTags('Educations')
 @Controller('education')
@@ -41,7 +41,7 @@ export class EducationsController {
       const { id } = req.user;
       const data = await this.educationsService.create(id, body);
       return response({
-        message: messages.eductionCreated,
+        message: messages.EDUCTION_CREATED,
         data,
       });
     } catch (e) {
@@ -57,7 +57,7 @@ export class EducationsController {
       const { id } = req.user;
       const data = await this.educationsService.getList(id);
       return response({
-        message: messages.eductionList,
+        message: messages.EDUCTION_LIST,
         data,
       });
     } catch (e) {
@@ -78,7 +78,7 @@ export class EducationsController {
       const { id } = param;
       const data = await this.educationsService.getById(user_id, id);
       return response({
-        message: messages.eductionGet,
+        message: messages.EDUCTION_GET,
         data,
       });
     } catch (e) {
@@ -103,7 +103,7 @@ export class EducationsController {
       const { id } = param;
       const data = await this.educationsService.update(user_id, id, body);
       return response({
-        message: messages.eductionUpdate,
+        message: messages.EDUCTION_UPDATE,
         data,
       });
     } catch (e) {
@@ -124,7 +124,7 @@ export class EducationsController {
       const { id } = param;
       const data = await this.educationsService.destroy(user_id, id);
       return response({
-        message: messages.eductionRemoved,
+        message: messages.EDUCTION_REMOVED,
         data,
       });
     } catch (e) {

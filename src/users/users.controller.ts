@@ -9,7 +9,7 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import {ApiBody, ApiConsumes, ApiHeader, ApiParam, ApiProperty, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBody, ApiConsumes, ApiHeader, ApiParam, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {UsersService} from './users.service';
 
 import {

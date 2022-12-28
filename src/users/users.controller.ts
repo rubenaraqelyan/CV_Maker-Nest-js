@@ -1,7 +1,7 @@
 import {
   Body,
   Controller,
-  Get, HttpStatus,
+  Get,
   Param,
   Post,
   Put,
@@ -9,7 +9,7 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import {ApiBody, ApiConsumes, ApiHeader, ApiParam, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBody, ApiConsumes, ApiHeader, ApiParam, ApiProperty, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {UsersService} from './users.service';
 
 import {

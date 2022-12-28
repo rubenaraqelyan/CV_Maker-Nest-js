@@ -24,29 +24,13 @@ import {
 } from '../swagger/addresses';
 import { address } from '../dto/address.dto';
 import { xAuthorization } from '../swagger/main';
-import { catchError } from '../utils/helpers';
+import {catchError, response} from '../utils/helpers';
+import messages from "../utils/messages";
 
 @ApiTags('Addresses')
 @Controller('address')
 export class AddressesController {
   constructor(private readonly addressesService: AddressesService) {}
-
-  @Get('/')
-  @ApiHeader(xAuthorization)
-  @ApiResponse(getAddressesResponse)
-  async getList(@Req() req: RequestType) {
-    try {
-      const { id } = req.user;
-      const data = await this.addressesService.getList(id);
-      return {
-        status: 201,
-        message: 'Get addresses',
-        data,
-      };
-    } catch (e) {
-      return catchError(e);
-    }
-  }
 
   @Post('/')
   @ApiHeader(xAuthorization)
@@ -56,11 +40,26 @@ export class AddressesController {
     try {
       const { id } = req.user;
       const data = await this.addressesService.create(id, body);
-      return {
-        status: 200,
-        message: 'Address has been created successfully',
+      return response({
+        message: messages.ADDRESS_CREATED,
         data,
-      };
+      });
+    } catch (e) {
+      return catchError(e);
+    }
+  }
+
+  @Get('/')
+  @ApiHeader(xAuthorization)
+  @ApiResponse(getAddressesResponse)
+  async getList(@Req() req: RequestType) {
+    try {
+      const { id } = req.user;
+      const data = await this.addressesService.getList(id);
+      return response({
+        message: messages.ADDRESS_GET_LIST,
+        data,
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -78,11 +77,10 @@ export class AddressesController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.addressesService.getById(user_id, id);
-      return {
-        status: 200,
-        message: 'Get address',
+      return response({
+        message: messages.ADDRESS_GET,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -105,11 +103,10 @@ export class AddressesController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.addressesService.update(user_id, id, body);
-      return {
-        status: 200,
-        message: 'Address has been updated successfully',
+      return response({
+        message: messages.ADDRESS_UPDATED,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -127,11 +124,10 @@ export class AddressesController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.addressesService.destroy(user_id, id);
-      return {
-        status: 200,
-        message: 'Address has been removed successfully',
+      return response({
+        message: messages.ADDRESS_REMOVED,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }

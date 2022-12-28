@@ -1,6 +1,8 @@
-const {BASE_URL} = process.env;
-
-const imageMimeTypes = {
+const STRIPE_CLIENT = 'STRIPE_CLIENT';
+const STRIPE_CURRENCY = 'usd';
+const PAYMENT_METHOD_TYPE = 'card';
+const INTERVAL = 'year';
+const IMAGE_MIME_TYPES = {
   'image/jpeg': '.jpg',
   'image/gif': '.gif',
   'image/png': '.png',
@@ -9,7 +11,7 @@ const imageMimeTypes = {
   'image/tiff': '.tiff',
   "image/heif": ".heif",
 }
-const avatarImage = {
+const AVATAR_IMAGE = {
   folderName:'avatars',
   extension: '.webp',
   format: 'webp',
@@ -17,20 +19,11 @@ const avatarImage = {
   height: 800,
 }
 
-const STRIPE_CLIENT = 'STRIPE_CLIENT';
-
-const options = (email: string, token: string) => ({
-  email,
-  verification_url: `${BASE_URL}/user/email-verify/${token}`,
-  facebook: 'https://imgur.com/pvqGGJp.png',
-  instagram: 'https://imgur.com/U1rrvPD.png',
-  twitter: 'https://imgur.com/dlxlYE5.png',
-  verify: 'https://imgur.com/cEWqKLp.png' || 'https://imgur.com/Sa7XP1o.png'
-})
-
 export {
-  imageMimeTypes,
-  avatarImage,
+  IMAGE_MIME_TYPES,
+  AVATAR_IMAGE,
   STRIPE_CLIENT,
-  options,
+  STRIPE_CURRENCY,
+  PAYMENT_METHOD_TYPE,
+  INTERVAL
 };

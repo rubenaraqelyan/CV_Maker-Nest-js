@@ -3,8 +3,9 @@ import { ApiHeader, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swa
 import { xAuthorization } from 'src/swagger/main';
 import { UserCvsService } from './user_cvs.service';
 import { RequestType, uuId } from '../dto/main.dto';
-import { catchError } from '../utils/helpers';
+import {catchError, response} from '../utils/helpers';
 import { createCvResponse, getCvResponse } from '../swagger/user_cvs';
+import messages from "../utils/messages";
 import {inMath} from "../dto/user_cvs.dto";
 
 @ApiTags('CVs')
@@ -19,11 +20,10 @@ export class UserCvsController {
     try {
       const { id } = req.user;
       const data = await this.userCvsService.create(id);
-      return {
-        statusCode: 201,
-        message: 'CV has been created successfully',
+      return response({
+        message: messages.CV_CREATED,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -36,11 +36,10 @@ export class UserCvsController {
     try {
       const { id } = req.user;
       const data = await this.userCvsService.getList(id);
-      return {
-        statusCode: 200,
-        message: 'CVs list',
+      return response({
+        message: messages.CV_LIST,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -64,11 +63,10 @@ export class UserCvsController {
       const { id } = req.user;
       const { start, end } = query;
       const data = await this.userCvsService.getBetween(id, start, end);
-      return {
-        statusCode: 200,
-        message: 'Get CVs by between dates',
+      return response({
+        message: messages.CV_GET_BETWEEN,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -86,11 +84,10 @@ export class UserCvsController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.userCvsService.getById(user_id, id);
-      return {
-        statusCode: 200,
-        message: 'Get CV',
+      return response({
+        message: messages.CV_GET,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }
@@ -108,11 +105,10 @@ export class UserCvsController {
       const { id: user_id } = req.user;
       const { id } = param;
       const data = await this.userCvsService.destroy(user_id, id);
-      return {
-        statusCode: 200,
-        message: 'CV has been removed successfully',
+      return response({
+        message: messages.CV_REMOVED,
         data,
-      };
+      });
     } catch (e) {
       return catchError(e);
     }

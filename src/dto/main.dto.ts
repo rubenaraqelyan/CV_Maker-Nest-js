@@ -34,3 +34,9 @@ export interface File {
     readonly buffer: Buffer;
     size: number;
 }
+
+export interface returnResponse {
+    readonly status?: number;
+    readonly message: string;
+    readonly data?: any | object;
+}

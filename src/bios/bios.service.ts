@@ -1,6 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectSqlModel} from "../database/inject-model-sql";
 import {bios} from "./bios.model";
+import messages from "../utils/messages";
 
 @Injectable()
 export class BiosService {
@@ -14,7 +15,7 @@ export class BiosService {
   }
   async getById(user_id, id) {
     const data = await this.Bios.findOne({where: {user_id, id}});
-    if (!data) throw new HttpException('Bio not found', HttpStatus.NOT_FOUND)
+    if (!data) throw new HttpException(messages.BIO_NOT_FOUND, HttpStatus.NOT_FOUND)
     return data;
   }
   async getList(user_id) {

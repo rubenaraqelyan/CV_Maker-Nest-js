@@ -28,12 +28,12 @@ import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 
 @ApiTags('Addresses')
+@ApiHeader(xAuthorization)
 @Controller('address')
 export class AddressesController {
   constructor(private readonly addressesService: AddressesService) {}
 
   @Post('/')
-  @ApiHeader(xAuthorization)
   @ApiBody(createAddressBody)
   @ApiResponse(createAddressResponse)
   async create(@Req() req: RequestType, @Body() body: address) {
@@ -50,7 +50,6 @@ export class AddressesController {
   }
 
   @Get('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(getAddressesResponse)
   async getList(@Req() req: RequestType) {
     try {
@@ -66,7 +65,6 @@ export class AddressesController {
   }
 
   @Get('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createAddressResponse)
   @ApiParam({
     name: 'id',
@@ -88,7 +86,6 @@ export class AddressesController {
 
   @Put('/:id')
   @ApiBody(createAddressBody)
-  @ApiHeader(xAuthorization)
   @ApiResponse(createAddressResponse)
   @ApiParam({
     name: 'id',
@@ -113,7 +110,6 @@ export class AddressesController {
   }
 
   @Delete('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createAddressResponse)
   @ApiParam({
     name: 'id',

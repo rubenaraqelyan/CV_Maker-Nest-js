@@ -9,12 +9,12 @@ import messages from "../utils/messages";
 import {inMath} from "../dto/user_cvs.dto";
 
 @ApiTags('CVs')
+@ApiHeader(xAuthorization)
 @Controller('user-cvs')
 export class UserCvsController {
   constructor(private readonly userCvsService: UserCvsService) {}
 
   @Post('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createCvResponse)
   async create(@Req() req: RequestType) {
     try {
@@ -30,7 +30,6 @@ export class UserCvsController {
   }
 
   @Get('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(getCvResponse)
   async getList(@Req() req: RequestType) {
     try {
@@ -46,7 +45,6 @@ export class UserCvsController {
   }
 
   @Get('/between')
-  @ApiHeader(xAuthorization)
   @ApiQuery({
     name: 'end',
     required: false,
@@ -73,7 +71,6 @@ export class UserCvsController {
   }
 
   @Get('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createCvResponse)
   @ApiParam({
     name: 'id',
@@ -94,7 +91,6 @@ export class UserCvsController {
   }
 
   @Delete('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createCvResponse)
   @ApiParam({
     name: 'id',

@@ -36,25 +36,20 @@ export class PaymentMethodService {
     return customerDB;
   }
 
-  async createPaymentMethod({user_id, customer, type, number, exp_month, exp_year, cvc}) {
+  async createPaymentMethod({user_id, customer, id}) {
     try {
-      const {id: pm_id} = await this.stripe.paymentMethods.create({
-        type,
-        card: {
-          number,
-          exp_month,
-          exp_year,
-          cvc,
-        },
-      });
-
-      await this.stripe.paymentMethods.attach(pm_id,{customer});
+   
+      const payment_method = await this.stripe.paymentMethods.retrieve(id)
+      await this.stripe.paymentMethods.attach(id,{customer});
+      const exp_month = payment_method['card']['exp_month']
+      const exp_year = payment_method['card']['exp_year']
+      const pm_id = payment_method.id
 
       return this.PaymentMethods.create({
         user_id,
-        pm_id,
         exp_month,
         exp_year,
+        pm_id
       });
 
     } catch (e) {

@@ -1,27 +1,5 @@
 import { response } from './main';
 
-const createPaymentMethodBody = {
-  schema: {
-    properties: {
-      type: {
-        type: 'string',
-      },
-      card_number: {
-        type: 'number',
-      },
-      exp_month: {
-        type: 'number',
-      },
-      exp_year: {
-        type: 'number',
-      },
-      cvc: {
-        type: 'number',
-      },
-    },
-  },
-};
-
 const createPaymentMethodResponse = {
   description: 'Create Payment method response',
   schema: {
@@ -84,7 +62,6 @@ const getPaymentMethodResponse = {
 };
 
 export {
-  createPaymentMethodBody,
   createPaymentMethodResponse,
   getPaymentMethodResponse,
 };

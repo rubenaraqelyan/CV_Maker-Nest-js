@@ -28,12 +28,12 @@ import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 
 @ApiTags('Educations')
+@ApiHeader(xAuthorization)
 @Controller('education')
 export class EducationsController {
   constructor(private readonly educationsService: EducationsService) {}
 
   @Post('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createEducationResponse)
   @ApiBody(createEducationBody)
   async create(@Req() req: RequestType, @Body() body: educations) {
@@ -50,7 +50,6 @@ export class EducationsController {
   }
 
   @Get('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(getEducationResponse)
   async getList(@Req() req: RequestType) {
     try {
@@ -66,7 +65,6 @@ export class EducationsController {
   }
 
   @Get('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createEducationResponse)
   @ApiParam({
     name: 'id',
@@ -86,7 +84,6 @@ export class EducationsController {
     }
   }
   @Put('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createEducationResponse)
   @ApiBody(createEducationBody)
   @ApiParam({
@@ -112,7 +109,6 @@ export class EducationsController {
   }
 
   @Delete('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createEducationResponse)
   @ApiParam({
     name: 'id',

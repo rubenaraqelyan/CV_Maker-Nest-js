@@ -29,12 +29,12 @@ import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 
 @ApiTags('Certificates')
+@ApiHeader(xAuthorization)
 @Controller('certificate')
 export class CertificatesController {
   constructor(private readonly certificatesService: CertificatesService) {}
 
   @Post('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createCertificateResponse)
   @ApiBody(createCertificateBody)
   async create(@Req() req: RequestType, @Body() body: certificates) {
@@ -51,7 +51,6 @@ export class CertificatesController {
   }
 
   @Get('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(getCertificateResponse)
   async getList(@Req() req: RequestType) {
     const { id } = req.user;
@@ -63,7 +62,6 @@ export class CertificatesController {
   }
 
   @Get('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createCertificateResponse)
   @ApiParam({
     name: 'id',
@@ -83,7 +81,6 @@ export class CertificatesController {
     }
   }
   @Put('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createCertificateResponse)
   @ApiBody(createCertificateBody)
   @ApiParam({
@@ -109,7 +106,6 @@ export class CertificatesController {
   }
 
   @Delete('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createCertificateResponse)
   @ApiParam({
     name: 'id',

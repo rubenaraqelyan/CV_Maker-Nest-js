@@ -2,6 +2,9 @@ import {Table, Column, Model, DataType, ForeignKey, BelongsTo} from 'sequelize-t
 import {users} from "../users/users.model";
 @Table
 export class payment_methods extends Model {
+  static retrieve(pm_id: any) {
+    throw new Error('Method not implemented.');
+  }
   @Column({
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,

@@ -28,12 +28,12 @@ import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 
 @ApiTags('Languages')
+@ApiHeader(xAuthorization)
 @Controller('language')
 export class LanguagesController {
   constructor(private readonly languageService: LanguagesService) {}
 
   @Post('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createLanguageResponse)
   @ApiBody(createLanguageBody)
   async create(@Req() req: RequestType, @Body() body: language) {
@@ -50,7 +50,6 @@ export class LanguagesController {
   }
 
   @Get('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(getLanguageResponse)
   async getList(@Req() req: RequestType) {
     try {
@@ -66,7 +65,6 @@ export class LanguagesController {
   }
 
   @Get('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createLanguageResponse)
   @ApiParam({
     name: 'id',
@@ -87,9 +85,8 @@ export class LanguagesController {
   }
 
   @Put('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createLanguageResponse)
-  @ApiResponse(createLanguageBody)
+  @ApiBody(createLanguageBody)
   @ApiParam({
     name: 'id',
     type: 'string',
@@ -113,7 +110,6 @@ export class LanguagesController {
   }
 
   @Delete('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createLanguageResponse)
   @ApiParam({
     name: 'id',

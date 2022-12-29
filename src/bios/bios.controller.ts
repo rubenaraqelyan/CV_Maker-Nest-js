@@ -28,12 +28,13 @@ import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 
 @ApiTags('Bios')
+@ApiHeader(xAuthorization)
 @Controller('bios')
+
 export class BiosController {
   constructor(private readonly biosService: BiosService) {}
 
   @Post('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createBioResponse)
   @ApiBody(createBioBody)
   async create(@Req() req: RequestType, @Body() body: bio) {
@@ -50,7 +51,6 @@ export class BiosController {
   }
 
   @Get('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(getBioResponse)
   async getList(@Req() req: RequestType) {
     try {
@@ -66,7 +66,6 @@ export class BiosController {
   }
 
   @Get('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createBioResponse)
   @ApiParam({
     name: 'id',
@@ -87,7 +86,6 @@ export class BiosController {
   }
 
   @Put('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createBioResponse)
   @ApiBody(createBioBody)
   @ApiParam({
@@ -113,7 +111,6 @@ export class BiosController {
   }
 
   @Delete('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createBioResponse)
   @ApiParam({
     name: 'id',

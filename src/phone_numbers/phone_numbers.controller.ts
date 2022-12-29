@@ -27,12 +27,12 @@ import {
 import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 @ApiTags('Phone numbers')
+@ApiHeader(xAuthorization)
 @Controller('phone-number')
 export class PhoneNumbersController {
   constructor(private readonly phoneNumbersService: PhoneNumbersService) {}
 
   @Post('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPhoneNumberResponse)
   @ApiBody(createPhoneNumberBody)
   async createPhoneNumber(@Req() req: RequestType, @Body() body: phone_number) {
@@ -49,7 +49,6 @@ export class PhoneNumbersController {
   }
 
   @Get('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(getPhoneNumbersResponse)
   async getList(@Req() req: RequestType) {
     const { id } = req.user;
@@ -61,7 +60,6 @@ export class PhoneNumbersController {
   }
 
   @Get('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPhoneNumberResponse)
   @ApiParam({
     name: 'id',
@@ -82,7 +80,6 @@ export class PhoneNumbersController {
   }
 
   @Put('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPhoneNumberResponse)
   @ApiBody(createPhoneNumberBody)
   @ApiParam({
@@ -108,7 +105,6 @@ export class PhoneNumbersController {
   }
 
   @Delete('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPhoneNumberResponse)
   @ApiParam({
     name: 'id',

@@ -14,11 +14,9 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { RequestType, uuId } from 'src/dto/main.dto';
-import { payment_method } from 'src/dto/payment_method.dto';
+import { RequestType, stripeId, uuId } from 'src/dto/main.dto';
 import { xAuthorization } from 'src/swagger/main';
 import {
-  createPaymentMethodBody,
   createPaymentMethodResponse,
   getPaymentMethodResponse,
 } from 'src/swagger/payment_methods';
@@ -27,26 +25,25 @@ import {catchError, response} from "../utils/helpers";
 import messages from "../utils/messages";
 
 @ApiTags('Payment methods')
+@ApiHeader(xAuthorization)
 @Controller('payment-method')
 export class PaymentMethodController {
   constructor(private readonly paymentMethodsService: PaymentMethodService) {}
-  @Post('/')
-  @ApiHeader(xAuthorization)
-  @ApiBody(createPaymentMethodBody)
+  @Post('/:id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+  })
   @ApiResponse(createPaymentMethodResponse)
-  async create(@Req() req: RequestType, @Body() body: payment_method) {
+  async create(@Req() req: RequestType,  @Param() param: stripeId) {
     try {
-      const { type, card_number: number, exp_month, exp_year, cvc } = body;
+      const { id } = param;
       const {id: user_id, name, email} = req.user;
       const {customer_id: customer} = await this.paymentMethodsService.getCustomer({name, email});
       const data = await this.paymentMethodsService.createPaymentMethod({
         user_id,
         customer,
-        type,
-        number,
-        exp_month,
-        exp_year,
-        cvc,
+        id
       });
       return response({
         message: messages.PAYMENT_METHOD_CREATED,
@@ -58,7 +55,6 @@ export class PaymentMethodController {
   }
 
   @Get('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(getPaymentMethodResponse)
   async getList(@Req() req: RequestType) {
     try {
@@ -74,7 +70,6 @@ export class PaymentMethodController {
   }
 
   @Get('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPaymentMethodResponse)
   @ApiParam({
     name: 'id',
@@ -95,7 +90,6 @@ export class PaymentMethodController {
   }
 
   @Delete('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPaymentMethodResponse)
   @ApiParam({
     name: 'id',

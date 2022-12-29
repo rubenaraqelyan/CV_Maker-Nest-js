@@ -17,6 +17,7 @@ import {catchError, response} from "../utils/helpers";
 import messages from "../utils/messages";
 
 @ApiTags('Plans')
+@ApiHeader(xAuthorization)
 @Controller('plan')
 export class PlansController {
   constructor(
@@ -24,7 +25,6 @@ export class PlansController {
     private readonly paymentMethodService: PaymentMethodService,
   ) {}
   @Post('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPlanResponse)
   @ApiBody(createPlanBody)
   async create(@Req() req: RequestType, @Body() body: plan){
@@ -40,7 +40,6 @@ export class PlansController {
   }
 
   @Get('/')
-  @ApiHeader(xAuthorization)
   @ApiResponse(getPlanResponse)
   async getList(@Req() req: RequestType){
     try {
@@ -55,7 +54,6 @@ export class PlansController {
   }
 
   @Get('/connected')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPlanResponse)
   async connectedPlans(@Req() req: RequestType){
     try {
@@ -71,7 +69,6 @@ export class PlansController {
   }
 
   @Get('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPlanResponse)
   @ApiParam({
     name: 'id',
@@ -91,7 +88,6 @@ export class PlansController {
   }
 
   @Put('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPlanResponse)
   @ApiBody(createPlanBody)
   @ApiParam({
@@ -112,7 +108,6 @@ export class PlansController {
   }
 
   @Delete('/:id')
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPlanResponse)
   @ApiParam({
     name: 'id',
@@ -132,7 +127,6 @@ export class PlansController {
   }
 
   @Post('/subscribe/:id')//plan_id
-  @ApiHeader(xAuthorization)
   @ApiBody(subscribeBody)
   @ApiResponse(subscribeResponse)
   @ApiParam({
@@ -157,7 +151,6 @@ export class PlansController {
   }
 
   @Post('/subscribe-toggle/:id')//plan_id
-  @ApiHeader(xAuthorization)
   @ApiBody(subscribeToggleBody)
   @ApiResponse(emptyResponse('Subscription toggle'))
   @ApiParam({
@@ -179,7 +172,6 @@ export class PlansController {
   }
 
   @Delete('/subscribe-delete/:id')//plan_id
-  @ApiHeader(xAuthorization)
   @ApiResponse(createPlanResponse)
   @ApiParam({
     name: 'id',

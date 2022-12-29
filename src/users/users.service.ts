@@ -26,13 +26,14 @@ export class UsersService {
 
   ) {}
   async signUp(data) {
-    data.password = await hashPassword(data.password);
-    const username = data.username.toLowerCase();
-    const email = data.email.toLowerCase();
-    data.username = username;
-    data.email = email;
-    await this.checkEmail(email);
-    await this.checkUsernameLogin(username);
+    data = {
+      ...data,
+      username: data.username.toLowerCase(),
+      email: data.username.toLowerCase(),
+      password: await hashPassword(data.password)
+    }
+    await this.checkEmail(data.email);
+    await this.checkUsernameLogin(data.username);
     const user = await this.Users.create(data);
     const token = this.getToken(user.id, 'verify_email');
     return this.sendVerificationEmail(data.email, token);
@@ -40,9 +41,9 @@ export class UsersService {
 
   async signIn(data) {
     const user = await this.Users.findOne({where: {email: data.email}});
+    if (!user?.verified_at) throw new HttpException(messages.VERIFY_YOUR_EMAIL, HttpStatus.UNPROCESSABLE_ENTITY);
     const checkUser = user ? await checkPassword(data.password, user?.getDataValue('password')) : null;
     if (!checkUser || !user) throw new HttpException(messages.INVALID_USERNAME_OR_PASSWORD, HttpStatus.UNPROCESSABLE_ENTITY);
-    if (!user.verified_at) throw new HttpException(messages.VERIFY_YOUR_EMAIL, HttpStatus.UNPROCESSABLE_ENTITY);
     return user.toJSON();
   }
 

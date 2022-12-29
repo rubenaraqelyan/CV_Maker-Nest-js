@@ -26,6 +26,11 @@ export class uuId {
     readonly id: string;
 }
 
+export class stripeId {
+    @IsString()
+    readonly id: string
+}
+
 export interface File {
     readonly fieldname: string;
     readonly originalname: string;

@@ -6,7 +6,7 @@ import * as sharp from "sharp";
 import * as ejs from "ejs";
 import {HttpException, HttpStatus, UnprocessableEntityException} from "@nestjs/common";
 import {AVATAR_IMAGE, IMAGE_MIME_TYPES} from "./constanst";
-import {File, returnResponse} from "../dto/main.dto";
+import {File, returnResponse} from "../modules/main.dto";
 import {ValidationError} from "class-validator";
 import messages from "./messages";
 const {BASE_URL} = process.env;

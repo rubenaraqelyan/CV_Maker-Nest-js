@@ -3,7 +3,7 @@ import {ApiBody, ApiHeader, ApiParam, ApiResponse, ApiTags} from "@nestjs/swagge
 import {PlansService} from "./plans.service";
 import {emptyResponse, xAuthorization} from "../swagger/main";
 import {RequestType, uuId} from "../dto/main.dto";
-import {plan, planSubscribeToggle} from "../dto/plans.dto";
+import {plan, planSubscribeToggle} from "./plans.dto";
 import {
   createPlanBody,
   createPlanResponse,
@@ -11,7 +11,7 @@ import {
   subscribeBody,
   subscribeResponse,
   subscribeToggleBody
-} from "../swagger/plans";
+} from "./plans.swagger";
 import {PaymentMethodService} from "../payment_method/payment_methods.service";
 import {catchError, response} from "../utils/helpers";
 import messages from "../utils/messages";

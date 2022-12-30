@@ -1,17 +1,17 @@
-import {response} from "./main";
+import {response} from "../swagger/main";
 
-const createSkillBody = {
+const createBioBody = {
   schema: {
     properties: {
-      skill: {
+      bio: {
         type: "string"
       }
     }
   }
 };
 
-const createSkillResponse = {
-  description: "Skill response",
+const createBioResponse = {
+  description: "Bios response",
   schema: {
     properties: {
       ...response,
@@ -24,7 +24,7 @@ const createSkillResponse = {
           user_id: {
             type: "string"
           },
-          skill: {
+          bio: {
             type: "string"
           }
         },
@@ -33,8 +33,8 @@ const createSkillResponse = {
   }
 };
 
-const getSkillResponse = {
-  description: "Skill response",
+const getBioResponse = {
+  description: "Bios response",
   schema: {
     properties: {
       ...response,
@@ -49,7 +49,7 @@ const getSkillResponse = {
             user_id: {
               type: "string"
             },
-            skill: {
+            bio: {
               type: "string"
             }
           },
@@ -60,7 +60,7 @@ const getSkillResponse = {
 };
 
 export {
-  createSkillBody,
-  createSkillResponse,
-  getSkillResponse,
+  createBioBody,
+  createBioResponse,
+  getBioResponse
 }

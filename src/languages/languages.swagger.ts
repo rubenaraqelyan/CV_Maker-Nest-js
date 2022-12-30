@@ -1,23 +1,20 @@
-import {response} from "./main";
-const createEducationBody = {
-  description: "Education body",
+import {response} from "../swagger/main";
+
+const createLanguageBody = {
   schema: {
     properties: {
-      title: {
+      language: {
         type: "string"
       } ,
-      start_date: {
-        type: "string"
-      },
-      end_date: {
+      level: {
         type: "string"
       }
     }
   }
 };
 
-const createEducationResponse = {
-  description: "Education response",
+const createLanguageResponse = {
+  description: "Language response",
   schema: {
     properties: {
       ...response,
@@ -30,23 +27,20 @@ const createEducationResponse = {
           user_id: {
             type: "string"
           },
-          title: {
-            type: "string"
-          } ,
-          start_date: {
+          language: {
             type: "string"
           },
-          end_date: {
+          level: {
             type: "string"
           }
-        }
+        },
       }
     }
   }
 };
 
-const getEducationResponse = {
-  description: "Education response",
+const getLanguageResponse = {
+  description: "Languages response",
   schema: {
     properties: {
       ...response,
@@ -61,13 +55,10 @@ const getEducationResponse = {
             user_id: {
               type: "string"
             },
-            title: {
-              type: "string"
-            } ,
-            start_date: {
+            language: {
               type: "string"
             },
-            end_date: {
+            level: {
               type: "string"
             }
           },
@@ -78,7 +69,7 @@ const getEducationResponse = {
 };
 
 export {
-  createEducationBody,
-  createEducationResponse,
-  getEducationResponse
+  createLanguageBody,
+  createLanguageResponse,
+  getLanguageResponse
 }

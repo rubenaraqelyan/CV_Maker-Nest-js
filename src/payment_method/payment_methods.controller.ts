@@ -20,11 +20,11 @@ import {
   createPaymentMethodResponse,
   getPaymentMethodBody,
   getPaymentMethodResponse,
-} from 'src/swagger/payment_methods';
+} from './payment_methods.swagger';
 import { PaymentMethodService } from './payment_methods.service';
 import {catchError, response} from "../utils/helpers";
 import messages from "../utils/messages";
-import { payment_method } from 'src/dto/payment.dto';
+import { payment_method } from './payment_methods.dto';
 
 @ApiTags('Payment methods')
 @ApiHeader(xAuthorization)

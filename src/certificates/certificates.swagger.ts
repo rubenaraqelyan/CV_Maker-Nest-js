@@ -1,20 +1,24 @@
-import {response} from "./main";
+import {response} from "../swagger/main";
 
-const createLanguageBody = {
+const createCertificateBody = {
+  description: "Certificate body",
   schema: {
     properties: {
-      language: {
+      name: {
         type: "string"
       } ,
-      level: {
+      url: {
+        type: "string"
+      },
+      expaire_date: {
         type: "string"
       }
     }
   }
 };
 
-const createLanguageResponse = {
-  description: "Language response",
+const createCertificateResponse = {
+  description: "Certificate response",
   schema: {
     properties: {
       ...response,
@@ -27,20 +31,23 @@ const createLanguageResponse = {
           user_id: {
             type: "string"
           },
-          language: {
+          name: {
+            type: "string"
+          } ,
+          url: {
             type: "string"
           },
-          level: {
+          expaire_date: {
             type: "string"
           }
-        },
+        }
       }
     }
   }
 };
 
-const getLanguageResponse = {
-  description: "Languages response",
+const getCertificateResponse = {
+  description: "Certificates response",
   schema: {
     properties: {
       ...response,
@@ -55,10 +62,13 @@ const getLanguageResponse = {
             user_id: {
               type: "string"
             },
-            language: {
+            name: {
+              type: "string"
+            } ,
+            url: {
               type: "string"
             },
-            level: {
+            expaire_date: {
               type: "string"
             }
           },
@@ -69,7 +79,7 @@ const getLanguageResponse = {
 };
 
 export {
-  createLanguageBody,
-  createLanguageResponse,
-  getLanguageResponse
+  createCertificateBody,
+  createCertificateResponse,
+  getCertificateResponse
 }

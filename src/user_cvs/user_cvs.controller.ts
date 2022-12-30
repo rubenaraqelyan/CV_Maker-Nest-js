@@ -4,9 +4,9 @@ import { xAuthorization } from 'src/swagger/main';
 import { UserCvsService } from './user_cvs.service';
 import { RequestType, uuId } from '../dto/main.dto';
 import {catchError, response} from '../utils/helpers';
-import { createCvResponse, getCvResponse } from '../swagger/user_cvs';
+import { createCvResponse, getCvResponse } from './user_cvs.swagger';
 import messages from "../utils/messages";
-import {inMath} from "../dto/user_cvs.dto";
+import {inMath} from "./user_cvs.dto";
 
 @ApiTags('CVs')
 @ApiHeader(xAuthorization)

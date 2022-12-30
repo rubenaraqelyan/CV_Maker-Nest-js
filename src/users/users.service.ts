@@ -7,7 +7,7 @@ const {JWT_SECRET} = process.env;
 import {checkPassword, hashPassword, renderHtmlFile, writeImage} from "../utils/helpers";
 import Email from "../services/Email";
 import {Op} from "sequelize";
-import {authData} from "../dto/auth.dto";
+import {authData} from "./auth.dto";
 import {STRIPE_CLIENT} from "../utils/constanst";
 import {options} from "../utils/helpers";
 import Stripe from "stripe";

@@ -21,8 +21,8 @@ import {
   createAddressBody,
   createAddressResponse,
   getAddressesResponse,
-} from '../swagger/addresses';
-import { address } from '../dto/address.dto';
+} from './addresses.swagger';
+import { address } from './address.dto';
 import { xAuthorization } from '../swagger/main';
 import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";

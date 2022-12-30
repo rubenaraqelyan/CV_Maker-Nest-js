@@ -18,12 +18,12 @@ import {
 import { xAuthorization } from '../swagger/main';
 import { RequestType, uuId } from '../dto/main.dto';
 import { BiosService } from './bios.service';
-import { bio } from '../dto/bios.dto';
+import { bio } from './bios.dto';
 import {
   createBioBody,
   createBioResponse,
   getBioResponse,
-} from '../swagger/bios';
+} from './bios.swagger';
 import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 

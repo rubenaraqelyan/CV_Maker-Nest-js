@@ -22,8 +22,8 @@ import {
   createLanguageBody,
   createLanguageResponse,
   getLanguageResponse,
-} from '../swagger/languages';
-import { language } from '../dto/languages.dto';
+} from './languages.swagger';
+import { language } from './languages.dto';
 import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 

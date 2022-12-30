@@ -1,4 +1,4 @@
-import { response } from './main';
+import { response } from '../swagger/main';
 
 const createCvResponse = {
   description: 'Create User Cv response',

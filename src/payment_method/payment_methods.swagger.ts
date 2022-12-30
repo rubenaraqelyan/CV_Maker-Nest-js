@@ -1,4 +1,4 @@
-import { response } from './main';
+import { response } from '../swagger/main';
 
 const getPaymentMethodBody = {
     description: "Payment method body",

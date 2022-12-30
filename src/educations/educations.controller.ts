@@ -22,8 +22,8 @@ import {
   createEducationBody,
   createEducationResponse,
   getEducationResponse,
-} from '../swagger/educations';
-import { educations } from '../dto/educations.dto';
+} from './educations.swagger';
+import { educations } from './educations.dto';
 import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 

@@ -1,24 +1,23 @@
-import {response} from "./main";
-
-const createCertificateBody = {
-  description: "Certificate body",
+import {response} from "../swagger/main";
+const createEducationBody = {
+  description: "Education body",
   schema: {
     properties: {
-      name: {
+      title: {
         type: "string"
       } ,
-      url: {
+      start_date: {
         type: "string"
       },
-      expaire_date: {
+      end_date: {
         type: "string"
       }
     }
   }
 };
 
-const createCertificateResponse = {
-  description: "Certificate response",
+const createEducationResponse = {
+  description: "Education response",
   schema: {
     properties: {
       ...response,
@@ -31,13 +30,13 @@ const createCertificateResponse = {
           user_id: {
             type: "string"
           },
-          name: {
+          title: {
             type: "string"
           } ,
-          url: {
+          start_date: {
             type: "string"
           },
-          expaire_date: {
+          end_date: {
             type: "string"
           }
         }
@@ -46,8 +45,8 @@ const createCertificateResponse = {
   }
 };
 
-const getCertificateResponse = {
-  description: "Certificates response",
+const getEducationResponse = {
+  description: "Education response",
   schema: {
     properties: {
       ...response,
@@ -62,13 +61,13 @@ const getCertificateResponse = {
             user_id: {
               type: "string"
             },
-            name: {
+            title: {
               type: "string"
             } ,
-            url: {
+            start_date: {
               type: "string"
             },
-            expaire_date: {
+            end_date: {
               type: "string"
             }
           },
@@ -79,7 +78,7 @@ const getCertificateResponse = {
 };
 
 export {
-  createCertificateBody,
-  createCertificateResponse,
-  getCertificateResponse
+  createEducationBody,
+  createEducationResponse,
+  getEducationResponse
 }

@@ -19,7 +19,7 @@ import {
   updatePassword,
   UserDto,
   UserLoginDto
-} from '../dto/user.dto';
+} from './user.dto';
 import {
   acceptCodeForgotPasswordBody,
   forgotPasswordBody,
@@ -29,7 +29,7 @@ import {
   signUpBody,
   updateBody, updatePasswordBody,
   updateResponse, uploadAvatarBody, uploadAvatarResponse, verifyUserResponse
-} from "../swagger/users";
+} from "./users.swagger";
 import {RequestType} from "../dto/main.dto";
 import {emptyResponse, xAuthorization} from "../swagger/main";
 import {FileInterceptor} from "@nestjs/platform-express";

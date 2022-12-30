@@ -16,14 +16,14 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { RequestType, uuId } from 'src/dto/main.dto';
-import { phone_number } from 'src/dto/phone_number.dto';
+import { phone_number } from './phone_number.dto';
 import { PhoneNumbersService } from './phone_numbers.service';
 import { xAuthorization } from '../swagger/main';
 import {
   createPhoneNumberBody,
   createPhoneNumberResponse,
   getPhoneNumbersResponse,
-} from 'src/swagger/phone_numbers';
+} from './phone_numbers.swagger';
 import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 @ApiTags('Phone numbers')

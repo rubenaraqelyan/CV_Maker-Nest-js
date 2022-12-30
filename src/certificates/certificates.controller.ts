@@ -22,9 +22,9 @@ import {
   createCertificateResponse,
   createCertificateBody,
   getCertificateResponse,
-} from '../swagger/certificates';
-import { certificates } from '../dto/certificates.dto';
-import { skill } from '../dto/skills.dto';
+} from './certificates.swagger';
+import { certificates } from './certificates.dto';
+import { skill } from '../skills/skills.dto';
 import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 

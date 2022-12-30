@@ -22,8 +22,8 @@ import {
   createSkillBody,
   createSkillResponse,
   getSkillResponse,
-} from '../swagger/skills';
-import { skill } from '../dto/skills.dto';
+} from './skills.swagger';
+import { skill } from './skills.dto';
 import {catchError, response} from '../utils/helpers';
 import messages from "../utils/messages";
 

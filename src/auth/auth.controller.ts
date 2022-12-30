@@ -3,7 +3,7 @@ import { GoogleAuthGuard } from '../services/GoogleGuard';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {UsersService} from "../users/users.service";
 import {RequestType} from "../dto/main.dto";
-import {OAuthLoginResponse, OAuthRedirectResponse} from "../swagger/users";
+import {OAuthLoginResponse, OAuthRedirectResponse} from "../users/users.swagger";
 import {response} from "../utils/helpers";
 import messages from "../utils/messages";
 

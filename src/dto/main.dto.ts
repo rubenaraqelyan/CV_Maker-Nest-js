@@ -7,7 +7,6 @@ export type next = NextFunction;
 class requestUser {
     id: string;
     name: string;
-    username: string;
     email: string;
     password: string;
     image: string;

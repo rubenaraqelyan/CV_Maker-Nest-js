@@ -40,7 +40,8 @@ export class PaymentMethodService {
     try {
    
       const payment_method = await this.stripe.paymentMethods.retrieve(id)
-      await this.stripe.paymentMethods.attach(id,{customer});
+      const attached_card = await this.stripe.paymentMethods.attach(id,{customer});
+      Promise.all([payment_method, attached_card])
       const exp_month = payment_method['card']['exp_month']
       const exp_year = payment_method['card']['exp_year']
       const pm_id = payment_method.id

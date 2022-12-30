@@ -14,30 +14,29 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { RequestType, stripeId, uuId } from 'src/dto/main.dto';
+import { RequestType, uuId } from 'src/dto/main.dto';
 import { xAuthorization } from 'src/swagger/main';
 import {
   createPaymentMethodResponse,
+  getPaymentMethodBody,
   getPaymentMethodResponse,
 } from 'src/swagger/payment_methods';
 import { PaymentMethodService } from './payment_methods.service';
 import {catchError, response} from "../utils/helpers";
 import messages from "../utils/messages";
+import { payment_method } from 'src/dto/payment.dto';
 
 @ApiTags('Payment methods')
 @ApiHeader(xAuthorization)
 @Controller('payment-method')
 export class PaymentMethodController {
   constructor(private readonly paymentMethodsService: PaymentMethodService) {}
-  @Post('/:id')
-  @ApiParam({
-    name: 'id',
-    type: 'string',
-  })
+  @Post('/')
   @ApiResponse(createPaymentMethodResponse)
-  async create(@Req() req: RequestType,  @Param() param: stripeId) {
+  @ApiBody(getPaymentMethodBody)
+  async create(@Req() req: RequestType,  @Body() body: payment_method) {
     try {
-      const { id } = param;
+      const { id } = body;
       const {id: user_id, name, email} = req.user;
       const {customer_id: customer} = await this.paymentMethodsService.getCustomer({name, email});
       const data = await this.paymentMethodsService.createPaymentMethod({

@@ -19,10 +19,6 @@ export class UserDto {
 
   @IsNotEmpty()
   @IsString()
-  readonly username: string;
-
-  @IsNotEmpty()
-  @IsString()
   @IsEmail()
   readonly email: string;
 
@@ -53,10 +49,6 @@ export class UpdateDto {
   @IsOptional()
   @IsString()
   readonly name: string;
-
-  @IsOptional()
-  @IsString()
-  readonly username: string;
 
   @IsOptional()
   @IsArray()

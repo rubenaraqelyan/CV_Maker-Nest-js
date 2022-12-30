@@ -1,5 +1,16 @@
 import { response } from './main';
 
+const getPaymentMethodBody = {
+    description: "Payment method body",
+    schema: {
+      properties: {
+        id: {
+          type: "string"
+        }
+      }
+    }
+}
+
 const createPaymentMethodResponse = {
   description: 'Create Payment method response',
   schema: {
@@ -62,6 +73,7 @@ const getPaymentMethodResponse = {
 };
 
 export {
+  getPaymentMethodBody,
   createPaymentMethodResponse,
   getPaymentMethodResponse,
 };

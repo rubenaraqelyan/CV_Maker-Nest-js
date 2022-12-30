@@ -28,12 +28,10 @@ export class UsersService {
   async signUp(data) {
     data = {
       ...data,
-      username: data.username.toLowerCase(),
-      email: data.username.toLowerCase(),
+      email: data.email.toLowerCase(),
       password: await hashPassword(data.password)
     }
     await this.checkEmail(data.email);
-    await this.checkUsernameLogin(data.username);
     const user = await this.Users.create(data);
     const token = this.getToken(user.id, 'verify_email');
     return this.sendVerificationEmail(data.email, token);
@@ -41,9 +39,13 @@ export class UsersService {
 
   async signIn(data) {
     const user = await this.Users.findOne({where: {email: data.email}});
+    return this.checkUser(user, data);
+  }
+
+  async checkUser(user, data) {
     if (!user?.verified_at) throw new HttpException(messages.VERIFY_YOUR_EMAIL, HttpStatus.UNPROCESSABLE_ENTITY);
     const checkUser = user ? await checkPassword(data.password, user?.getDataValue('password')) : null;
-    if (!checkUser || !user) throw new HttpException(messages.INVALID_USERNAME_OR_PASSWORD, HttpStatus.UNPROCESSABLE_ENTITY);
+    if (!checkUser || !user) throw new HttpException(messages.INVALID_EMAIL_OR_PASSWORD, HttpStatus.UNPROCESSABLE_ENTITY);
     return user.toJSON();
   }
 
@@ -77,11 +79,8 @@ export class UsersService {
   }
 
   async update(id, data) {
-    const username = data.username.toLowerCase();
     const email = data.email.toLowerCase();
-    data.username = username;
     data.email = email;
-    await this.checkUsername(id, username);
     await this.Users.update(data, {where: {id}});
     return this.getUserById(id);
   }
@@ -91,25 +90,6 @@ export class UsersService {
     return this.Users.update(data, {where: {id}})
   }
 
-  async checkUsername(id, username) {
-    const check = await this.Users.findOne({where: {username, id: {[Op.ne]: id}}});
-    if (check) throw new HttpError({
-      status: HttpStatus.BAD_REQUEST,
-      message: messages.BAD_REQUEST,
-      messagesGroup: {username: messages.USERNAME_ALREADY_USE}
-    });
-    return true;
-  }
-
-  async checkUsernameLogin(username) {
-    const check = await this.Users.findOne({where: {username}});
-    if (check) throw new HttpError({
-      status: HttpStatus.BAD_REQUEST,
-      message: messages.BAD_REQUEST,
-      messagesGroup: {username: messages.USERNAME_ALREADY_USE}
-    });
-    return true;
-  }
 
   async checkEmail(email) {
     const check = await this.Users.findOne({where: {email}});
@@ -123,7 +103,7 @@ export class UsersService {
 
   async findById(id) {
     const user = await this.Users.findByPk(id);
-    if (!user) throw new HttpException(messages.INVALID_USERNAME_OR_PASSWORD, HttpStatus.UNPROCESSABLE_ENTITY);
+    if (!user) throw new HttpException(messages.INVALID_EMAIL_OR_PASSWORD, HttpStatus.UNPROCESSABLE_ENTITY);
     return user;
   }
 
@@ -181,7 +161,7 @@ export class UsersService {
   async validateGoogleUser(params: authData) {
     const {name, email, social_id, image} = params;
     const where = {email};
-    const defaults = {name, username: `user_${social_id}`, email, social_id, image, verified_at: new Date()};
+    const defaults = {name, email, social_id, image, verified_at: new Date()};
     const [user] = await this.Users.findOrCreate({where, defaults});
     return user['dataValues'];
   }

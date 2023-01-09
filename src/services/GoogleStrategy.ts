@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Profile, Strategy } from 'passport-google-oauth20';
-import {UsersService} from "../users/users.service";
+import {UsersService} from "../modules/users/users.service";
 const {BASE_API, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET} = process.env;
 
 @Injectable()

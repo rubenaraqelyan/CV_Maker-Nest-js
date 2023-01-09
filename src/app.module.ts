@@ -4,21 +4,21 @@ import {
   MiddlewareConsumer,
   RequestMethod,
 } from '@nestjs/common';
-import { SocketConnection } from './middlewares/socket.connection';
-import { AuthMiddleware } from './middlewares/auth.middleware';
-import { UsersModule } from './users/users.module';
-import { AddressesModule } from './addresses/addresses.module';
-import { SkillsModule } from './skills/skills.module';
-import { LanguagesModule } from './languages/languages.module';
-import { BiosModule } from './bios/bios.module';
-import { CertificatesModule } from './certificates/certificates.module';
-import { EducationsModule } from './educations/educations.module';
-import { PhoneNumbersModule } from './phone_numbers/phone_numbers.module';
-import { AuthModule } from './auth/auth.module';
-import { PaymentMethodModule } from './payment_method/payment_methods.module';
-import { PlansModule } from './plans/plans.module';
-import Sequelize from './database/initialize-sql';
-import { UserCvsModule } from './user_cvs/user_cvs.module';
+import { SocketConnection } from 'src/middlewares/socket.connection';
+import { AuthMiddleware } from 'src/middlewares/auth.middleware';
+import { UsersModule } from './modules/users/users.module';
+import { AddressesModule } from './modules/addresses/addresses.module';
+import { SkillsModule } from './modules/skills/skills.module';
+import { LanguagesModule } from './modules/languages/languages.module';
+import { BiosModule } from './modules/bios/bios.module';
+import { CertificatesModule } from './modules/certificates/certificates.module';
+import { EducationsModule } from './modules/educations/educations.module';
+import { PhoneNumbersModule } from './modules/phone_numbers/phone_numbers.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { PaymentMethodModule } from './modules/payment_method/payment_methods.module';
+import { PlansModule } from './modules/plans/plans.module';
+import Sequelize from 'src/database/initialize-sql';
+import { UserCvsModule } from './modules/user_cvs/user_cvs.module';
 
 @Module({
   imports: [

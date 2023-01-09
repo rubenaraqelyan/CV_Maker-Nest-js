@@ -1,6 +1,6 @@
 import {HttpException, HttpStatus, Injectable, NestMiddleware} from '@nestjs/common';
-import {RequestType, response, next, } from '../dto/main.dto';
-import {UsersService} from "../users/users.service";
+import {RequestType, response, next, } from '../modules/main.dto';
+import {UsersService} from "../modules/users/users.service";
 import messages from "../utils/messages";
 
 @Injectable()

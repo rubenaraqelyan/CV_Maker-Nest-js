@@ -1,17 +1,17 @@
 import { SequelizeModule } from '@nestjs/sequelize';
-import { users } from '../users/users.model';
-import { addresses } from '../addresses/addresses.model';
-import {skills} from "../skills/skills.model";
-import {languages} from "../languages/languages.model";
-import {bios} from "../bios/bios.model";
-import {certificates} from "../certificates/certificates.model";
-import {educations} from "../educations/educations.model";
-import { phone_numbers } from 'src/phone_numbers/phone_numbers.model';
-import {payment_methods} from "../payment_method/payment_methods.model";
-import {plans} from "../plans/plans.model";
-import {users_plans} from "../plans/users_plans.model";
-import {subscriptions} from "../plans/subscriptions.model";
-import { user_cvs } from 'src/user_cvs/user_cvs.model';
+import { users } from '../modules/users/users.model';
+import { addresses } from '../modules/addresses/addresses.model';
+import {skills} from "../modules/skills/skills.model";
+import {languages} from "../modules/languages/languages.model";
+import {bios} from "../modules/bios/bios.model";
+import {certificates} from "../modules/certificates/certificates.model";
+import {educations} from "../modules/educations/educations.model";
+import { phone_numbers } from '../modules/phone_numbers/phone_numbers.model';
+import {payment_methods} from "../modules/payment_method/payment_methods.model";
+import {plans} from "../modules/plans/plans.model";
+import {users_plans} from "../modules/plans/users_plans.model";
+import {subscriptions} from "../modules/plans/subscriptions.model";
+import { user_cvs } from '../modules/user_cvs/user_cvs.model';
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
 export default class Sequelize {

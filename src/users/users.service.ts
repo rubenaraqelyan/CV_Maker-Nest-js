@@ -185,4 +185,10 @@ export class UsersService {
     return user['dataValues'];
   }
 
+  async getInvoices(customer) {
+    if (!customer) throw new HttpException(messages.CUSTOMER_NOT_FOUND, HttpStatus.NOT_FOUND);
+    const {data} = await this.stripe.invoices.list({customer});
+    return data.map(d => d.lines.data[0]);
+  }
+
 }

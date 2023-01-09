@@ -23,7 +23,7 @@ import {
 import {
   acceptCodeForgotPasswordBody,
   forgotPasswordBody,
-  getMeResponse,
+  getMeResponse, invoicesResponse,
   signInBody,
   signInResponse,
   signUpBody,
@@ -184,6 +184,22 @@ export class UsersController {
       const data = await this.usersService.uploadAvatar(id, file);
       return response({
         message: messages.AVATAR_UPLOADED,
+        data
+      });
+    } catch (e) {
+      return catchError(e);
+    }
+  }
+
+  @Get('/invoices')
+  @ApiHeader(xAuthorization)
+  @ApiResponse(invoicesResponse)
+  async getInvoices(@Req() req: RequestType) {
+    try {
+      const {customer_id} = req.user;
+      const data = await this.usersService.getInvoices(customer_id);
+      return response({
+        message: messages.INVOICES_LIST,
         data
       });
     } catch (e) {

@@ -88,7 +88,7 @@ export class UsersService {
   async updatePassword(id, data) {
     const user = await this.Users.findOne({where: {id}});
     const checkUser = user ? await checkPassword(data.oldPassword, user?.getDataValue('password')) : null;
-    if (!checkUser || !user) throw new HttpException(messages.INVALID_USERNAME_OR_PASSWORD, HttpStatus.UNPROCESSABLE_ENTITY);
+    if (!checkUser || !user) throw new HttpException(messages.INVALID_PASSWORD, HttpStatus.UNPROCESSABLE_ENTITY);
     data.password = await hashPassword(data.password);
     return this.Users.update(data, {where: {id}})
   }

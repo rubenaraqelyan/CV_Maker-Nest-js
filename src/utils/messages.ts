@@ -85,5 +85,6 @@ export default {
   ADDRESS_NOT_FOUND: 'Address not found',
   AVATAR_IS_MANDATORY: 'Avatar is mandatory',
   IMAGE_TYPE_ERROR: 'Image type error',
-  PASSWORD_VALIDATION_ERROR: 'Password should contain at least 8 or more characters, 1 upper case letter, 1 lower case letter, 1 number and 1 special character'
+  PASSWORD_VALIDATION_ERROR: 'Password should contain at least 8 or more characters, 1 upper case letter, 1 lower case letter, 1 number and 1 special character',
+  INVALID_PASSWORD: 'Invalid password',
 }

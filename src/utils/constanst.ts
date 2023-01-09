@@ -19,11 +19,14 @@ const AVATAR_IMAGE = {
   height: 800,
 }
 
+const passwordValidation = /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?=.*[!@#$&*])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/
+
 export {
   IMAGE_MIME_TYPES,
   AVATAR_IMAGE,
   STRIPE_CLIENT,
   STRIPE_CURRENCY,
   PAYMENT_METHOD_TYPE,
-  INTERVAL
+  INTERVAL,
+  passwordValidation
 };

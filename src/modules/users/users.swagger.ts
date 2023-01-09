@@ -255,6 +255,9 @@ const updatePasswordBody = {
   description: "User body",
   schema: {
     properties: {
+      oldPassword: {
+        type: "string"
+      },
       password: {
         type: "string"
       }

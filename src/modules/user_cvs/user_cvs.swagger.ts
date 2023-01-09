@@ -21,23 +21,26 @@ const createCvResponse = {
 };
 
 const getCvResponse = {
-    description: "Get CV response",
-    schema: {
-      properties: {
-        ...response,
-        data: {
-          type: "object",
+  description: 'Get CVs response',
+  schema: {
+    properties: {
+      ...response,
+      data: {
+        type: 'array',
+        items: {
+          type: 'object',
           properties: {
             id: {
-              type: "string"
+              type: 'string',
             },
             user_id: {
-              type: "string"
+              type: 'string',
             },
           },
-        }
-      }
-    }
-}
+        },
+      },
+    },
+  },
+};
 
 export { createCvResponse, getCvResponse };

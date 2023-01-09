@@ -355,6 +355,22 @@ const OAuthRedirectResponse = {
   }
 };
 
+const invoicesResponse = {
+  description: "User invoices response",
+  schema: {
+    properties: {
+      ...response,
+      data: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {}
+        }
+      }
+    }
+  }
+};
+
 export {
   signUpBody,
   signInBody,
@@ -369,5 +385,6 @@ export {
   uploadAvatarBody,
   uploadAvatarResponse,
   OAuthLoginResponse,
-  OAuthRedirectResponse
+  OAuthRedirectResponse,
+  invoicesResponse
 }

@@ -18,6 +18,8 @@ export default {
   EMAIL_ALREADY_VERIFIED: 'Email already verified',
   AUTH_GOOGLE_REDIRECT: 'Google social login',
   FORBIDDEN: 'Forbidden',
+  CUSTOMER_NOT_FOUND: 'Customer not found',
+  INVOICES_LIST: 'Invoices list',
   CV_CREATED: 'CV has been created successfully',
   CV_LIST: 'CVs list',
   CV_GET: 'Get CV',

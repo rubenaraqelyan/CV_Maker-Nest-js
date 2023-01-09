@@ -71,6 +71,12 @@ export class UpdateDto {
 export class updatePassword {
   @IsNotEmpty()
   @IsString()
+  readonly oldPassword: string;
+
+  @IsString()  
+  @Matches(passwordValidation, {
+    message: messages.PASSWORD_VALIDATION_ERROR
+  })
   readonly password: string;
 }
 

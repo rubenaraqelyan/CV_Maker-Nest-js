@@ -2,9 +2,11 @@ import {ApiProperty} from "@nestjs/swagger";
 import {
   IsString,
   IsNotEmpty,
-  IsEmail, IsArray, IsOptional, ValidateNested
+  IsEmail, IsArray, IsOptional, ValidateNested, Matches,
 } from 'class-validator';
 import {Type} from "class-transformer";
+import { passwordValidation } from "src/utils/constanst";
+import messages from 'src/utils/messages'
 
 class socialsDto {
   @IsString()
@@ -26,8 +28,10 @@ export class UserDto {
   @IsEmail()
   readonly email: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsString()  
+  @Matches(passwordValidation, {
+    message: messages.PASSWORD_VALIDATION_ERROR
+  })
   readonly password: string;
 
   @IsArray()

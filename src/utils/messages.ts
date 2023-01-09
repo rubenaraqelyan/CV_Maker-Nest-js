@@ -21,6 +21,7 @@ export default {
   FORBIDDEN: 'Forbidden',
   CUSTOMER_NOT_FOUND: 'Customer not found',
   INVOICES_LIST: 'Invoices list',
+  SUBSCRIPTIONS_LIST: 'Subscriptions list',
   CV_CREATED: 'CV has been created successfully',
   CV_LIST: 'CVs list',
   CV_GET: 'Get CV',

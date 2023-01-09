@@ -191,4 +191,10 @@ export class UsersService {
     return data.map(d => d.lines.data[0]);
   }
 
+  async getSubscriptions(customer) {
+    if (!customer) throw new HttpException(messages.CUSTOMER_NOT_FOUND, HttpStatus.NOT_FOUND);
+    const {data} = await this.stripe.subscriptions.list({customer});
+    return data.map(d => d.items.data[0]);
+  }
+
 }

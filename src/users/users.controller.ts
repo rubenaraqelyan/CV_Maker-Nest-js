@@ -26,7 +26,7 @@ import {
   getMeResponse, invoicesResponse,
   signInBody,
   signInResponse,
-  signUpBody,
+  signUpBody, subscriptionsResponse,
   updateBody, updatePasswordBody,
   updateResponse, uploadAvatarBody, uploadAvatarResponse, verifyUserResponse
 } from "../swagger/users";
@@ -200,6 +200,22 @@ export class UsersController {
       const data = await this.usersService.getInvoices(customer_id);
       return response({
         message: messages.INVOICES_LIST,
+        data
+      });
+    } catch (e) {
+      return catchError(e);
+    }
+  }
+
+  @Get('/subscriptions')
+  @ApiHeader(xAuthorization)
+  @ApiResponse(subscriptionsResponse)
+  async getSubscriptions(@Req() req: RequestType) {
+    try {
+      const {customer_id} = req.user;
+      const data = await this.usersService.getSubscriptions(customer_id);
+      return response({
+        message: messages.SUBSCRIPTIONS_LIST,
         data
       });
     } catch (e) {

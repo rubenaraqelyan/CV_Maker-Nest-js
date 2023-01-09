@@ -9,6 +9,7 @@ class requestUser {
     name: string;
     username: string;
     email: string;
+    customer_id: string | null;
     password: string;
     image: string;
     verified_at: string | null;

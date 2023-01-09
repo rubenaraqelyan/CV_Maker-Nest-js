@@ -374,6 +374,22 @@ const invoicesResponse = {
   }
 };
 
+const subscriptionsResponse = {
+  description: "User subscriptions response",
+  schema: {
+    properties: {
+      ...response,
+      data: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {}
+        }
+      }
+    }
+  }
+};
+
 export {
   signUpBody,
   signInBody,
@@ -389,5 +405,6 @@ export {
   uploadAvatarResponse,
   OAuthLoginResponse,
   OAuthRedirectResponse,
-  invoicesResponse
+  invoicesResponse,
+  subscriptionsResponse
 }

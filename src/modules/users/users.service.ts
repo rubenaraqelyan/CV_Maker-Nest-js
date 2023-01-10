@@ -111,7 +111,7 @@ export class UsersService {
   }
 
   async sendVerificationEmail(email, token) {
-    const direction = path.resolve('src','emailTemplates','verification.html');
+    const direction = path.resolve('src','modules','emailTemplates','verification.html');
     const html = await renderHtmlFile(direction, options(email, token));
     await Email.send(email, messages.VERIFY_YOUR_EMAIL, html);
   }

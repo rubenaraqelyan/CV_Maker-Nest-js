@@ -18,6 +18,10 @@ export class UserDto {
   @IsNotEmpty()
   @IsString()
   readonly name: string;
+  
+  @IsNotEmpty()
+  @IsString()
+  readonly last_name: string;
 
   @IsNotEmpty()
   @IsString()
@@ -53,6 +57,10 @@ export class UpdateDto {
   @IsOptional()
   @IsString()
   readonly name: string;
+
+  @IsOptional()
+  @IsString()
+  readonly last_name: string;
 
   @IsOptional()
   @IsArray()

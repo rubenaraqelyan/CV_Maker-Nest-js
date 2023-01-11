@@ -79,8 +79,6 @@ export class UsersService {
   }
 
   async update(id, data) {
-    const email = data.email.toLowerCase();
-    data.email = email;
     await this.Users.update(data, {where: {id}});
     return this.getUserById(id);
   }

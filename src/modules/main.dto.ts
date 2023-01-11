@@ -46,3 +46,7 @@ export interface returnResponse {
     readonly message: string;
     readonly data?: any | object;
 }
+
+export interface JwtPayload {
+    id: string;
+}

@@ -39,6 +39,12 @@ export class users extends Model {
     type: DataType.STRING(255),
     allowNull: false,
   })
+  last_name: string;
+
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: false,
+  })
   email: string;
 
   @Column({

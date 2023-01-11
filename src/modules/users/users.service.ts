@@ -17,6 +17,7 @@ import {plans} from "../plans/plans.model";
 import {users_plans} from "../plans/users_plans.model";
 import {user_cvs} from "../user_cvs/user_cvs.model";
 import messages from "../../utils/messages";
+import { JwtPayload } from '../main.dto';
 
 @Injectable()
 export class UsersService {
@@ -54,7 +55,7 @@ export class UsersService {
   }
 
   async verifyToken(token, prefix = '') {
-    const decoded = await JWT.verify(token, JWT_SECRET + prefix);
+    const decoded = await JWT.verify(token, JWT_SECRET + prefix) as JwtPayload;
     return decoded?.id;
   }
 
@@ -79,8 +80,6 @@ export class UsersService {
   }
 
   async update(id, data) {
-    const email = data.email.toLowerCase();
-    data.email = email;
     await this.Users.update(data, {where: {id}});
     return this.getUserById(id);
   }

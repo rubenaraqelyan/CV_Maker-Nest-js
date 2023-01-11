@@ -7,6 +7,9 @@ const signUpBody = {
       name: {
         type: "string"
       },
+      last_name: {
+        type: "string"
+      },
       email: {
         type: "string"
       },
@@ -59,6 +62,9 @@ const signInResponse = {
           name: {
             type: "string"
           },
+          last_name: {
+            type: "string"
+          },
           email: {
             type: "string"
           },
@@ -108,6 +114,9 @@ const getMeResponse = {
           name: {
             type: "string"
           },
+          last_name: {
+            type: "string"
+          },
           email: {
             type: "string"
           },
@@ -151,6 +160,9 @@ const getMeResponse = {
                     name: {
                       type: "string"
                     },
+                    last_name: {
+                      type: "string"
+                    },
                     number: {
                       type: "number"
                     },
@@ -187,6 +199,9 @@ const updateBody = {
       name: {
         type: "string"
       },
+      last_name: {
+        type: "string"
+      },
       socials: {
         type: "array",
         items: {
@@ -217,6 +232,9 @@ const updateResponse = {
             type: "string"
           },
           name: {
+            type: "string"
+          },
+          last_name: {
             type: "string"
           },
           social_id: {

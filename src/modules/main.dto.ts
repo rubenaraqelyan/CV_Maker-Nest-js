@@ -7,6 +7,7 @@ export type next = NextFunction;
 class requestUser {
     id: string;
     name: string;
+    last_name: string
     email: string;
     customer_id: string | null;
     password: string;
@@ -44,4 +45,8 @@ export interface returnResponse {
     readonly status?: number;
     readonly message: string;
     readonly data?: any | object;
+}
+
+export interface JwtPayload {
+    id: string;
 }

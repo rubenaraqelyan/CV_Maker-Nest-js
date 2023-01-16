@@ -90,7 +90,10 @@ export class acceptCodeForgotPassword {
   @IsNotEmpty()
   @IsString()
   readonly code: string;
-  @IsNotEmpty()
-  @IsString()
+  
+  @IsString()  
+  @Matches(passwordValidation, {
+    message: messages.PASSWORD_VALIDATION_ERROR
+  })
   readonly password: string;
 }

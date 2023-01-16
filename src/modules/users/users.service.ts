@@ -92,6 +92,11 @@ export class UsersService {
     return this.Users.update(data, {where: {id}})
   }
 
+  async updatePasswordByCode(id, data) {
+    data.password = await hashPassword(data.password);
+    return this.Users.update(data, {where: {id}})
+  }
+
 
   async checkEmail(email) {
     const check = await this.Users.findOne({where: {email}});
@@ -130,7 +135,7 @@ export class UsersService {
   async sendForgotCodeToEmail(email) {
     const forgot_password_code = uniq.time();
     const user = await this.Users.findOne({where: {email}});
-    if (user) throw new HttpError({
+    if (!user) throw new HttpError({
       status: HttpStatus.NOT_FOUND,
       message: messages.BAD_REQUEST,
       messagesGroup: {email: messages.EMAIL_NOT_FOUND}
@@ -151,7 +156,7 @@ export class UsersService {
       message: messages.BAD_REQUEST,
       messagesGroup: {code: messages.CODE_NOT_CORRECT}
     });
-    return this.updatePassword(user.id, {password: data.password});
+    return this.updatePasswordByCode(user.id, {password: data.password});
   }
 
   async uploadAvatar(id, file) {
